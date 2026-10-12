@@ -22,3 +22,19 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+# Konfigurasi rahasia
+laravel_temp/.env
+
+# Dependensi yang bisa diinstal ulang
+laravel_temp/vendor/
+laravel_temp/node_modules/
+
+# Hasil build frontend
+laravel_temp/public/build/
+
+# Cache dan file runtime Laravel
+laravel_temp/bootstrap/cache/*.php
+laravel_temp/storage/framework/sessions/*
+laravel_temp/storage/framework/views/*
+laravel_temp/storage/framework/cache/*
+laravel_temp/storage/logs/*
