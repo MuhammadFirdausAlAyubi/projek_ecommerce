@@ -1,0 +1,92 @@
+html{
+	scroll-behavior: smooth;
+}
+.navbar{
+	background-color: black;
+}
+
+#about h1{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+#about{
+	margin-top: 40px;
+}
+
+#facility{
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+#facility h1{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+#facility p{
+	margin-top: 10px;
+}
+
+
+#facility img{
+	width: 120px;
+	height: 120px;
+}
+
+#about img{
+	width: 200px;
+	height: 200px;
+}
+
+.slider{
+	margin-top: 50px;
+}
+
+.img-slider{
+	background-color: blue;
+	height: 900px;
+	z-index: 1000;
+}
+
+footer{
+	background-color: black;
+	color: white;
+	text-align: center;
+	padding: 10px;
+}
+
+#contact{
+	background-color: grey;
+
+}
+
+#contact input{
+	margin: 20px;
+}
+
+#contact textarea{
+	margin: 20px;
+}
+
+#contact button{
+	margin-left: 20px;
+	margin-bottom: 20px;
+	margin-top: -10px;
+	margin-right: 20px;
+}
+
+#contact h1{
+	color: white;
+	margin-left: 18px;
+}
+
+#contact .tulisan{
+	margin-top: 140px;
+}
+
+
+#contact p{
+	color: white;
+	margin-left: 20px;
+}
+
+
