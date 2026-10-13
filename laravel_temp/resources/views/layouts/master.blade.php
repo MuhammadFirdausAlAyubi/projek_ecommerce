@@ -1,153 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Aplikasi Inventaris Sekolah</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="adminlte/bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="adminlte/bower_components/Ionicons/css/ionicons.min.css">
-  <!-- jvectormap -->
-  <link rel="stylesheet" href="adminlte/bower_components/jvectormap/jquery-jvectormap.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <!-- dataTables --> 
-  <link rel="stylesheet" href="adminlte/dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="adminlte/dist/css/skins/_all-skins.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ trim($__env->yieldContent('title', 'Dashboard')) }} | AdminLTE</title>
 
+  <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/jqvmap/jqvmap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
+  @stack('styles')
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="{{ asset('assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" height="60" width="60">
+  </div>
 
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="#" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>I</b>SMK</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>INVEN</b>SMK</span>
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto"></ul>
+  </nav>
+
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="{{ url('/') }}" class="brand-link">
+      <img src="{{ asset('assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">NAMA APLIKASI</span>
     </a>
 
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-      <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="adminlte/dist/img/avatar5.png" class="user-image" alt="User Image">
-              <span class="hidden-xs">NAMA USER</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="adminlte/dist/img/avatar5.png" class="img-circle" alt="User Image">
-
-                <p>
-                  Nama User - Level
-                  
-                </p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="../logout.php" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
-            </ul>
-          </li>   
-        </ul>
+    <div class="sidebar">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ asset('assets/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Username</a>
+        </div>
       </div>
 
-    </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- Sidebar user panel -->
-    <div class="user-panel">
-        <div class="pull-left image">
-          <img src="adminlte/dist/img/avatar5.png" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Nama User</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Level</a>
-        </div>
+      @include('layouts.sidebar')
     </div>
-      <?php 
-        include('sidemenu.php');
-      ?>
-
-
-    </section>
-    <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content aplikasi -->
-   
-         <?php
-                if(!empty($_GET['menu'])){
-                    $menu = $_GET['menu'];
-                    if($menu==1){
-                      include('errors/404.php');
-                    }else{
-                      include('errors/404.php');
-                    }
-                }else{
-                  include('errors/404.php');
-                }
-            ?>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+  @yield('content')
 
   <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
   </footer>
 
+  <aside class="control-sidebar control-sidebar-dark"></aside>
+</div>
 
-<!-- jQuery 3 -->
-<script src="adminlte/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="adminlte/bower_components/datatables.net/js/jquery.dataTables.js"></script>
-<script src="adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
-<!-- Data Tables -->
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#example').DataTable();
-} );
+<script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
 </script>
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#example2').DataTable();
-} );
-</script>
-<!-- Posisi Harus dibawah databales js -->
-
-<script src="adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script><!-- AdminLTE App -->
-<script src="adminlte/dist/js/adminlte.min.js"></script>
-<script src="adminlte/js/modaljs.js"></script>
+<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/sparklines/sparkline.js') }}"></script>
+<script src="{{ asset('assets/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+<script src="{{ asset('assets/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
+@stack('scripts')
 </body>
 </html>
