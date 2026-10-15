@@ -1,62 +1,52 @@
- <!-- Sidebar Menu -->
- <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-home"></i>
-              <p>
-                Dashboard
-              </p>
+{{-- Sidebar AdminLTE 3. Sesuaikan route name dengan routes/web.php milik project. --}}
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+            <a href="{{ url('/admin') }}" class="nav-link {{ request()->is('admin') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-chart-pie"></i><p>Dashboard</p>
             </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
-              <p>
-                Menu Utama
-                <i class="fas fa-angle-left right"></i>
-              </p>
+        </li>
+
+        <li class="nav-header">MANAJEMEN TOKO</li>
+        <li class="nav-item">
+            <a href="{{ url('/admin/products') }}" class="nav-link {{ request()->is('admin/products*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-box-open"></i><p>Data Produk</p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/tables/simple.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Kelola Data User</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/tables/data.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Kelola Data</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-search"></i>
-              <p>
-                Setting
-                <i class="fas fa-angle-left right"></i>
-              </p>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url('/admin/categories') }}" class="nav-link {{ request()->is('admin/categories*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-layer-group"></i><p>Kategori Produk</p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Profil</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Logout</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
+        </li>
+        <li class="nav-item">
+            <a href="{{ url('/admin/orders') }}" class="nav-link {{ request()->is('admin/orders*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-receipt"></i><p>Pesanan</p>
+            </a>
+        </li>
+
+        <li class="nav-header">PENGGUNA</li>
+        <li class="nav-item">
+            <a href="{{ url('/admin/users') }}" class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-users"></i><p>Kelola Pengguna</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url('/admin/profile') }}" class="nav-link {{ request()->is('admin/profile*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user-cog"></i><p>Profil</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url('/') }}" class="nav-link">
+                <i class="nav-icon fas fa-store"></i><p>Lihat Toko</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <form action="{{ url('/logout') }}" method="POST" class="d-none" id="sidebar-logout-form">
+                @csrf
+            </form>
+            <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('sidebar-logout-form').submit();">
+                <i class="nav-icon fas fa-sign-out-alt"></i><p>Logout</p>
+            </a>
+        </li>
+    </ul>
+</nav>
