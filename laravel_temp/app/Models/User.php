@@ -8,18 +8,28 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class User extends Authenticatable
 {
     protected $table = 'user';
+
     protected $primaryKey = 'id_user';
+
     public $timestamps = false;
 
     protected $fillable = [
-        'nama', 'email', 'password', 'no_telp', 'role',
+        'nama',
+        'email',
+        'password',
+        'no_telp',
+        'role',
     ];
 
-    protected $hidden = ['password'];
+    protected $hidden = [
+        'password',
+    ];
 
     protected function casts(): array
     {
-        return ['password' => 'hashed'];
+        return [
+            'password' => 'hashed',
+        ];
     }
 
     public function alamat(): HasMany
