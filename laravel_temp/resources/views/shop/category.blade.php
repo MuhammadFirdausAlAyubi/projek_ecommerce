@@ -4,317 +4,283 @@
 @section('title', $category . ' | ELECTROMART')
 
 @push('styles')
-.category-page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 28px 20px 50px;
-}
-
-.category-breadcrumb {
-    font-size: 13px;
-    color: #777;
-    margin-bottom: 18px;
-}
-
-.category-breadcrumb a {
-    color: #555;
-    text-decoration: none;
-}
-
-.category-breadcrumb a:hover {
-    color: #155eef;
-}
-
-.category-heading {
-    margin-bottom: 26px;
-}
-
-.category-heading h1 {
-    font-size: 28px;
-    margin: 0 0 8px;
-    color: #222;
-}
-
-.category-heading p {
-    color: #777;
-    margin: 0;
-    font-size: 14px;
-}
-
-.category-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    color: #666;
-}
-
-.category-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
-}
-
-.category-product {
-    min-width: 0;
-    background: #fff;
-    border: 1px solid #e9e9e9;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform .2s, box-shadow .2s;
-}
-
-.category-product:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
-}
-
-.category-product-image {
-    height: 210px;
-    background: #f7f7f7;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    overflow: hidden;
-}
-
-.category-product-image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.category-image-placeholder {
-    color: #999;
-    font-size: 13px;
-    text-align: center;
-}
-
-.category-product-info {
-    padding: 16px;
-}
-
-.category-brand {
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 7px;
-}
-
-.category-product-name {
-    font-size: 15px;
-    line-height: 1.5;
-    color: #292929;
-    margin: 0 0 12px;
-    min-height: 45px;
-    font-weight: 600;
-    overflow-wrap: anywhere;
-}
-
-.category-product-price {
-    color: #e53935;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    overflow-wrap: anywhere;
-}
-
-.category-product-stock {
-    font-size: 12px;
-    color: #777;
-}
-
-.category-empty {
-    padding: 55px 20px;
-    text-align: center;
-    background: #fafafa;
-    border-radius: 10px;
-    color: #777;
-}
-
-.category-empty h3 {
-    color: #333;
-    margin-bottom: 8px;
-}
-
-.category-empty a {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 18px;
-    background: #155eef;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-}
-
-.category-pagination {
-    margin-top: 30px;
-}
-
-@media (max-width: 1000px) {
-    .category-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 15px;
-    }
-}
-
-@media (max-width: 700px) {
-    .category-page {
-        padding: 22px 14px 40px;
-    }
-
-    .category-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-    }
-
-    .category-product-image {
-        height: 160px;
-        padding: 10px;
-    }
-
-    .category-product-info {
-        padding: 12px;
-    }
-
-    .category-heading h1 {
-        font-size: 23px;
-    }
-
-    .category-product-price {
-        font-size: 16px;
-    }
-
-    .category-toolbar {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 380px) {
-    .category-grid {
-        grid-template-columns: 1fr;
-    }
-}
+<style>
+.category-page{width:100%;max-width:1400px;margin:0 auto;padding:28px 36px 48px;box-sizing:border-box}
+.category-breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:20px;color:#667085;font-size:12px}
+.category-breadcrumb a{color:#155eef;text-decoration:none}
+.category-heading{margin-bottom:22px}
+.category-heading h1{margin:0 0 7px;color:#172033;font-size:clamp(25px,3vw,32px);font-weight:700;line-height:1.3}
+.category-heading p{margin:0;color:#667085;font-size:13px;line-height:1.6}
+.category-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:20px;align-items:start}
+.category-sidebar{padding:16px;background:#fff;border:1px solid #e6eaf0;border-radius:10px;box-sizing:border-box}
+.category-filter-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:15px}
+.category-filter-heading h2{margin:0;color:#172033;font-size:16px}
+.category-filter-heading a{color:#155eef;font-size:11px;text-decoration:none}
+.category-filter-section{padding-top:14px;border-top:1px solid #e6eaf0}
+.category-filter-section h3{margin:0 0 13px;color:#172033;font-size:13px}
+.category-price-values{display:flex;justify-content:space-between;gap:8px;margin-bottom:16px}
+.category-price-value{min-width:0;color:#172033;font-size:11px;font-weight:700;overflow-wrap:anywhere}
+.category-price-value small{display:block;margin-bottom:4px;color:#667085;font-size:10px;font-weight:400}
+.category-slider{position:relative;height:6px;margin:0 9px 20px;background:#dbe4f5;border-radius:99px}
+.category-slider-track{position:absolute;height:6px;background:#155eef;border-radius:99px}
+.category-slider input[type=range]{position:absolute;top:-7px;left:0;width:100%;height:20px;margin:0;background:none;pointer-events:none;appearance:none;-webkit-appearance:none}
+.category-slider input[type=range]::-webkit-slider-thumb{width:19px;height:19px;border:3px solid #fff;border-radius:50%;background:#155eef;box-shadow:0 0 0 1px #155eef;pointer-events:auto;appearance:none;-webkit-appearance:none;cursor:grab}
+.category-slider input[type=range]::-moz-range-thumb{width:14px;height:14px;border:3px solid #fff;border-radius:50%;background:#155eef;box-shadow:0 0 0 1px #155eef;pointer-events:auto;cursor:grab}
+.category-price-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.category-price-inputs label{display:grid;gap:5px;color:#667085;font-size:10px}
+.category-price-inputs input{width:100%;min-width:0;padding:8px 6px;border:1px solid #d0d5dd;border-radius:7px;font-size:11px;box-sizing:border-box}
+.category-price-ranges{display:grid;gap:9px;margin:15px 0}
+.category-price-range{display:flex;align-items:center;gap:7px;color:#475467;font-size:11px;cursor:pointer}
+.category-price-range input{accent-color:#155eef}
+.category-filter-apply{width:100%;margin-top:12px;padding:10px;border:0;border-radius:7px;background:#155eef;color:#fff;font-size:12px;font-weight:600;cursor:pointer}
+.category-filter-apply:hover{background:#1048c7}
+.category-results{min-width:0}
+.category-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;color:#667085;font-size:12px}
+.category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch;gap:12px}
+.category-product{display:flex;flex-direction:column;min-width:0;overflow:hidden;background:#fff;border:1px solid #e6eaf0;border-radius:10px;transition:transform .2s,box-shadow .2s,border-color .2s}
+.category-product:hover{transform:translateY(-2px);border-color:#d5e1fa;box-shadow:0 7px 18px rgba(23,32,51,.07)}
+.category-product-link{display:flex;flex:1;flex-direction:column;min-width:0;color:inherit;text-decoration:none}
+.category-product-link:hover{color:inherit}
+.category-product-image{display:flex;align-items:center;justify-content:center;width:100%;height:165px;padding:10px;overflow:hidden;background:#f7f9fc;box-sizing:border-box}
+.category-product-image img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .25s}
+.category-product:hover .category-product-image img{transform:scale(1.03)}
+.category-image-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#98a2b3;font-size:11px;text-align:center}
+.category-product-info{display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;padding:10px;box-sizing:border-box}
+.category-brand{color:#667085;font-size:10px;line-height:1.4}
+.category-product-name{display:-webkit-box;width:100%;min-height:32px;margin:0;overflow:hidden;color:#172033;font-size:12px;font-weight:600;line-height:1.4;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.category-product-rating{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:11px;line-height:1.4}
+.category-product-price{margin-top:auto;padding-top:5px;color:#155eef;font-size:14px;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
+.category-product-stock{color:#667085;font-size:10px}
+.category-product-stock.tersedia{color:#15803d}
+.category-product-stock.habis{color:#dc2626}
+.category-empty{grid-column:1/-1;padding:35px 16px;border:1px dashed #d0d5dd;border-radius:10px;background:#fff;color:#667085;text-align:center}
+.category-empty h3{margin:0 0 8px;color:#172033;font-size:18px}
+.category-empty p{margin:0;font-size:12px}
+.category-empty a{display:inline-block;margin-top:13px;padding:9px 14px;border-radius:6px;background:#155eef;color:#fff;text-decoration:none;font-size:12px}
+.category-empty a:hover{background:#1048c7}
+.category-pagination{display:flex;justify-content:center;margin-top:25px}
+.category-pagination nav{max-width:100%}
+@media(min-width:1250px){.category-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:1100px){.category-page{padding-right:24px;padding-left:24px}.category-layout{grid-template-columns:205px minmax(0,1fr);gap:14px}.category-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}}
+@media(max-width:768px){.category-page{padding:24px 18px 36px}.category-layout{grid-template-columns:1fr}.category-sidebar{padding:14px}}
+@media(max-width:540px){.category-page{padding:20px 12px 30px}.category-layout{gap:15px}.category-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.category-product-image{height:145px;padding:8px}.category-product-info{padding:9px}.category-product-name{font-size:12px}.category-product-price{font-size:13px}}
+@media(max-width:380px){.category-page{padding-right:12px;padding-left:12px}.category-grid{gap:8px}.category-product-image{height:125px}.category-product-info{padding:8px}.category-product-price{font-size:12px}}
+</style>
 @endpush
 
 @section('content')
 <div class="category-page">
-
-    {{-- BREADCRUMB --}}
-    <div class="category-breadcrumb">
+    <nav class="category-breadcrumb" aria-label="Breadcrumb">
         <a href="{{ route('home') }}">Beranda</a>
-        <span> / </span>
-        <span>{{ $category }}</span>
-    </div>
+        <span>/</span>
+        <span aria-current="page">{{ $category }}</span>
+    </nav>
 
-    {{-- JUDUL KATEGORI --}}
-    <div class="category-heading">
+    <header class="category-heading">
         <h1>{{ $category }}</h1>
-        <p>
-            Temukan produk {{ strtolower($category) }} pilihan di ELECTROMART.
-        </p>
-    </div>
+        <p>Temukan produk {{ strtolower($category) }} pilihan di ELECTROMART.</p>
+    </header>
 
-    {{-- JUMLAH PRODUK --}}
-    <div class="category-toolbar">
-        <span>{{ $produks->total() }} produk ditemukan</span>
+    @php
+        $priceMin = max(0, min(50000000, (int) request('min_price', 0)));
+        $priceMax = max(0, min(50000000, (int) request('max_price', 50000000)));
+        if ($priceMin > $priceMax) {
+            $priceMin = 0;
+            $priceMax = 50000000;
+        }
+        $selectedRange = request('price_range', '');
+        $ranges = [
+            'under500' => ['label' => 'Di bawah Rp500.000', 'min' => 0, 'max' => 499999],
+            '500to1m' => ['label' => 'Rp500.000 – Rp1.000.000', 'min' => 500000, 'max' => 1000000],
+            '1to3m' => ['label' => 'Rp1.000.001 – Rp3.000.000', 'min' => 1000001, 'max' => 3000000],
+            'above3m' => ['label' => 'Di atas Rp3.000.000', 'min' => 3000001, 'max' => 50000000],
+        ];
+    @endphp
 
-        <span>
-            Halaman {{ $produks->currentPage() }}
-            dari {{ max(1, $produks->lastPage()) }}
-        </span>
-    </div>
+    <div class="category-layout">
+        <aside class="category-sidebar">
+            <div class="category-filter-heading">
+                <h2>Filter Produk</h2>
+                <a href="{{ url()->current() }}">Reset</a>
+            </div>
 
-    {{-- DAFTAR PRODUK --}}
-    @if ($produks->count() > 0)
-        <div class="category-grid">
-            @foreach ($produks as $produk)
-                <article class="category-product">
+            <form action="{{ url()->current() }}" method="GET" id="categoryPriceFilter">
+                <div class="category-filter-section">
+                    <h3>Rentang Harga</h3>
 
-                    {{-- GAMBAR --}}
-                    <div class="category-product-image">
-                        @if ($produk->gambar)
-                            @php
-                                $gambar = $produk->gambar;
-
-                                if (!preg_match('/^https?:\/\//i', $gambar)) {
-                                    $gambar = asset(
-                                        'storage/' . ltrim($gambar, '/')
-                                    );
-                                }
-                            @endphp
-
-                            <img
-                                src="{{ $gambar }}"
-                                alt="{{ $produk->nama_produk }}"
-                                loading="lazy"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                            >
-
-                            <div
-                                class="category-image-placeholder"
-                                style="display:none;"
-                            >
-                                Gambar tidak tersedia
-                            </div>
-                        @else
-                            <div class="category-image-placeholder">
-                                Gambar belum tersedia
-                            </div>
-                        @endif
+                    <div class="category-price-values">
+                        <div class="category-price-value"><small>Harga minimum</small><span id="categoryMinLabel">Rp{{ number_format($priceMin, 0, ',', '.') }}</span></div>
+                        <div class="category-price-value" style="text-align:right"><small>Harga maksimum</small><span id="categoryMaxLabel">Rp{{ number_format($priceMax, 0, ',', '.') }}</span></div>
                     </div>
 
-                    {{-- INFORMASI PRODUK --}}
-                    <div class="category-product-info">
-
-                        <div class="category-brand">
-                            {{ $produk->brand->nama_brand ?? 'ELECTROMART' }}
-                        </div>
-
-                        <h2 class="category-product-name">
-                            {{ $produk->nama_produk }}
-                        </h2>
-
-                        <div class="category-product-price">
-                            Rp {{ number_format((float) $produk->harga_jual, 0, ',', '.') }}
-                        </div>
-
-                        <div class="category-product-stock">
-                            @if ($produk->stok)
-                                Stok: {{ $produk->stok->jumlah_stok }}
-                            @else
-                                Stok belum tercatat
-                            @endif
-                        </div>
-
+                    <div class="category-slider">
+                        <div class="category-slider-track" id="categoryRangeTrack"></div>
+                        <input type="range" id="categoryMinRange" min="0" max="50000000" step="100000" value="{{ $priceMin }}" aria-label="Harga minimum">
+                        <input type="range" id="categoryMaxRange" min="0" max="50000000" step="100000" value="{{ $priceMax }}" aria-label="Harga maksimum">
                     </div>
-                </article>
-            @endforeach
-        </div>
 
-        {{-- PAGINATION --}}
-        <div class="category-pagination">
-            {{ $produks->links() }}
-        </div>
+                    <div class="category-price-inputs">
+                        <label>Minimum (Rp)<input type="number" id="categoryMinInput" name="min_price" min="0" max="50000000" step="1000" value="{{ request('min_price', '') }}" placeholder="Minimum"></label>
+                        <label>Maksimum (Rp)<input type="number" id="categoryMaxInput" name="max_price" min="0" max="50000000" step="1000" value="{{ request('max_price', '') }}" placeholder="Maksimum"></label>
+                    </div>
 
-    @else
-        {{-- KALAU KATEGORI BELUM ADA PRODUK --}}
-        <div class="category-empty">
-            <h3>Belum ada produk {{ $category }}</h3>
+                    <div class="category-price-ranges">
+                        @foreach ($ranges as $value => $range)
+                            <label class="category-price-range">
+                                <input type="radio" name="price_range" value="{{ $value }}" data-min="{{ $range['min'] }}" data-max="{{ $range['max'] }}" {{ $selectedRange === $value ? 'checked' : '' }}>
+                                <span>{{ $range['label'] }}</span>
+                            </label>
+                        @endforeach
+                    </div>
 
-            <p>
-                Produk kategori ini belum ditemukan di database.
-                Produk akan tampil setelah tersedia di database.
-            </p>
+                    <button type="submit" class="category-filter-apply">Terapkan Filter</button>
+                </div>
+            </form>
+        </aside>
 
-            <a href="{{ route('shop.index') }}">
-                Lihat Semua Produk
-            </a>
-        </div>
-    @endif
+        <main class="category-results">
+            <div class="category-toolbar">
+                <span>{{ $produks->total() }} produk ditemukan</span>
+                <span>Halaman {{ $produks->currentPage() }} dari {{ max(1, $produks->lastPage()) }}</span>
+            </div>
 
+            <div class="category-grid">
+                @forelse ($produks as $produk)
+                    @php
+                        $namaBrand = $produk->brand->nama_brand ?? null;
+                        $jumlahUlasan = $produk->ulasanProduk->count();
+                        $rataRataRating = $jumlahUlasan > 0 ? $produk->ulasanProduk->avg('rating') : 0;
+                    @endphp
+
+                    <article class="category-product">
+                        <a class="category-product-link" href="{{ route('produk.detail', $produk->id_produk) }}" aria-label="Lihat detail {{ $produk->nama_produk }}">
+                            <div class="category-product-image">
+                                @if ($produk->gambar)
+                                    @php
+                                        $gambar = $produk->gambar;
+                                        if (!preg_match('/^https?:\/\//i', $gambar)) {
+                                            $gambar = asset('storage/' . ltrim($gambar, '/'));
+                                        }
+                                    @endphp
+                                    <img src="{{ $gambar }}" alt="{{ $produk->nama_produk }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                                    <div class="category-image-placeholder" style="display:none">Gambar tidak tersedia</div>
+                                @else
+                                    <div class="category-image-placeholder">Gambar belum tersedia</div>
+                                @endif
+                            </div>
+
+                            <div class="category-product-info">
+                                <span class="category-brand">{{ $namaBrand ?: 'ELECTROMART' }}</span>
+                                <h2 class="category-product-name">{{ $produk->nama_produk }}</h2>
+
+                                <div class="category-product-rating">
+                                    @if ($jumlahUlasan > 0)
+                                        <span style="color:#f59e0b;">★ {{ number_format($rataRataRating, 1) }}</span>
+                                        <span style="color:#667085;">({{ $jumlahUlasan }} ulasan)</span>
+                                    @else
+                                        <span style="color:#98a2b3;">Belum ada ulasan</span>
+                                    @endif
+                                </div>
+
+                                <div class="category-product-price">Rp {{ number_format((float) $produk->harga_jual, 0, ',', '.') }}</div>
+
+                                <span class="category-product-stock {{ $produk->stok && $produk->stok->jumlah_stok > 0 ? 'tersedia' : ($produk->stok ? 'habis' : '') }}">
+                                    @if ($produk->stok)
+                                        Stok: {{ $produk->stok->jumlah_stok }}
+                                    @else
+                                        Stok belum tercatat
+                                    @endif
+                                </span>
+                            </div>
+                        </a>
+                    </article>
+                @empty
+                    <div class="category-empty">
+                        <h3>Belum ada produk {{ $category }}</h3>
+                        <p>Produk kategori ini belum ditemukan atau tidak sesuai dengan filter harga.</p>
+                        <a href="{{ route('shop.index') }}">Lihat Semua Produk</a>
+                    </div>
+                @endforelse
+            </div>
+
+            @if (method_exists($produks, 'links'))
+                <div class="category-pagination">{{ $produks->appends(request()->query())->links() }}</div>
+            @endif
+        </main>
+    </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('categoryPriceFilter');
+    if (!form) return;
+
+    const minRange = document.getElementById('categoryMinRange');
+    const maxRange = document.getElementById('categoryMaxRange');
+    const minInput = document.getElementById('categoryMinInput');
+    const maxInput = document.getElementById('categoryMaxInput');
+    const minLabel = document.getElementById('categoryMinLabel');
+    const maxLabel = document.getElementById('categoryMaxLabel');
+    const track = document.getElementById('categoryRangeTrack');
+    const maxValue = 50000000;
+    const gap = 100000;
+    const rupiah = value => 'Rp' + Number(value).toLocaleString('id-ID');
+
+    function update(source, syncInputs = true) {
+        let min = Number(minRange.value);
+        let max = Number(maxRange.value);
+
+        if (max - min < gap) {
+            if (source === 'min') min = max - gap;
+            else max = min + gap;
+        }
+
+        min = Math.max(0, min);
+        max = Math.min(maxValue, max);
+        minRange.value = min;
+        maxRange.value = max;
+
+        if (syncInputs) {
+            minInput.value = min;
+            maxInput.value = max;
+        }
+
+        minLabel.textContent = rupiah(min);
+        maxLabel.textContent = rupiah(max);
+        track.style.left = (min / maxValue * 100) + '%';
+        track.style.width = ((max - min) / maxValue * 100) + '%';
+
+        form.querySelectorAll('input[name="price_range"]').forEach(radio => {
+            radio.checked = Number(radio.dataset.min) === min && Number(radio.dataset.max) === max;
+        });
+    }
+
+    minRange.addEventListener('input', () => update('min'));
+    maxRange.addEventListener('input', () => update('max'));
+
+    minInput.addEventListener('input', function () {
+        minRange.value = Math.max(0, Math.min(maxValue, Number(this.value || 0)));
+        update('min', false);
+    });
+
+    maxInput.addEventListener('input', function () {
+        maxRange.value = Math.max(0, Math.min(maxValue, Number(this.value || maxValue)));
+        update('max', false);
+    });
+
+    form.querySelectorAll('input[name="price_range"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            minRange.value = this.dataset.min;
+            maxRange.value = this.dataset.max;
+            minInput.value = this.dataset.min;
+            maxInput.value = this.dataset.max;
+            update('max');
+        });
+    });
+
+    update('max', false);
+});
+</script>
+@endpush
