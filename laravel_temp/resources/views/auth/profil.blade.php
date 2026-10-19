@@ -1,4 +1,3 @@
-
 @extends('layouts.customer')
 
 @section('content')
@@ -15,12 +14,19 @@
         </div>
     @endif
 
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     @if ($errors->any())
         <div class="alert alert-danger">
             {{ $errors->first() }}
         </div>
     @endif
 
+    {{-- PROFIL SAYA --}}
     <div class="card mb-4">
         <div class="card-body p-4">
             <h5 class="mb-4">Profil Saya</h5>
@@ -49,6 +55,30 @@
         </div>
     </div>
 
+    {{-- ALAMAT PENGIRIMAN --}}
+    <div class="card mb-4">
+        <div class="card-body p-4">
+            <div class="d-flex align-items-start gap-3 mb-3">
+                <div class="text-primary fs-3">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+
+                <div>
+                    <h5 class="mb-2">Alamat Pengiriman</h5>
+                    <p class="text-secondary mb-0">
+                        Kelola alamat tujuan pengiriman pesanan ELECTROMART kamu.
+                    </p>
+                </div>
+            </div>
+
+            <a href="{{ route('alamat.index') }}" class="btn btn-primary">
+                <i class="fa-solid fa-map-location-dot me-1"></i>
+                Kelola Alamat
+            </a>
+        </div>
+    </div>
+
+    {{-- KEAMANAN AKUN --}}
     <div class="card mb-4">
         <div class="card-body p-4">
             <h5 class="mb-2">Keamanan Akun</h5>
@@ -63,6 +93,7 @@
         </div>
     </div>
 
+    {{-- LOGOUT --}}
     <div class="card">
         <div class="card-body p-4">
             <h5 class="mb-2">Logout</h5>
@@ -70,7 +101,8 @@
                 Keluar dari akun ELECTROMART kamu.
             </p>
 
-            <form method="POST" action="{{ route('logout') }}"
+            <form method="POST"
+                  action="{{ route('logout') }}"
                   onsubmit="return confirm('Yakin ingin logout?')">
                 @csrf
 
