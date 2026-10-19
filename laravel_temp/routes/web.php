@@ -1,10 +1,14 @@
-
 <?php
 
 use App\Models\Produk;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\DashboardController;
+
+// ========================================
+// HALAMAN PUBLIK
+// ========================================
 
 // HALAMAN UTAMA
 Route::get('/', function () {
@@ -63,7 +67,11 @@ Route::get('/shop/{category}', function ($category) {
     ]);
 })->name('shop.category');
 
+
+// ========================================
 // LOGIN DAN REGISTRASI
+// ========================================
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [UserController::class, 'showLogin'])
         ->name('login');
@@ -78,8 +86,23 @@ Route::middleware('guest')->group(function () {
         ->name('register.process');
 });
 
-// AKUN, EDIT PROFIL, GANTI PASSWORD, LOGOUT, DAN KERANJANG
-Route::middleware('auth')->group(function () {
+
+// ========================================
+// LOGOUT
+// ========================================
+
+Route::post('/logout', [UserController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
+
+
+// ========================================
+// KHUSUS USER / PELANGGAN
+// ========================================
+
+Route::middleware(['auth', 'user'])->group(function () {
+
+    // PROFIL
     Route::get('/akun', [UserController::class, 'profile'])
         ->name('account.profile');
 
@@ -89,16 +112,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/akun/edit', [UserController::class, 'updateProfile'])
         ->name('account.update');
 
-    Route::get('/akun/ganti-password', [UserController::class, 'showChangePassword'])
+    // GANTI PASSWORD
+    Route::get('/akun/ganti-password',
+        [UserController::class, 'showChangePassword'])
         ->name('password.edit');
 
-    Route::put('/akun/ganti-password', [UserController::class, 'changePassword'])
+    Route::put('/akun/ganti-password',
+        [UserController::class, 'changePassword'])
         ->name('password.update');
 
-    Route::post('/logout', [UserController::class, 'logout'])
-        ->name('logout');
-
-    // KERANJANG: URL /cart
+    // KERANJANG: /cart
     Route::get('/cart', [KeranjangController::class, 'index'])
         ->name('cart.index');
 
@@ -111,16 +134,37 @@ Route::middleware('auth')->group(function () {
     Route::delete('/cart/{id}', [KeranjangController::class, 'hapus'])
         ->name('cart.remove');
 
-    // KERANJANG: URL /keranjang
+    // KERANJANG: /keranjang
     Route::get('/keranjang', [KeranjangController::class, 'index'])
         ->name('keranjang.index');
 
-    Route::post('/keranjang/tambah/{id_produk}', [KeranjangController::class, 'tambah'])
+    Route::post('/keranjang/tambah/{id_produk}',
+        [KeranjangController::class, 'tambah'])
         ->name('keranjang.tambah');
 
-    Route::patch('/keranjang/update/{id_detail_keranjang}', [KeranjangController::class, 'update'])
+    Route::patch('/keranjang/update/{id_detail_keranjang}',
+        [KeranjangController::class, 'update'])
         ->name('keranjang.update');
 
-    Route::delete('/keranjang/hapus/{id_detail_keranjang}', [KeranjangController::class, 'hapus'])
+    Route::delete('/keranjang/hapus/{id_detail_keranjang}',
+        [KeranjangController::class, 'hapus'])
         ->name('keranjang.hapus');
 });
+
+
+// ========================================
+// KHUSUS ADMIN ELECTROMART
+// ========================================
+
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        // DASHBOARD ADMIN
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard');
+
+        // CRUD PRODUK, KATEGORI, BRAND, DAN STOK
+        // Route akan ditambahkan saat modul CRUD dibuat.
+    });

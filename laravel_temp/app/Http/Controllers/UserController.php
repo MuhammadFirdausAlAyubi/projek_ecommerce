@@ -25,19 +25,43 @@ class UserController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+        if (!Auth::attempt($credentials)) {
+            return back()
+                ->withErrors([
+                    'email' => 'Email atau password salah.',
+                ])
+                ->onlyInput('email');
+        }
 
+        $request->session()->regenerate();
+
+        $user = Auth::user();
+
+        // ADMIN MASUK KE DASHBOARD ADMIN
+        if ($user->role === 'admin') {
             return redirect()
-                ->intended(route('account.profile'))
+                ->route('admin.dashboard')
+                ->with('success', 'Login admin berhasil!');
+        }
+
+        // PELANGGAN MASUK KE HALAMAN AKUN
+        if ($user->role === 'pelanggan') {
+            return redirect()
+                ->route('account.profile')
                 ->with('success', 'Login berhasil!');
         }
 
-        return back()
+        // LOGOUT JIKA ROLE TIDAK VALID
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()
+            ->route('login')
             ->withErrors([
-                'email' => 'Email atau password salah.',
-            ])
-            ->onlyInput('email');
+                'email' => 'Role akun tidak valid.',
+            ]);
     }
 
     // MENAMPILKAN REGISTRASI
@@ -78,7 +102,10 @@ class UserController extends Controller
 
         return redirect()
             ->route('account.profile')
-            ->with('success', 'Registrasi berhasil! Selamat datang di ELECTROMART.');
+            ->with(
+                'success',
+                'Registrasi berhasil! Selamat datang di ELECTROMART.'
+            );
     }
 
     // MENAMPILKAN PROFIL
@@ -148,7 +175,7 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        if (! Hash::check($validated['current_password'], $user->password)) {
+        if (!Hash::check($validated['current_password'], $user->password)) {
             return back()
                 ->withErrors([
                     'current_password' => 'Password saat ini salah.',
