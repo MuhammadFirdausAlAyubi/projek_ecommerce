@@ -13,18 +13,26 @@ class Pesanan extends Model
     protected $primaryKey = 'id_pesanan';
     public $timestamps = false;
 
+        
     protected $fillable = [
-        'id_user', 'id_alamat', 'alamat_pengiriman_snapshot',
-        'tanggal_pesanan', 'total_harga', 'status_pesanan',
+        'id_user',
+        'id_alamat',
+        'alamat_pengiriman_snapshot',
+        'tanggal_pesanan',
+        'total_harga',
+        'ongkir',
+        'status_pesanan',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'tanggal_pesanan' => 'datetime',
-            'total_harga' => 'decimal:2',
-        ];
-    }
+protected function casts(): array
+{
+    return [
+        'tanggal_pesanan' => 'datetime',
+        'total_harga' => 'decimal:2',
+        'ongkir' => 'decimal:2',
+    ];
+}
+
 
     public function user(): BelongsTo
     {
