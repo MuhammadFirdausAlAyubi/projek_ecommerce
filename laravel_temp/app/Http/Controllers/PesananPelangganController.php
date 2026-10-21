@@ -11,12 +11,15 @@ class PesananPelangganController extends Controller
      * Menampilkan semua pesanan milik pelanggan yang login.
      */
     public function index()
-    {
-        $pesanan = Pesanan::with([
-            'detailPesanan.produk',
-            'pembayaran',
-            'pengiriman.ekspedisi',
-        ])
+    {   
+    $pesanan = Pesanan::with([
+        'detailPesanan.produk.ulasanProduk',
+        'detailPesanan.returProduk',
+        'pembayaran',
+        'pengiriman.ekspedisi',
+        'alamat',
+    ])
+
             ->where('id_user', Auth::user()->id_user)
             ->orderByDesc('tanggal_pesanan')
             ->orderByDesc('id_pesanan')

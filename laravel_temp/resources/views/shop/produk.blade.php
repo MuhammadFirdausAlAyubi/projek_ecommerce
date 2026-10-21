@@ -4,23 +4,23 @@
 
 @push('styles')
 <style>
-.shop-container{width:100%;max-width:1400px;margin:0 auto;padding:28px 36px 48px;box-sizing:border-box}
-.shop-breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:20px;color:#667085;font-size:12px}
+.shop-container{width:100%;max-width:1400px;margin:0 auto;padding:16px 36px 36px;box-sizing:border-box}
+.shop-breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px;color:#667085;font-size:12px}
 .shop-breadcrumb a{color:#155eef;text-decoration:none}
 .shop-heading{margin-bottom:24px}
 .shop-heading h1{margin:0 0 7px;color:#172033;font-size:clamp(25px,3vw,32px);font-weight:700;line-height:1.3}
 .shop-heading p{margin:0;color:#667085;font-size:13px;line-height:1.6}
 .shop-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:20px;align-items:start}
 .shop-sidebar{padding:16px;background:#fff;border:1px solid #e6eaf0;border-radius:10px;box-sizing:border-box}
-.filter-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:15px}
+.filter-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
 .filter-heading h2{margin:0;color:#172033;font-size:16px}
 .filter-reset{color:#155eef;font-size:11px;text-decoration:none}
-.filter-section{padding-top:14px;border-top:1px solid #e6eaf0}
-.filter-section h3{margin:0 0 13px;color:#172033;font-size:13px}
-.filter-price-values{display:flex;justify-content:space-between;gap:8px;margin-bottom:16px}
+.filter-section{padding-top:12px;border-top:1px solid #e6eaf0}
+.filter-section h3{margin:0 0 10px;color:#172033;font-size:13px}
+.filter-price-values{display:flex;justify-content:space-between;gap:8px;margin-bottom:12px}
 .filter-price-value{min-width:0;color:#172033;font-size:11px;font-weight:700;overflow-wrap:anywhere}
 .filter-price-value small{display:block;margin-bottom:4px;color:#667085;font-size:10px;font-weight:400}
-.filter-slider{position:relative;height:6px;margin:0 9px 20px;background:#dbe4f5;border-radius:99px}
+.filter-slider{position:relative;height:6px;margin:0 9px 16px;background:#dbe4f5;border-radius:99px}
 .filter-slider-track{position:absolute;height:6px;background:#155eef;border-radius:99px}
 .filter-slider input[type=range]{position:absolute;top:-7px;left:0;width:100%;height:20px;margin:0;background:none;pointer-events:none;appearance:none;-webkit-appearance:none}
 .filter-slider input[type=range]::-webkit-slider-thumb{width:19px;height:19px;border:3px solid #fff;border-radius:50%;background:#155eef;box-shadow:0 0 0 1px #155eef;pointer-events:auto;appearance:none;-webkit-appearance:none;cursor:grab}
@@ -29,13 +29,19 @@
 .filter-price-inputs label{display:grid;gap:5px;color:#667085;font-size:10px}
 .filter-price-inputs input{width:100%;min-width:0;padding:8px 6px;border:1px solid #d0d5dd;border-radius:7px;font-size:11px;box-sizing:border-box}
 .filter-price-inputs input:focus{outline:none;border-color:#155eef;box-shadow:0 0 0 3px rgba(21,94,239,.1)}
-.filter-ranges{display:grid;gap:9px;margin:15px 0}
+.filter-ranges{display:grid;gap:8px;margin:12px 0 4px}
 .filter-range{display:flex;align-items:center;gap:7px;color:#475467;font-size:11px;cursor:pointer}
 .filter-range input{accent-color:#155eef}
-.filter-apply{width:100%;margin-top:12px;padding:10px;border:0;border-radius:7px;background:#155eef;color:#fff;font-size:12px;font-weight:600;cursor:pointer}
+.filter-apply{width:100%;margin-top:14px;padding:10px;border:0;border-radius:7px;background:#155eef;color:#fff;font-size:12px;font-weight:600;cursor:pointer}
 .filter-apply:hover{background:#1048c7}
+.filter-section + .filter-section{margin-top:14px}
+.filter-brand-list{display:grid;gap:8px;max-height:200px;overflow-y:auto;padding-right:4px}
+.filter-brand-option{display:flex;align-items:center;gap:8px;color:#475467;font-size:12px;cursor:pointer}
+.filter-brand-option:hover{color:#155eef}
+.filter-brand-option input{width:15px;height:15px;accent-color:#155eef;cursor:pointer}
+.filter-brand-empty{margin:0;color:#98a2b3;font-size:11px}
 .shop-main{min-width:0}
-.shop-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.shop-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
 .shop-count{margin:0;color:#667085;font-size:12px}
 /* (CSS card produk ada di layouts/customer.blade.php, class .pcard-*) */
 .produk-empty{grid-column:1/-1;padding:35px 16px;border:1px dashed #d0d5dd;border-radius:10px;background:#fff;text-align:center}
@@ -45,8 +51,8 @@
 .shop-pagination{display:flex;justify-content:center;margin-top:25px}
 .shop-pagination nav{max-width:100%}
 @media(max-width:1000px){.shop-container{padding-right:24px;padding-left:24px}.shop-layout{grid-template-columns:205px minmax(0,1fr);gap:14px}}
-@media(max-width:768px){.shop-container{padding:24px 18px 36px}.shop-layout{grid-template-columns:1fr}.shop-sidebar{padding:14px}}
-@media(max-width:540px){.shop-container{padding:20px 12px 30px}.shop-layout{gap:15px}}
+@media(max-width:768px){.shop-container{padding:14px 18px 30px}.shop-layout{grid-template-columns:1fr}.shop-sidebar{padding:14px}}
+@media(max-width:540px){.shop-container{padding:12px 12px 26px}.shop-layout{gap:15px}}
 </style>
 @endpush
 
@@ -56,11 +62,6 @@
         <a href="{{ route('home') }}">Beranda</a><span>/</span>
         <span aria-current="page">Semua Produk</span>
     </nav>
-
-    <header class="shop-heading">
-        <h1>Semua Produk</h1>
-        <p>Jelajahi koleksi produk elektronik ELECTROMART.</p>
-    </header>
 
     <div class="shop-layout">
         <aside class="shop-sidebar">
@@ -77,6 +78,14 @@
                     $priceMax = 50000000;
                 }
                 $selectedRange = request('price_range', $selectedRange ?? '');
+
+                // Daftar brand untuk filter (pakai $brands dari controller kalau ada)
+                $brandList = isset($brands)
+                    ? collect($brands)
+                    : (class_exists(\App\Models\Brand::class)
+                        ? \App\Models\Brand::orderBy('nama_brand')->get()
+                        : collect());
+                $selectedBrands = array_map('intval', (array) request('brand', []));
                 $ranges = [
                     'under500' => ['label' => 'Di bawah Rp500.000', 'min' => 0, 'max' => 499999],
                     '500to1m' => ['label' => 'Rp500.000 – Rp1.000.000', 'min' => 500000, 'max' => 1000000],
@@ -86,6 +95,10 @@
             @endphp
 
             <form action="{{ route('shop.index') }}" method="GET" id="productPriceFilter">
+                @if (request()->filled('q'))
+                    <input type="hidden" name="q" value="{{ request('q') }}">
+                @endif
+
                 <div class="filter-section">
                     <h3>Rentang Harga</h3>
 
@@ -113,8 +126,27 @@
                             </label>
                         @endforeach
                     </div>
-                    <button type="submit" class="filter-apply">Terapkan Filter</button>
                 </div>
+
+                <div class="filter-section">
+                    <h3>Brand</h3>
+
+                    @if ($brandList->isNotEmpty())
+                        <div class="filter-brand-list">
+                            @foreach ($brandList as $brandItem)
+                                <label class="filter-brand-option">
+                                    <input type="checkbox" name="brand[]" value="{{ $brandItem->id_brand }}"
+                                        {{ in_array((int) $brandItem->id_brand, $selectedBrands, true) ? 'checked' : '' }}>
+                                    <span>{{ $brandItem->nama_brand }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="filter-brand-empty">Brand belum tersedia.</p>
+                    @endif
+                </div>
+
+                <button type="submit" class="filter-apply">Terapkan Filter</button>
             </form>
         </aside>
 
