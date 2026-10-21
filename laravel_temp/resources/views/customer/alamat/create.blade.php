@@ -1,69 +1,86 @@
 @extends('layouts.customer')
 
 @section('content')
+@include('partials.em-ui')
+
 <div class="container py-5" style="max-width: 750px">
 
-    <div class="mb-4">
-        <h2 class="mb-2">Tambah Alamat Pengiriman</h2>
-        <p class="text-secondary">
+    <div class="em-hero mb-4">
+        <h1 class="h2 mb-2">Tambah Alamat Pengiriman</h1>
+        <p class="mb-0">
             Lengkapi informasi penerima dan alamat untuk pesanan ELECTROMART.
         </p>
     </div>
 
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Periksa kembali data kamu:</strong>
-            <ul class="mb-0 mt-2">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+        <div class="em-alert em-alert-danger mb-4">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <div>
+                <strong>Periksa kembali data kamu:</strong>
+                <ul class="mb-0 mt-2">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
     @endif
 
-    <div class="card border-0 shadow-sm">
+    <div class="em-card">
         <div class="card-body p-4">
 
-            <form action="{{ route('alamat.store') }}" method="POST">
+            <form action="{{ route('alamat.store') }}" method="POST" class="em-form">
                 @csrf
 
-                <h5 class="mb-3">Informasi Penerima</h5>
+                <div class="em-section-title">
+                    <span class="em-icon-chip"><i class="fa-solid fa-user"></i></span>
+                    <h2>Informasi Penerima</h2>
+                </div>
 
                 <div class="mb-3">
                     <label for="nama_penerima" class="form-label">
                         Nama Penerima
                     </label>
-                    <input
-                        type="text"
-                        id="nama_penerima"
-                        name="nama_penerima"
-                        class="form-control"
-                        value="{{ old('nama_penerima') }}"
-                        placeholder="Masukkan nama penerima"
-                        maxlength="100"
-                        required
-                    >
+                    <div class="em-ic">
+                        <i class="fa-regular fa-user"></i>
+                        <input
+                            type="text"
+                            id="nama_penerima"
+                            name="nama_penerima"
+                            class="form-control"
+                            value="{{ old('nama_penerima') }}"
+                            placeholder="Masukkan nama penerima"
+                            maxlength="100"
+                            required
+                        >
+                    </div>
                 </div>
 
                 <div class="mb-4">
                     <label for="no_telp_penerima" class="form-label">
                         Nomor Telepon
                     </label>
-                    <input
-                        type="tel"
-                        id="no_telp_penerima"
-                        name="no_telp_penerima"
-                        class="form-control"
-                        value="{{ old('no_telp_penerima') }}"
-                        placeholder="Contoh: 081234567890"
-                        maxlength="20"
-                        required
-                    >
+                    <div class="em-ic">
+                        <i class="fa-solid fa-phone"></i>
+                        <input
+                            type="tel"
+                            id="no_telp_penerima"
+                            name="no_telp_penerima"
+                            class="form-control"
+                            value="{{ old('no_telp_penerima') }}"
+                            placeholder="Contoh: 081234567890"
+                            maxlength="20"
+                            required
+                        >
+                    </div>
                 </div>
 
                 <hr class="my-4">
 
-                <h5 class="mb-3">Detail Alamat</h5>
+                <div class="em-section-title">
+                    <span class="em-icon-chip"><i class="fa-solid fa-map-location-dot"></i></span>
+                    <h2>Detail Alamat</h2>
+                </div>
 
                 {{-- PROVINSI --}}
                 <div class="mb-3">
@@ -126,16 +143,19 @@
                         <label for="kode_pos" class="form-label">
                             Kode Pos
                         </label>
-                        <input
-                            type="text"
-                            id="kode_pos"
-                            name="kode_pos"
-                            class="form-control"
-                            value="{{ old('kode_pos') }}"
-                            placeholder="Contoh: 15560"
-                            maxlength="10"
-                            required
-                        >
+                        <div class="em-ic">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input
+                                type="text"
+                                id="kode_pos"
+                                name="kode_pos"
+                                class="form-control"
+                                value="{{ old('kode_pos') }}"
+                                placeholder="Contoh: 15560"
+                                maxlength="10"
+                                required
+                            >
+                        </div>
                     </div>
                 </div>
 
@@ -155,13 +175,12 @@
                 </div>
 
                 <div class="d-flex flex-wrap gap-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa-solid fa-floppy-disk me-1"></i>
+                    <button type="submit" class="em-btn-primary">
+                        <i class="fa-solid fa-floppy-disk"></i>
                         Simpan Alamat
                     </button>
 
-                    <a href="{{ route('alamat.index') }}"
-                       class="btn btn-outline-secondary">
+                    <a href="{{ route('alamat.index') }}" class="em-btn-ghost">
                         Batal
                     </a>
                 </div>
