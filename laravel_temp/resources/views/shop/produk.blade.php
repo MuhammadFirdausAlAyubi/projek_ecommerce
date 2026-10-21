@@ -1,4 +1,3 @@
-
 @extends('layouts.customer')
 
 @section('title', 'Semua Produk')
@@ -38,38 +37,16 @@
 .shop-main{min-width:0}
 .shop-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
 .shop-count{margin:0;color:#667085;font-size:12px}
-.produk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:12px;width:100%}
-.produk-card{display:flex;flex-direction:column;min-width:0;overflow:hidden;background:#fff;border:1px solid #e6eaf0;border-radius:10px;transition:transform .2s,box-shadow .2s,border-color .2s}
-.produk-card:hover{transform:translateY(-2px);border-color:#d5e1fa;box-shadow:0 7px 18px rgba(23,32,51,.07)}
-.produk-card-link{display:flex;flex:1;flex-direction:column;min-width:0;color:inherit;text-decoration:none}
-.produk-card-link:hover{color:inherit}
-.produk-image{display:flex;align-items:center;justify-content:center;width:100%;height:165px;padding:10px;overflow:hidden;background:#f7f9fc;box-sizing:border-box}
-.produk-image img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .25s}
-.produk-card:hover .produk-image img{transform:scale(1.03)}
-.produk-no-image{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;height:100%;color:#98a2b3;font-size:11px;text-align:center}
-.produk-no-image i{font-size:27px}
-.produk-info{display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;padding:10px;box-sizing:border-box}
-.produk-brand{color:#667085;font-size:10px;line-height:1.4}
-.produk-name{display:-webkit-box;width:100%;min-height:32px;margin:0;overflow:hidden;color:#172033;font-size:12px;font-weight:600;line-height:1.4;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}
-.produk-category{color:#667085;font-size:10px;line-height:1.4}
-.produk-rating{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:11px;line-height:1.4}
-.produk-price{margin-top:auto;padding-top:5px;color:#155eef;font-size:14px;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
-.produk-stock{color:#667085;font-size:10px}
-.produk-stock.tersedia{color:#15803d}
-.produk-stock.habis{color:#dc2626}
-.produk-action{padding:0 10px 10px}
-.produk-button{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;min-height:32px;padding:7px 9px;border:1px solid #155eef;border-radius:6px;background:#155eef;color:#fff;font-size:10px;font-weight:600;text-align:center;text-decoration:none;box-sizing:border-box}
-.produk-button:hover{border-color:#1048c7;background:#1048c7;color:#fff}
+/* (CSS card produk ada di layouts/customer.blade.php, class .pcard-*) */
 .produk-empty{grid-column:1/-1;padding:35px 16px;border:1px dashed #d0d5dd;border-radius:10px;background:#fff;text-align:center}
 .produk-empty i{margin-bottom:10px;color:#98a2b3;font-size:32px}
 .produk-empty h2{margin:0 0 7px;color:#172033;font-size:18px;font-weight:700}
 .produk-empty p{margin:0;color:#667085;font-size:12px}
 .shop-pagination{display:flex;justify-content:center;margin-top:25px}
 .shop-pagination nav{max-width:100%}
-@media(min-width:1250px){.produk-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:1000px){.shop-container{padding-right:24px;padding-left:24px}.shop-layout{grid-template-columns:205px minmax(0,1fr);gap:14px}.produk-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.produk-image{height:145px}.produk-info{padding:9px}}
-@media(max-width:768px){.shop-container{padding:24px 18px 36px}.shop-layout{grid-template-columns:1fr}.shop-sidebar{padding:14px}.produk-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.produk-image{height:140px}}
-@media(max-width:540px){.shop-container{padding:20px 12px 30px}.shop-layout{gap:15px}.produk-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.produk-image{height:145px;padding:8px}.produk-info{gap:5px;padding:9px}.produk-name{font-size:12px}.produk-price{font-size:13px}.produk-action{padding:0 9px 9px}.produk-button{min-height:31px;font-size:10px}}
+@media(max-width:1000px){.shop-container{padding-right:24px;padding-left:24px}.shop-layout{grid-template-columns:205px minmax(0,1fr);gap:14px}}
+@media(max-width:768px){.shop-container{padding:24px 18px 36px}.shop-layout{grid-template-columns:1fr}.shop-sidebar{padding:14px}}
+@media(max-width:540px){.shop-container{padding:20px 12px 30px}.shop-layout{gap:15px}}
 </style>
 @endpush
 
@@ -144,51 +121,9 @@
         <main class="shop-main">
             <div class="shop-toolbar"><p class="shop-count">{{ $produk->total() }} produk tersedia</p></div>
 
-            <div class="produk-grid">
+            <div class="pcard-grid">
                 @forelse ($produk as $item)
-                    @php
-                        $stokTersedia = (int) ($item->stok->jumlah_stok ?? 0);
-                        $namaBrand = $item->brand->nama_brand ?? null;
-                        $namaKategori = $item->kategori->nama_kategori ?? null;
-                        $jumlahUlasan = $item->ulasanProduk->count();
-                        $rataRataRating = $jumlahUlasan > 0 ? $item->ulasanProduk->avg('rating') : 0;
-                    @endphp
-                    <article class="produk-card">
-                        <a href="{{ route('produk.detail', $item->id_produk) }}" class="produk-card-link" aria-label="Lihat detail {{ $item->nama_produk }}">
-                            <div class="produk-image">
-                                @if ($item->gambar)
-                                    @php
-                                        $gambar = $item->gambar;
-                                        if (!preg_match('/^https?:\/\//i', $gambar)) {
-                                            $gambar = asset('storage/' . ltrim($gambar, '/'));
-                                        }
-                                    @endphp
-                                    <img src="{{ $gambar }}" alt="{{ $item->nama_produk }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                                    <div class="produk-no-image" style="display:none">Gambar tidak tersedia</div>
-                                @else
-                                    <div class="produk-no-image"><i class="fa-regular fa-image"></i><span>Gambar belum tersedia</span></div>
-                                @endif
-                            </div>
-                            <div class="produk-info">
-                                <span class="produk-brand">{{ $namaBrand ?: 'ELECTROMART' }}</span>
-                                <h2 class="produk-name">{{ $item->nama_produk }}</h2>
-                                @if ($namaKategori)<span class="produk-category">{{ $namaKategori }}</span>@endif
-                                <div class="produk-rating">
-                                    @if ($jumlahUlasan > 0)
-                                        <span style="color:#f59e0b;">★ {{ number_format($rataRataRating, 1) }}</span>
-                                        <span style="color:#667085;">({{ $jumlahUlasan }} ulasan)</span>
-                                    @else
-                                        <span style="color:#98a2b3;">Belum ada ulasan</span>
-                                    @endif
-                                </div>
-                                <div class="produk-price">Rp {{ number_format((float) $item->harga_jual, 0, ',', '.') }}</div>
-                                <span class="produk-stock {{ $stokTersedia > 0 ? 'tersedia' : 'habis' }}">
-                                    @if ($stokTersedia > 0) Stok: {{ $stokTersedia }} @else Stok habis @endif
-                                </span>
-                            </div>
-                        </a>
-                        <div class="produk-action"><a href="{{ route('produk.detail', $item->id_produk) }}" class="produk-button">Lihat Detail <i class="fa-solid fa-arrow-right"></i></a></div>
-                    </article>
+                    @include('partials.product-card', ['produk' => $item])
                 @empty
                     <div class="produk-empty">
                         <i class="fa-solid fa-box-open"></i>
