@@ -35,6 +35,7 @@ class PesananPelangganController extends Controller
     {
         $pesanan = Pesanan::with([
             'detailPesanan.produk.ulasanProduk',
+            'detailPesanan.returProduk',
             'pembayaran',
             'pengiriman.ekspedisi',
             'alamat',

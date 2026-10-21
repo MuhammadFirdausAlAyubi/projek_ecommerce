@@ -676,10 +676,15 @@ Route::middleware(['auth', 'user'])->group(function () {
         'show',
     ])->name('pesanan-saya.show');
     
-    Route::post(
-        '/pesanan-saya/{id_pesanan}/detail/{id_detail_pesanan}/retur',
-        [ReturPelangganController::class, 'store']
-    )->name('pesanan-saya.retur.store');
+ Route::get(
+    '/pesanan-saya/{id_pesanan}/retur',
+    [ReturPelangganController::class, 'create']
+)->name('pesanan-saya.retur.create');
+
+Route::post(
+    '/pesanan-saya/{id_pesanan}/retur',
+    [ReturPelangganController::class, 'store']
+)->name('pesanan-saya.retur.store');
 
     // KERANJANG
     Route::get('/keranjang', [KeranjangController::class, 'index'])
