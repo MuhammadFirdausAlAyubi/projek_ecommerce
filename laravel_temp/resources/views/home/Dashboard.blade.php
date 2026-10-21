@@ -160,13 +160,8 @@
     background: var(--em-blue);
 }
 
-.em-ad-prev {
-    left: 14px;
-}
-
-.em-ad-next {
-    right: 14px;
-}
+.em-ad-prev { left: 14px; }
+.em-ad-next { right: 14px; }
 
 .em-ad-dots {
     position: absolute;
@@ -333,9 +328,7 @@
     border-right: 1px solid rgba(255, 255, 255, .18);
 }
 
-.em-benefit:first-child {
-    padding-left: 0;
-}
+.em-benefit:first-child { padding-left: 0; }
 
 .em-benefit:last-child {
     padding-right: 0;
@@ -374,29 +367,16 @@
 
 /* TABLET */
 @media (max-width: 1100px) {
-    .em-benefits {
-        padding: 20px 16px;
-    }
-
-    .em-benefit {
-        gap: 9px;
-        padding: 0 10px;
-    }
-
+    .em-benefits { padding: 20px 16px; }
+    .em-benefit { gap: 9px; padding: 0 10px; }
     .em-benefit-icon {
         width: 40px;
         height: 40px;
         flex-basis: 40px;
         font-size: 15px;
     }
-
-    .em-benefit strong {
-        font-size: 11px;
-    }
-
-    .em-benefit p {
-        font-size: 10px;
-    }
+    .em-benefit strong { font-size: 11px; }
+    .em-benefit p { font-size: 10px; }
 }
 
 /* MOBILE */
@@ -406,37 +386,25 @@
         gap: 18px 0;
         padding: 20px 14px;
     }
-
     .em-benefit {
         gap: 10px;
         padding: 0 10px;
         border-right: 1px solid rgba(255, 255, 255, .18);
     }
-
-    .em-benefit:nth-child(2n) {
-        border-right: 0;
-    }
-
+    .em-benefit:nth-child(2n) { border-right: 0; }
     .em-benefit:last-child {
         grid-column: 1 / -1;
         justify-content: center;
         border-right: 0;
     }
-
     .em-benefit-icon {
         width: 42px;
         height: 42px;
         flex-basis: 42px;
         font-size: 16px;
     }
-
-    .em-benefit strong {
-        font-size: 12px;
-    }
-
-    .em-benefit p {
-        font-size: 10px;
-    }
+    .em-benefit strong { font-size: 12px; }
+    .em-benefit p { font-size: 10px; }
 }
 
 @media (max-width: 480px) {
@@ -445,32 +413,19 @@
         gap: 16px 0;
         border-radius: 11px;
     }
-
-    .em-benefit {
-        gap: 8px;
-        padding: 0 6px;
-    }
-
+    .em-benefit { gap: 8px; padding: 0 6px; }
     .em-benefit-icon {
         width: 34px;
         height: 34px;
         flex-basis: 34px;
         font-size: 13px;
     }
-
-    .em-benefit strong {
-        font-size: 10px;
-    }
-
-    .em-benefit p {
-        font-size: 9px;
-    }
+    .em-benefit strong { font-size: 10px; }
+    .em-benefit p { font-size: 9px; }
 }
 
 /* SECTION */
-.em-section {
-    padding-top: 32px;
-}
+.em-section { padding-top: 32px; }
 
 .em-section-head {
     display: flex;
@@ -507,9 +462,7 @@
     white-space: nowrap;
 }
 
-.em-section-link:hover {
-    color: var(--em-blue-dark);
-}
+.em-section-link:hover { color: var(--em-blue-dark); }
 
 /* KATEGORI */
 .em-category-grid {
@@ -558,7 +511,7 @@
     text-align: center;
 }
 
-/* (CSS card produk dipindah ke layouts/customer.blade.php, class .pcard-*) */
+/* CSS card produk dipindah ke layouts/customer.blade.php, class .pcard-* */
 
 .em-empty {
     padding: 28px 18px;
@@ -621,6 +574,59 @@
     margin-top: 5px;
     color: var(--em-muted);
     font-size: 10px;
+}
+
+/* PILIHAN BRAND */
+.em-brand-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.em-brand-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 100px;
+    padding: 18px;
+    overflow: hidden;
+    border: 1px solid var(--em-line);
+    border-radius: 12px;
+    background: #fff;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.em-brand-card:hover {
+    transform: translateY(-3px);
+    border-color: #c4d4fb;
+    box-shadow: 0 8px 20px rgba(21, 94, 239, .09);
+}
+
+.em-brand-card img {
+    display: block;
+    width: 100%;
+    max-width: 140px;
+    height: 52px;
+    object-fit: contain;
+    object-position: center;
+}
+
+@media (max-width: 1100px) {
+    .em-brand-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+    .em-brand-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+}
+    .em-brand-card { min-height: 82px; padding: 12px; }
+    .em-brand-card img { height: 42px; }
+}
+
+@media (max-width: 480px) {
+    .em-brand-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .em-brand-card { min-height: 76px; padding: 10px; }
+    .em-brand-card img { height: 38px; }
 }
 
 /* BANNER BAWAH */
@@ -864,7 +870,6 @@
 @section('content')
 <div class="em-home">
     <div class="em-container">
-
         {{-- BANNER UTAMA: 4 GAMBAR --}}
         <section class="em-hero-layout" aria-label="Iklan ELECTROMART">
             <div class="em-ad-slider" data-em-ad-slider>
@@ -912,7 +917,6 @@
 
             {{-- DUA BANNER KANAN: SLIDER TERPISAH --}}
             <div class="em-hero-aside">
-
                 {{-- BANNER KANAN ATAS: KHUSUS SMARTPHONE --}}
                 <div class="em-side-ad" data-em-side-slider>
                     <div class="em-side-track">
@@ -920,21 +924,26 @@
                             <img src="{{ asset('assets/gambar/iklan/promo-smartphone.png') }}"
                                  alt="Promo smartphone premium" loading="eager">
                         </a>
+
                         <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo smartphone 2">
                             <img src="{{ asset('assets/gambar/iklan/promo-smartphone-2.png') }}"
                                  alt="Promo smartphone kamera unggulan" loading="lazy">
                         </a>
+
                         <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo smartphone 3">
                             <img src="{{ asset('assets/gambar/iklan/promo-smartphone-3.png') }}"
                                  alt="Promo smartphone dan aksesori" loading="lazy">
                         </a>
                     </div>
+
                     <button type="button" class="em-side-arrow em-side-prev" aria-label="Promo smartphone sebelumnya">
                         <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
                     </button>
+
                     <button type="button" class="em-side-arrow em-side-next" aria-label="Promo smartphone berikutnya">
                         <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
                     </button>
+
                     <div class="em-side-dots" aria-label="Navigasi promo smartphone">
                         <button type="button" class="active" aria-label="Smartphone slide 1"></button>
                         <button type="button" aria-label="Smartphone slide 2"></button>
@@ -949,28 +958,32 @@
                             <img src="{{ asset('assets/gambar/iklan/promo-gaming-aksesori.png') }}"
                                  alt="Promo headset gaming dan keyboard" loading="lazy">
                         </a>
+
                         <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo gaming 2">
                             <img src="{{ asset('assets/gambar/iklan/promo-gaming-aksesori-2.png') }}"
                                  alt="Promo mouse gaming dan keyboard RGB" loading="lazy">
                         </a>
+
                         <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo gaming 3">
                             <img src="{{ asset('assets/gambar/iklan/promo-gaming-aksesori-3.png') }}"
                                  alt="Promo controller, headset, dan aksesori komputer" loading="lazy">
                         </a>
                     </div>
+
                     <button type="button" class="em-side-arrow em-side-prev" aria-label="Promo gaming sebelumnya">
                         <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
                     </button>
+
                     <button type="button" class="em-side-arrow em-side-next" aria-label="Promo gaming berikutnya">
                         <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
                     </button>
+
                     <div class="em-side-dots" aria-label="Navigasi promo gaming">
                         <button type="button" class="active" aria-label="Gaming slide 1"></button>
                         <button type="button" aria-label="Gaming slide 2"></button>
                         <button type="button" aria-label="Gaming slide 3"></button>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -1033,7 +1046,7 @@
                 <div>
                     <h2>Kategori Produk</h2>
                 </div>
-                <a href="{{ route('shop.index') }}" class="em-section-link">
+                                <a href="{{ route('shop.index') }}" class="em-section-link">
                     Semua produk
                     <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </a>
@@ -1057,7 +1070,6 @@
             <div class="em-section-head">
                 <div>
                     <h2>Produk Pilihan</h2>
-                    <p>Temukan produk elektronik untuk kebutuhanmu.</p>
                 </div>
                 <a href="{{ route('shop.index') }}" class="em-section-link">
                     Lihat semua
@@ -1109,7 +1121,6 @@
             <div class="em-section-head">
                 <div>
                     <h2>Ulasan Pelanggan</h2>
-                    <p>Penilaian pelanggan yang tersimpan pada produk.</p>
                 </div>
                 <a href="{{ route('shop.index') }}" class="em-section-link">
                     Jelajahi produk
@@ -1150,6 +1161,75 @@
             @endif
         </section>
 
+        {{-- PILIHAN BRAND --}}
+        @php
+            $brandLogos = [
+                'acer' => 'acer.png',
+                'asus' => 'asus.png',
+                'lenovo' => 'lenovo.png',
+                'apple' => 'apple.png',
+                'hp' => 'hp.png',
+                'dell' => 'dell.png',
+                'samsung' => 'samsung.png',
+                'xiaomi' => 'xiaomi.png',
+                'oppo' => 'oppo.png',
+                'vivo' => 'vivo.png',
+                'infinix' => 'infinix.png',
+                'logitech' => 'logitech.png',
+            ];
+
+            $homeBrands = $homeProducts
+                ->map(fn ($produk) => $produk->brand ?? null)
+                ->filter()
+                ->unique('id_brand')
+                ->values();
+        @endphp
+
+        @if ($homeBrands->isNotEmpty())
+            <section class="em-section">
+                <div class="em-section-head">
+                    <div>
+                        <h2>Pilihan Brand</h2>
+                    </div>
+                    <a href="{{ route('shop.index') }}" class="em-section-link">
+                        Lihat semua produk
+                        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+                <div class="em-brand-grid">
+                    @foreach ($homeBrands as $brand)
+                        @php
+                            $brandName = $brand->nama_brand ?? '';
+                            $brandSlug = \Illuminate\Support\Str::slug($brandName);
+                            $logoFile = $brandLogos[$brandSlug] ?? null;
+                        @endphp
+
+                        <a href="{{ route('shop.index') }}"
+                           class="em-brand-card"
+                           title="{{ $brandName }}"
+                           aria-label="Lihat produk {{ $brandName }}">
+                            @if ($logoFile)
+                                <img
+                                    src="{{ asset('assets/gambar/brand/' . $logoFile) }}"
+                                    alt="Logo {{ $brandName }}"
+                                    loading="lazy"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+
+                                <span style="display:none; font-weight:800; color:#172033;">
+                                    {{ $brandName }}
+                                </span>
+                            @else
+                                <span style="font-weight:800; color:#172033;">
+                                    {{ $brandName }}
+                                </span>
+                            @endif
+                        </a>
+                    @endforeach
+                </div>
+            </section>
+        @endif
+
         {{-- BANNER PENUTUP --}}
         <section class="em-bottom-banner">
             <div class="em-bottom-copy">
@@ -1169,7 +1249,6 @@
                 alt="Perangkat teknologi ELECTROMART"
                 loading="lazy">
         </section>
-
     </div>
 </div>
 @endsection
@@ -1196,6 +1275,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function showSlide(index) {
             currentIndex = (index + slides.length) % slides.length;
+
             track.style.transform =
                 'translateX(-' + (currentIndex * 100) + '%)';
 
@@ -1273,12 +1353,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // SLIDER OTOMATIS UNTUK MASING-MASING BANNER KECIL
-    document.querySelectorAll("[data-em-side-slider]").forEach(function (slider) {
-        const track = slider.querySelector(".em-side-track");
-        const slides = slider.querySelectorAll(".em-side-slide");
-        const dots = slider.querySelectorAll(".em-side-dots button");
-        const prev = slider.querySelector(".em-side-prev");
-        const next = slider.querySelector(".em-side-next");
+    document.querySelectorAll('[data-em-side-slider]').forEach(function (slider) {
+        const track = slider.querySelector('.em-side-track');
+        const slides = slider.querySelectorAll('.em-side-slide');
+        const dots = slider.querySelectorAll('.em-side-dots button');
+        const prev = slider.querySelector('.em-side-prev');
+        const next = slider.querySelector('.em-side-next');
 
         if (!track || slides.length < 2) return;
 
@@ -1287,11 +1367,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function showSideSlide(index) {
             currentIndex = (index + slides.length) % slides.length;
+
             track.style.transform =
-                "translateX(-" + (currentIndex * 100) + "%)";
+                'translateX(-' + (currentIndex * 100) + '%)';
 
             dots.forEach(function (dot, dotIndex) {
-                dot.classList.toggle("active", dotIndex === currentIndex);
+                dot.classList.toggle('active', dotIndex === currentIndex);
             });
         }
 
@@ -1313,29 +1394,29 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (prev) {
-            prev.addEventListener("click", function () {
+            prev.addEventListener('click', function () {
                 showSideSlide(currentIndex - 1);
                 startSideSlider();
             });
         }
 
         if (next) {
-            next.addEventListener("click", function () {
+            next.addEventListener('click', function () {
                 showSideSlide(currentIndex + 1);
                 startSideSlider();
             });
         }
 
         dots.forEach(function (dot, index) {
-            dot.addEventListener("click", function () {
+            dot.addEventListener('click', function () {
                 showSideSlide(index);
                 startSideSlider();
             });
         });
 
         // Slider tetap berjalan ketika kursor berada di atas banner.
-        slider.addEventListener("mouseenter", startSideSlider);
-        slider.addEventListener("mouseleave", startSideSlider);
+        slider.addEventListener('mouseenter', startSideSlider);
+        slider.addEventListener('mouseleave', startSideSlider);
 
         document.addEventListener('visibilitychange', function () {
             if (document.hidden) {
