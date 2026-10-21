@@ -33,6 +33,19 @@ use App\Http\Controllers\ReturPelangganController;
 
 /*
 |--------------------------------------------------------------------------
+| RENTANG HARGA FILTER (dipakai /shop dan /shop/{category})
+|--------------------------------------------------------------------------
+*/
+
+$priceRangeOptions = [
+    'under5m' => ['label' => 'Di bawah 5 jt', 'min' => 0,        'max' => 4999999],
+    '5to10m'  => ['label' => '5 – 10 jt',     'min' => 5000000,  'max' => 10000000],
+    '10to20m' => ['label' => '10 – 20 jt',    'min' => 10000001, 'max' => 20000000],
+    'above20m' => ['label' => 'Di atas 20 jt', 'min' => 20000001, 'max' => null],
+];
+
+/*
+|--------------------------------------------------------------------------
 | HALAMAN PUBLIK
 |--------------------------------------------------------------------------
 */
@@ -54,16 +67,8 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-// KATALOG SEMUA PRODUK + FILTER HARGA
-Route::get('/shop', function (Request $request) {
-  $priceRanges = [
-    'under2_5m' => [0, 2499999],
-    '2_5m_to_5m' => [2500000, 5000000],
-    '5m_to_10m' => [5000001, 10000000],
-    '10m_to_20m' => [10000001, 20000000],
-    '20m_to_50m' => [20000001, 50000000],
-];
-
+// KATALOG SEMUA PRODUK + FILTER HARGA + FILTER BRAND
+Route::get('/shop', function (Request $request) use ($priceRangeOptions) {
     $selectedRange = $request->query('price_range');
 
     $minPrice = $request->filled('min_price') && is_numeric($request->min_price)
@@ -74,11 +79,24 @@ Route::get('/shop', function (Request $request) {
         ? max(0, (float) $request->max_price)
         : null;
 
-    if (isset($priceRanges[$selectedRange])) {
-        [$minPrice, $maxPrice] = $priceRanges[$selectedRange];
+    if (isset($priceRangeOptions[$selectedRange])) {
+        $minPrice = $priceRangeOptions[$selectedRange]['min'];
+        $maxPrice = $priceRangeOptions[$selectedRange]['max'];
     } else {
         $selectedRange = null;
     }
+
+    // Semua brand yang punya produk
+    $brandOptions = Produk::with('brand')
+        ->get()
+        ->pluck('brand')
+        ->filter()
+        ->unique('id_brand')
+        ->sortBy('nama_brand')
+        ->values();
+
+    // Brand yang dicentang
+    $selectedBrands = array_filter((array) $request->query('brand'));
 
     $query = Produk::with([
         'kategori',
@@ -86,6 +104,10 @@ Route::get('/shop', function (Request $request) {
         'stok',
         'ulasanProduk',
     ]);
+
+    if (!empty($selectedBrands)) {
+        $query->whereIn('id_brand', $selectedBrands);
+    }
 
     if ($minPrice !== null) {
         $query->where('harga_jual', '>=', $minPrice);
@@ -104,6 +126,9 @@ Route::get('/shop', function (Request $request) {
         'minPrice' => $minPrice,
         'maxPrice' => $maxPrice,
         'selectedRange' => $selectedRange,
+        'priceRanges' => $priceRangeOptions,
+        'brandOptions' => $brandOptions,
+        'selectedBrands' => $selectedBrands,
     ]);
 })->name('shop.index');
 
@@ -123,8 +148,8 @@ Route::get('/produk/{id}', function ($id) {
 })->name('produk.detail');
 
 
-// HALAMAN KATEGORI + FILTER HARGA
-Route::get('/shop/{category}', function (Request $request, $category) {
+// HALAMAN KATEGORI + FILTER HARGA + FILTER BRAND (brand ikut kategori)
+Route::get('/shop/{category}', function (Request $request, $category) use ($priceRangeOptions) {
     $categories = [
         'smartphone' => 'Smartphone',
         'laptop' => 'Laptop',
@@ -138,13 +163,6 @@ Route::get('/shop/{category}', function (Request $request, $category) {
 
     $namaKategori = $categories[$category];
 
-    $priceRanges = [
-        'under500' => [0, 499999],
-        '500to1m' => [500000, 1000000],
-        '1to3m' => [1000001, 3000000],
-        'above3m' => [3000001, null],
-    ];
-
     $selectedRange = $request->query('price_range');
 
     $minPrice = $request->filled('min_price') && is_numeric($request->min_price)
@@ -155,23 +173,44 @@ Route::get('/shop/{category}', function (Request $request, $category) {
         ? max(0, (float) $request->max_price)
         : null;
 
-    if (isset($priceRanges[$selectedRange])) {
-        [$minPrice, $maxPrice] = $priceRanges[$selectedRange];
+    if (isset($priceRangeOptions[$selectedRange])) {
+        $minPrice = $priceRangeOptions[$selectedRange]['min'];
+        $maxPrice = $priceRangeOptions[$selectedRange]['max'];
     } else {
         $selectedRange = null;
     }
+
+    // Syarat kategori (dipakai untuk daftar brand dan daftar produk)
+    $byKategori = function ($query) use ($namaKategori) {
+        $query->whereRaw(
+            'LOWER(TRIM(nama_kategori)) = ?',
+            [strtolower($namaKategori)]
+        );
+    };
+
+    // Brand yang tampil di sidebar = brand dari produk di kategori ini saja
+    $brandOptions = Produk::with('brand')
+        ->whereHas('kategori', $byKategori)
+        ->get()
+        ->pluck('brand')
+        ->filter()
+        ->unique('id_brand')
+        ->sortBy('nama_brand')
+        ->values();
+
+    // Brand yang dicentang
+    $selectedBrands = array_filter((array) $request->query('brand'));
 
     $query = Produk::with([
         'kategori',
         'brand',
         'stok',
         'ulasanProduk',
-    ])->whereHas('kategori', function ($query) use ($namaKategori) {
-        $query->whereRaw(
-            'LOWER(TRIM(nama_kategori)) = ?',
-            [strtolower($namaKategori)]
-        );
-    });
+    ])->whereHas('kategori', $byKategori);
+
+    if (!empty($selectedBrands)) {
+        $query->whereIn('id_brand', $selectedBrands);
+    }
 
     if ($minPrice !== null) {
         $query->where('harga_jual', '>=', $minPrice);
@@ -185,14 +224,18 @@ Route::get('/shop/{category}', function (Request $request, $category) {
         ->paginate(12)
         ->withQueryString();
 
-    return view('shop.category', [
-        'category' => $namaKategori,
-        'slug' => $category,
-        'produks' => $produks,
-        'minPrice' => $minPrice,
-        'maxPrice' => $maxPrice,
-        'selectedRange' => $selectedRange,
-    ]);
+return view('shop.category', [
+    'category' => $namaKategori,
+    'slug' => $category,
+    'produks' => $produks,
+    'minPrice' => $minPrice,
+    'maxPrice' => $maxPrice,
+    'selectedRange' => $selectedRange,
+    'priceRanges' => $priceRangeOptions,
+    'brandOptions' => $brandOptions,
+    'selectedBrands' => $selectedBrands,
+]);
+
 })->name('shop.category');
 
 
@@ -587,7 +630,8 @@ Route::post('/logout', [UserController::class, 'logout'])
 */
 
 Route::middleware(['auth', 'user'])->group(function () {
-      // ULASAN PRODUK
+
+    // ULASAN PRODUK
     Route::post('/produk/{id}/ulasan', [
         UlasanProdukController::class,
         'store',
@@ -627,7 +671,6 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::delete('/cart/{id}', [KeranjangController::class, 'hapus'])
         ->name('cart.remove');
 
-       
     // ALAMAT PENGIRIMAN PELANGGAN
 
     // Dropdown kabupaten/kota berdasarkan provinsi
@@ -664,8 +707,8 @@ Route::middleware(['auth', 'user'])->group(function () {
 
     Route::post('/checkout', [CheckoutController::class, 'store'])
         ->name('checkout.store');
-    
-        // PESANAN SAYA - PELANGGAN
+
+    // PESANAN SAYA - PELANGGAN
     Route::get('/pesanan-saya', [
         PesananPelangganController::class,
         'index',
@@ -675,16 +718,17 @@ Route::middleware(['auth', 'user'])->group(function () {
         PesananPelangganController::class,
         'show',
     ])->name('pesanan-saya.show');
-    
- Route::get(
-    '/pesanan-saya/{id_pesanan}/retur',
-    [ReturPelangganController::class, 'create']
-)->name('pesanan-saya.retur.create');
 
-Route::post(
-    '/pesanan-saya/{id_pesanan}/retur',
-    [ReturPelangganController::class, 'store']
-)->name('pesanan-saya.retur.store');
+    // RETUR PESANAN - PELANGGAN
+    Route::get('/pesanan-saya/{id_pesanan}/retur', [
+        ReturPelangganController::class,
+        'create',
+    ])->name('pesanan-saya.retur.create');
+
+    Route::post('/pesanan-saya/{id_pesanan}/retur', [
+        ReturPelangganController::class,
+        'store',
+    ])->name('pesanan-saya.retur.store');
 
     // KERANJANG
     Route::get('/keranjang', [KeranjangController::class, 'index'])
@@ -828,5 +872,5 @@ Route::middleware(['auth', 'admin'])
 
         Route::delete('/ulasan/{id}', [AdminUlasanProdukController::class, 'destroy'])
             ->name('ulasan.destroy');
-            
+
     });
