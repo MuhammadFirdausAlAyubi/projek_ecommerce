@@ -74,11 +74,10 @@
         $selectedRange = request('price_range', '');
 
         // Daftar brand untuk filter (pakai $brands dari controller kalau ada)
-        $brandList = isset($brands)
-            ? collect($brands)
-            : (class_exists(\App\Models\Brand::class)
-                ? \App\Models\Brand::orderBy('nama_brand')->get()
-                : collect());
+        $brandList = isset($brandOptions)
+            ? collect($brandOptions)
+            : collect();
+        $selectedBrands = array_map('intval', (array) request('brand', []));
         $selectedBrands = array_map('intval', (array) request('brand', []));
         $ranges = [
             'under500' => ['label' => 'Di bawah Rp500.000', 'min' => 0, 'max' => 499999],
