@@ -1,4 +1,3 @@
-
 @extends('layouts.customer')
 
 @section('title', $category . ' | ELECTROMART')
@@ -36,23 +35,7 @@
 .category-filter-apply:hover{background:#1048c7}
 .category-results{min-width:0}
 .category-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;color:#667085;font-size:12px}
-.category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch;gap:12px}
-.category-product{display:flex;flex-direction:column;min-width:0;overflow:hidden;background:#fff;border:1px solid #e6eaf0;border-radius:10px;transition:transform .2s,box-shadow .2s,border-color .2s}
-.category-product:hover{transform:translateY(-2px);border-color:#d5e1fa;box-shadow:0 7px 18px rgba(23,32,51,.07)}
-.category-product-link{display:flex;flex:1;flex-direction:column;min-width:0;color:inherit;text-decoration:none}
-.category-product-link:hover{color:inherit}
-.category-product-image{display:flex;align-items:center;justify-content:center;width:100%;height:165px;padding:10px;overflow:hidden;background:#f7f9fc;box-sizing:border-box}
-.category-product-image img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .25s}
-.category-product:hover .category-product-image img{transform:scale(1.03)}
-.category-image-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#98a2b3;font-size:11px;text-align:center}
-.category-product-info{display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;padding:10px;box-sizing:border-box}
-.category-brand{color:#667085;font-size:10px;line-height:1.4}
-.category-product-name{display:-webkit-box;width:100%;min-height:32px;margin:0;overflow:hidden;color:#172033;font-size:12px;font-weight:600;line-height:1.4;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}
-.category-product-rating{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:11px;line-height:1.4}
-.category-product-price{margin-top:auto;padding-top:5px;color:#155eef;font-size:14px;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
-.category-product-stock{color:#667085;font-size:10px}
-.category-product-stock.tersedia{color:#15803d}
-.category-product-stock.habis{color:#dc2626}
+/* (CSS card produk ada di layouts/customer.blade.php, class .pcard-*) */
 .category-empty{grid-column:1/-1;padding:35px 16px;border:1px dashed #d0d5dd;border-radius:10px;background:#fff;color:#667085;text-align:center}
 .category-empty h3{margin:0 0 8px;color:#172033;font-size:18px}
 .category-empty p{margin:0;font-size:12px}
@@ -60,11 +43,10 @@
 .category-empty a:hover{background:#1048c7}
 .category-pagination{display:flex;justify-content:center;margin-top:25px}
 .category-pagination nav{max-width:100%}
-@media(min-width:1250px){.category-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
-@media(max-width:1100px){.category-page{padding-right:24px;padding-left:24px}.category-layout{grid-template-columns:205px minmax(0,1fr);gap:14px}.category-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}}
+@media(max-width:1100px){.category-page{padding-right:24px;padding-left:24px}.category-layout{grid-template-columns:205px minmax(0,1fr);gap:14px}}
 @media(max-width:768px){.category-page{padding:24px 18px 36px}.category-layout{grid-template-columns:1fr}.category-sidebar{padding:14px}}
-@media(max-width:540px){.category-page{padding:20px 12px 30px}.category-layout{gap:15px}.category-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.category-product-image{height:145px;padding:8px}.category-product-info{padding:9px}.category-product-name{font-size:12px}.category-product-price{font-size:13px}}
-@media(max-width:380px){.category-page{padding-right:12px;padding-left:12px}.category-grid{gap:8px}.category-product-image{height:125px}.category-product-info{padding:8px}.category-product-price{font-size:12px}}
+@media(max-width:540px){.category-page{padding:20px 12px 30px}.category-layout{gap:15px}}
+@media(max-width:380px){.category-page{padding-right:12px;padding-left:12px}}
 </style>
 @endpush
 
@@ -144,56 +126,9 @@
                 <span>Halaman {{ $produks->currentPage() }} dari {{ max(1, $produks->lastPage()) }}</span>
             </div>
 
-            <div class="category-grid">
+            <div class="pcard-grid">
                 @forelse ($produks as $produk)
-                    @php
-                        $namaBrand = $produk->brand->nama_brand ?? null;
-                        $jumlahUlasan = $produk->ulasanProduk->count();
-                        $rataRataRating = $jumlahUlasan > 0 ? $produk->ulasanProduk->avg('rating') : 0;
-                    @endphp
-
-                    <article class="category-product">
-                        <a class="category-product-link" href="{{ route('produk.detail', $produk->id_produk) }}" aria-label="Lihat detail {{ $produk->nama_produk }}">
-                            <div class="category-product-image">
-                                @if ($produk->gambar)
-                                    @php
-                                        $gambar = $produk->gambar;
-                                        if (!preg_match('/^https?:\/\//i', $gambar)) {
-                                            $gambar = asset('storage/' . ltrim($gambar, '/'));
-                                        }
-                                    @endphp
-                                    <img src="{{ $gambar }}" alt="{{ $produk->nama_produk }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                                    <div class="category-image-placeholder" style="display:none">Gambar tidak tersedia</div>
-                                @else
-                                    <div class="category-image-placeholder">Gambar belum tersedia</div>
-                                @endif
-                            </div>
-
-                            <div class="category-product-info">
-                                <span class="category-brand">{{ $namaBrand ?: 'ELECTROMART' }}</span>
-                                <h2 class="category-product-name">{{ $produk->nama_produk }}</h2>
-
-                                <div class="category-product-rating">
-                                    @if ($jumlahUlasan > 0)
-                                        <span style="color:#f59e0b;">★ {{ number_format($rataRataRating, 1) }}</span>
-                                        <span style="color:#667085;">({{ $jumlahUlasan }} ulasan)</span>
-                                    @else
-                                        <span style="color:#98a2b3;">Belum ada ulasan</span>
-                                    @endif
-                                </div>
-
-                                <div class="category-product-price">Rp {{ number_format((float) $produk->harga_jual, 0, ',', '.') }}</div>
-
-                                <span class="category-product-stock {{ $produk->stok && $produk->stok->jumlah_stok > 0 ? 'tersedia' : ($produk->stok ? 'habis' : '') }}">
-                                    @if ($produk->stok)
-                                        Stok: {{ $produk->stok->jumlah_stok }}
-                                    @else
-                                        Stok belum tercatat
-                                    @endif
-                                </span>
-                            </div>
-                        </a>
-                    </article>
+                    @include('partials.product-card', ['produk' => $produk])
                 @empty
                     <div class="category-empty">
                         <h3>Belum ada produk {{ $category }}</h3>

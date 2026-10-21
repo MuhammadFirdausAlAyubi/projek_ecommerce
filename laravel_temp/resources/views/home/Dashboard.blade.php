@@ -1,294 +1,1353 @@
 @extends('layouts.customer')
 
-@section('title', 'Beranda')
+@section('title', 'Beranda ELECTROMART')
+
+@php
+    $heroImages = [
+        [
+            'file' => 'iphone-18-pro.png',
+            'alt' => 'Promo iPhone 18 Pro ELECTROMART',
+        ],
+        [
+            'file' => 'infinix-xbook-14-neo.png',
+            'alt' => 'Promo Infinix XBOOK 14 Neo',
+        ],
+        [
+            'file' => 'starlink-standard-v4.png',
+            'alt' => 'Promo Starlink Standard V4',
+        ],
+        [
+            'file' => 'windows-11-campus.png',
+            'alt' => 'Promo Windows 11 Back to Campus',
+        ],
+    ];
+
+    $homeCategories = [
+        ['slug' => 'smartphone', 'name' => 'Smartphone', 'icon' => 'fa-mobile-screen-button'],
+        ['slug' => 'laptop', 'name' => 'Laptop', 'icon' => 'fa-laptop'],
+        ['slug' => 'komputer', 'name' => 'Komputer', 'icon' => 'fa-desktop'],
+        ['slug' => 'aksesori', 'name' => 'Aksesori', 'icon' => 'fa-headphones'],
+        ['slug' => 'gaming', 'name' => 'Gaming', 'icon' => 'fa-gamepad'],
+        ['slug' => 'networking', 'name' => 'Networking', 'icon' => 'fa-wifi'],
+    ];
+
+    $homeProducts = collect($produks ?? []);
+@endphp
 
 @push('styles')
 <style>
-.em-home{color:#172033}
-.em-container{width:min(1320px,94%);margin:0 auto}
-.em-hero{position:relative;height:400px;min-height:400px;margin:24px auto 0;overflow:hidden;border-radius:14px;background:#eaf1ff}
-.em-hero-track{display:flex;height:100%;transition:transform .65s cubic-bezier(.22,.61,.36,1);will-change:transform}
-.em-hero-slide{display:grid;grid-template-columns:1fr 1fr;flex:0 0 100%;min-width:100%;height:100%}
-.em-hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0;padding:32px clamp(24px,4vw,55px)}
-.em-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;color:#155eef;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
-.em-eyebrow:before{content:"";width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#155eef}
-.em-hero h1{max-width:480px;margin:0 0 14px;color:#172033;font-size:clamp(30px,3.5vw,48px);line-height:1.08;letter-spacing:-1.5px;font-weight:800}
-.em-hero h1 span{color:#155eef}
-.em-hero-copy>p{max-width:390px;margin:0 0 18px;color:#667085;font-size:13px;line-height:1.7}
-.em-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:40px;padding:0 18px;border:0;border-radius:7px;background:#155eef;color:#fff;font-size:11px;font-weight:700;text-decoration:none;transition:.2s}
-.em-btn:hover{background:#1048c7;color:#fff;transform:translateY(-1px)}
-.em-hero-image{min-width:0;min-height:0;height:100%;overflow:hidden}
-.em-hero-image img{display:block;width:100%;height:100%;object-fit:cover}
-.em-slider-arrow{position:absolute;top:50%;z-index:4;display:grid;place-items:center;width:36px;height:36px;padding:0;transform:translateY(-50%);border:1px solid #ffffffa8;border-radius:50%;background:#ffffffdf;color:#172033;cursor:pointer;transition:.2s}
-.em-slider-arrow:hover{background:#155eef;color:#fff}
-.em-slider-prev{left:12px}
-.em-slider-next{right:12px}
-.em-slider-dots{position:absolute;z-index:4;bottom:14px;left:50%;display:flex;gap:7px;transform:translateX(-50%)}
-.em-slider-dot{width:7px;height:7px;padding:0;border:0;border-radius:20px;background:#ffffffb8;cursor:pointer;transition:width .25s,background .25s}
-.em-slider-dot.active{width:22px;background:#155eef}
-.em-section{padding:42px 0 0}
-.em-section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
-.em-section-head h2{margin:0;font-size:clamp(20px,2.5vw,26px);letter-spacing:-.5px;font-weight:800}
-.em-section-head p{margin:6px 0 0;color:#667085;font-size:12px}
-.em-text-link{color:#155eef;font-size:11px;font-weight:700;white-space:nowrap;text-decoration:none}
-.em-category-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
-.em-category-card{display:flex;min-width:0;min-height:115px;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px 6px;border:1px solid #e6eaf0;border-radius:10px;background:#fff;text-decoration:none;transition:.2s}
-.em-category-card:hover{transform:translateY(-2px);border-color:#b8ccff;box-shadow:0 7px 18px #15294b0c;color:#155eef}
-.em-category-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:11px;background:#edf3ff;color:#155eef;font-size:19px}
-.em-category-card strong{font-size:11px;text-align:center}
-.em-product-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:stretch}
-.em-product-card{display:flex;min-width:0;flex-direction:column;overflow:hidden;border:1px solid #e6eaf0;border-radius:10px;background:#fff;transition:transform .2s,box-shadow .2s}
-.em-product-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px #17203312}
-.em-product-image{display:flex;align-items:center;justify-content:center;aspect-ratio:1/0.82;overflow:hidden;background:#f7f9fc;text-decoration:none}
-.em-product-image img{display:block;width:100%;height:100%;padding:9px;object-fit:contain;box-sizing:border-box;transition:transform .25s}
-.em-product-card:hover .em-product-image img{transform:scale(1.03)}
-.em-product-info{display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:4px;padding:10px;min-width:0}
-.em-product-category{margin:0;color:#667085;font-size:10px;font-weight:600;line-height:1.4}
-.em-product-name{display:-webkit-box;width:100%;min-height:32px;margin:0;overflow:hidden;color:#172033;font-size:12px;line-height:1.4;font-weight:700;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}
-.em-product-price{margin:auto 0 7px;padding-top:5px;color:#155eef;font-size:14px;font-weight:800;overflow-wrap:anywhere}
-.em-product-action{display:flex;align-items:center;justify-content:center;width:100%;min-height:32px;box-sizing:border-box;border:1px solid #cbd8f5;border-radius:6px;color:#155eef;background:#fff;font-size:10px;font-weight:700;text-decoration:none}
-.em-product-action:hover{background:#155eef;border-color:#155eef;color:#fff}
-.em-product-no-image{display:grid;place-items:center;width:100%;height:100%;padding:8px;color:#98a2b3;font-size:11px;text-align:center;box-sizing:border-box}
-.em-empty-products{padding:30px 16px;border:1px solid #e6eaf0;border-radius:10px;background:#fff;text-align:center}
-.em-empty-products h3{margin:0 0 8px;color:#172033;font-size:17px}
-.em-empty-products p{margin:0 0 16px;color:#667085;font-size:12px}
-.em-brand-panel{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-top:42px;padding:26px;border-radius:12px;background:#111d35;color:#fff}
-.em-brand-panel h2{margin:0 0 9px;font-size:clamp(20px,2.5vw,28px);font-weight:800;letter-spacing:-.5px}
-.em-brand-panel p{max-width:520px;margin:0 0 14px;color:#c5cee0;font-size:12px;line-height:1.7}
-.em-brand-panel img{width:34%;max-height:190px;object-fit:cover;border-radius:9px}
-.em-service-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:36px;padding:20px 0;border-top:1px solid #e7ecf3;border-bottom:1px solid #e7ecf3}
-.em-service{display:flex;align-items:center;gap:10px;min-width:0;padding:4px 14px;border-right:1px solid #e7ecf3}
-.em-service:first-child{padding-left:0}
-.em-service:last-child{padding-right:0;border-right:0}
-.em-service-icon{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border-radius:10px;background:#edf3ff;color:#2463d8;font-size:15px}
-.em-service-copy{min-width:0}
-.em-service strong{display:block;margin:0 0 4px;color:#172033;font-size:11px;line-height:1.35;font-weight:750}
-.em-service-copy p{margin:0;color:#778196;font-size:10px;line-height:1.5}
-@media(max-width:1100px){
-    .em-container{width:94%}
-    .em-product-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-    .em-category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.em-home {
+    --em-blue: #155eef;
+    --em-blue-dark: #1048c7;
+    --em-navy: #0b1d38;
+    --em-ink: #172033;
+    --em-muted: #667085;
+    --em-line: #e6eaf0;
+    --em-bg: #f7f9fc;
+    color: var(--em-ink);
+    background: var(--em-bg);
+    padding: 0 0 40px;
+    overflow-x: clip;
 }
-@media(max-width:900px){
-    .em-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .em-service{padding:12px 10px;border-right:0}
-    .em-service:nth-child(odd){border-right:1px solid #e7ecf3}
-    .em-service:first-child,.em-service:nth-child(3){padding-left:0}
-    .em-service:nth-child(2),.em-service:last-child{padding-right:0}
-    .em-service:nth-child(-n+2){border-bottom:1px solid #e7ecf3}
+
+.em-home *,
+.em-home *::before,
+.em-home *::after {
+    box-sizing: border-box;
 }
-@media(max-width:650px){
-    .em-container{width:92%}
-    .em-hero{height:auto;min-height:0;margin-top:16px}
-    .em-hero-track{height:auto}
-    .em-hero-slide{grid-template-columns:1fr;grid-template-rows:auto 190px;height:auto}
-    .em-hero-copy{padding:28px 22px 36px}
-    .em-hero h1{font-size:34px;letter-spacing:-1px}
-    .em-hero-image{height:190px}
-    .em-slider-arrow{width:32px;height:32px}
-    .em-slider-prev{left:7px}
-    .em-slider-next{right:7px}
-    .em-section{padding-top:32px}
-    .em-section-head{align-items:flex-start;gap:9px}
-    .em-category-grid{gap:8px}
-    .em-category-card{min-height:100px;gap:8px}
-    .em-category-icon{width:36px;height:36px;font-size:17px}
-    .em-category-card strong{font-size:10px}
-    .em-product-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-    .em-product-image{aspect-ratio:1/0.9}
-    .em-product-image img{padding:6px}
-    .em-product-info{padding:8px}
-    .em-product-name{font-size:11px;min-height:30px}
-    .em-product-price{font-size:12px}
-    .em-product-action{font-size:9px;min-height:29px}
-    .em-brand-panel{flex-direction:column;align-items:flex-start;padding:20px}
-    .em-brand-panel img{width:100%;max-height:170px}
-    .em-service-grid{margin-top:28px;padding:8px 0}
-    .em-service{align-items:flex-start;gap:8px;padding:12px 7px}
-    .em-service-icon{width:30px;height:30px;flex-basis:30px;font-size:12px}
-    .em-service strong{font-size:10px}
-    .em-service-copy p{font-size:9px}
+
+.em-home img {
+    display: block;
+    max-width: 100%;
 }
-@media(max-width:480px){
-    .em-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-    .em-product-image{aspect-ratio:1/0.8}
-    .em-product-info{padding:9px}
-    .em-product-name{font-size:12px}
-    .em-product-price{font-size:13px}
-    .em-section-head h2{font-size:20px}
-    .em-section-head p{font-size:11px}
+
+.em-home a {
+    text-decoration: none;
 }
-@media(prefers-reduced-motion:reduce){.em-hero-track{transition:none}}
+
+.em-container {
+    width: min(1600px, calc(100% - 36px));
+    margin-inline: auto;
+}
+
+/* HERO BANNER */
+.em-hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2.15fr) minmax(250px, .9fr);
+    gap: 14px;
+    margin-top: 16px;
+    align-items: stretch;
+}
+
+.em-ad-slider {
+    position: relative;
+    width: 100%;
+    height: clamp(300px, 34vw, 470px);
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #eef2f7;
+    isolation: isolate;
+}
+
+.em-ad-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform .55s ease-in-out;
+    will-change: transform;
+}
+
+.em-ad-slide {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    overflow: hidden;
+    background: #fff;
+}
+
+.em-ad-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.em-ad-image-error {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    color: #667085;
+    font-size: 13px;
+    text-align: center;
+    background: #f1f4f8;
+}
+
+.em-ad-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    transform: translateY(-50%);
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 50%;
+    background: rgba(11,29,56,.55);
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .2s ease, background .2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.em-ad-slider:hover .em-ad-arrow,
+.em-ad-slider:focus-within .em-ad-arrow {
+    opacity: 1;
+}
+
+.em-ad-arrow:hover {
+    background: var(--em-blue);
+}
+
+.em-ad-prev {
+    left: 14px;
+}
+
+.em-ad-next {
+    right: 14px;
+}
+
+.em-ad-dots {
+    position: absolute;
+    z-index: 5;
+    bottom: 14px;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 11px;
+    transform: translateX(-50%);
+    border-radius: 30px;
+    background: rgba(255,255,255,.88);
+    backdrop-filter: blur(6px);
+}
+
+.em-ad-dots button {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: 0;
+    border-radius: 20px;
+    background: #aab4c3;
+    cursor: pointer;
+    transition: width .25s ease, background .25s ease;
+}
+
+.em-ad-dots button.active {
+    width: 25px;
+    background: var(--em-blue);
+}
+
+/* BANNER KANAN */
+.em-hero-aside {
+    display: grid;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    height: clamp(300px, 34vw, 470px);
+    min-width: 0;
+}
+
+.em-side-ad {
+    position: relative;
+    display: block;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border: 1px solid var(--em-line);
+    border-radius: 13px;
+    background: #fff;
+    isolation: isolate;
+}
+
+.em-side-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform .55s ease-in-out;
+    will-change: transform;
+}
+
+.em-side-slide {
+    display: block;
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.em-side-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .35s ease;
+}
+
+.em-side-ad:hover .em-side-slide img {
+    transform: scale(1.025);
+}
+
+.em-side-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(11, 29, 56, .65);
+    color: #fff;
+    opacity: 0;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: opacity .2s ease, background .2s ease;
+}
+
+.em-side-ad:hover .em-side-arrow,
+.em-side-ad:focus-within .em-side-arrow {
+    opacity: 1;
+}
+
+.em-side-arrow:hover {
+    background: var(--em-blue);
+}
+
+.em-side-prev { left: 8px; }
+.em-side-next { right: 8px; }
+
+.em-side-dots {
+    position: absolute;
+    z-index: 5;
+    bottom: 8px;
+    left: 50%;
+    display: flex;
+    gap: 5px;
+    padding: 6px 8px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .85);
+    transform: translateX(-50%);
+}
+
+.em-side-dots button {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #aab4c3;
+    cursor: pointer;
+}
+
+.em-side-dots button.active {
+    width: 18px;
+    border-radius: 8px;
+    background: var(--em-blue);
+}
+
+/* BENEFIT BAR */
+.em-benefits {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 18px;
+    padding: 25px 24px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 14px;
+    background: var(--em-navy);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(11, 29, 56, .08);
+}
+
+.em-benefit {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 0 15px;
+    border-right: 1px solid rgba(255, 255, 255, .18);
+}
+
+.em-benefit:first-child {
+    padding-left: 0;
+}
+
+.em-benefit:last-child {
+    padding-right: 0;
+    border-right: 0;
+}
+
+.em-benefit-icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    border-radius: 50%;
+    background: #254eaa;
+    color: #fff;
+    font-size: 17px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .12);
+}
+
+.em-benefit strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.45;
+    letter-spacing: .1px;
+}
+
+.em-benefit p {
+    margin: 0;
+    color: #c5d0e1;
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+/* TABLET */
+@media (max-width: 1100px) {
+    .em-benefits {
+        padding: 20px 16px;
+    }
+
+    .em-benefit {
+        gap: 9px;
+        padding: 0 10px;
+    }
+
+    .em-benefit-icon {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+        font-size: 15px;
+    }
+
+    .em-benefit strong {
+        font-size: 11px;
+    }
+
+    .em-benefit p {
+        font-size: 10px;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 760px) {
+    .em-benefits {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 0;
+        padding: 20px 14px;
+    }
+
+    .em-benefit {
+        gap: 10px;
+        padding: 0 10px;
+        border-right: 1px solid rgba(255, 255, 255, .18);
+    }
+
+    .em-benefit:nth-child(2n) {
+        border-right: 0;
+    }
+
+    .em-benefit:last-child {
+        grid-column: 1 / -1;
+        justify-content: center;
+        border-right: 0;
+    }
+
+    .em-benefit-icon {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+        font-size: 16px;
+    }
+
+    .em-benefit strong {
+        font-size: 12px;
+    }
+
+    .em-benefit p {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .em-benefits {
+        padding: 17px 9px;
+        gap: 16px 0;
+        border-radius: 11px;
+    }
+
+    .em-benefit {
+        gap: 8px;
+        padding: 0 6px;
+    }
+
+    .em-benefit-icon {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+        font-size: 13px;
+    }
+
+    .em-benefit strong {
+        font-size: 10px;
+    }
+
+    .em-benefit p {
+        font-size: 9px;
+    }
+}
+
+/* SECTION */
+.em-section {
+    padding-top: 32px;
+}
+
+.em-section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.em-section-head h2 {
+    margin: 0;
+    color: var(--em-ink);
+    font-size: clamp(20px, 2vw, 27px);
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -.45px;
+}
+
+.em-section-head p {
+    margin: 5px 0 0;
+    color: var(--em-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.em-section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+    color: var(--em-blue);
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.em-section-link:hover {
+    color: var(--em-blue-dark);
+}
+
+/* KATEGORI */
+.em-category-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.em-category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    min-width: 0;
+    min-height: 132px;
+    padding: 14px 8px;
+    border: 1px solid var(--em-line);
+    border-radius: 13px;
+    background: #fff;
+    color: var(--em-ink);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.em-category-card:hover {
+    transform: translateY(-3px);
+    border-color: #c4d4fb;
+    color: var(--em-blue);
+    box-shadow: 0 9px 22px rgba(21,94,239,.08);
+}
+
+.em-category-icon {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    background: #eef4ff;
+    color: var(--em-blue);
+    font-size: 23px;
+}
+
+.em-category-card strong {
+    font-size: 12px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* (CSS card produk dipindah ke layouts/customer.blade.php, class .pcard-*) */
+
+.em-empty {
+    padding: 28px 18px;
+    border: 1px solid var(--em-line);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--em-muted);
+    text-align: center;
+}
+
+/* ULASAN */
+.em-review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.em-review-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid var(--em-line);
+    border-radius: 13px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(23,32,51,.025);
+}
+
+.em-review-stars {
+    margin-bottom: 10px;
+    color: #f4ad16;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.em-review-text {
+    display: -webkit-box;
+    min-height: 60px;
+    margin: 0 0 14px;
+    overflow: hidden;
+    color: #475467;
+    font-size: 12px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.em-review-product {
+    margin-top: auto;
+    padding-top: 11px;
+    border-top: 1px solid #eef0f4;
+    color: var(--em-ink);
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.em-review-rating {
+    margin-top: 5px;
+    color: var(--em-muted);
+    font-size: 10px;
+}
+
+/* BANNER BAWAH */
+.em-bottom-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    margin-top: 34px;
+    padding: clamp(22px, 3vw, 38px);
+    overflow: hidden;
+    border-radius: 15px;
+    background: linear-gradient(115deg, #eaf1ff, #f5f8ff 65%, #dce8ff);
+}
+
+.em-bottom-copy {
+    max-width: 570px;
+}
+
+.em-bottom-copy h2 {
+    margin: 0 0 11px;
+    color: var(--em-ink);
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.em-bottom-copy p {
+    margin: 0 0 17px;
+    color: var(--em-muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.em-home .em-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 17px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--em-blue);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.em-home .em-btn:hover {
+    background: var(--em-blue-dark);
+}
+
+.em-bottom-banner > img {
+    width: 30%;
+    max-height: 170px;
+    object-fit: contain;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+    .em-container {
+        width: calc(100% - 28px);
+    }
+
+    .em-hero-layout {
+        grid-template-columns: minmax(0, 1.7fr) minmax(220px, 1fr);
+        gap: 10px;
+    }
+
+    .em-ad-slider,
+    .em-hero-aside {
+        height: 340px;
+    }
+
+    .em-hero-aside {
+        gap: 10px;
+    }
+
+    .em-benefits {
+        padding: 16px 13px;
+    }
+
+    .em-benefit {
+        padding-inline: 9px;
+    }
+}
+
+@media (max-width: 760px) {
+    .em-hero-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .em-ad-slider {
+        height: clamp(220px, 55vw, 360px);
+    }
+
+    .em-ad-arrow {
+        width: 34px;
+        height: 34px;
+        opacity: 1;
+    }
+
+    .em-hero-aside {
+        height: 250px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: minmax(0, 1fr);
+    }
+
+    .em-benefits {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px 0;
+    }
+
+    .em-benefit:nth-child(2) {
+        border-right: 0;
+    }
+
+    .em-benefit:nth-child(3) {
+        padding-left: 0;
+    }
+
+    .em-benefit:nth-child(4) {
+        padding-right: 0;
+    }
+
+    .em-category-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .em-review-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .em-container {
+        width: calc(100% - 20px);
+    }
+
+    .em-ad-slider {
+        height: 225px;
+        border-radius: 10px;
+    }
+
+    .em-ad-dots {
+        bottom: 8px;
+    }
+
+    .em-ad-arrow {
+        width: 30px;
+        height: 30px;
+    }
+
+    .em-hero-aside {
+        height: 190px;
+        gap: 8px;
+    }
+
+    .em-benefits {
+        padding: 15px 10px;
+    }
+
+    .em-benefit {
+        gap: 8px;
+        padding-inline: 7px;
+    }
+
+    .em-benefit-icon {
+        width: 31px;
+        height: 31px;
+        flex-basis: 31px;
+        font-size: 12px;
+    }
+
+    .em-benefit strong {
+        font-size: 10px;
+    }
+
+    .em-benefit p {
+        font-size: 9px;
+    }
+
+    .em-section {
+        padding-top: 25px;
+    }
+
+    .em-section-head h2 {
+        font-size: 19px;
+    }
+
+    .em-section-head p {
+        font-size: 10px;
+    }
+
+    .em-category-grid {
+        gap: 7px;
+    }
+
+    .em-category-card {
+        min-height: 100px;
+        gap: 8px;
+        padding: 9px 4px;
+    }
+
+    .em-category-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+        font-size: 18px;
+    }
+
+    .em-category-card strong {
+        font-size: 10px;
+    }
+
+    .em-review-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .em-bottom-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .em-bottom-banner > img {
+        width: 100%;
+        max-height: 125px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .em-ad-track {
+        transition: none;
+    }
+}
 </style>
 @endpush
 
 @section('content')
 <div class="em-home">
     <div class="em-container">
-        <section class="em-hero" id="emHeroSlider" aria-label="Banner utama">
-            <div class="em-hero-track">
-                <article class="em-hero-slide">
-                    <div class="em-hero-copy">
-                        <div class="em-eyebrow">Teknologi untuk keseharian</div>
-                        <h1>Upgrade duniamu dengan <span>teknologi.</span></h1>
-                        <p>Temukan smartphone, laptop, dan perangkat elektronik untuk menunjang aktivitasmu.</p>
-                        <a href="{{ url('/shop') }}" class="em-btn">Jelajahi Produk <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                    <div class="em-hero-image"><img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=1200&q=85" alt="Perangkat elektronik modern" fetchpriority="high"></div>
-                </article>
-                <article class="em-hero-slide">
-                    <div class="em-hero-copy">
-                        <div class="em-eyebrow">Temukan perangkat pilihan</div>
-                        <h1>Teknologi pintar untuk <span>aktivitasmu.</span></h1>
-                        <p>Pilih smartphone dan aksesori yang mendukung komunikasi, kreativitas, dan produktivitasmu.</p>
-                        <a href="{{ route('shop.category', ['category' => 'smartphone']) }}" class="em-btn">Lihat Smartphone <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                    <div class="em-hero-image"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=85" alt="Smartphone modern" loading="lazy"></div>
-                </article>
-                <article class="em-hero-slide">
-                    <div class="em-hero-copy">
-                        <div class="em-eyebrow">Produktivitas tanpa batas</div>
-                        <h1>Temukan perangkat untuk <span>berkarya.</span></h1>
-                        <p>Jelajahi laptop dan perangkat komputer untuk belajar, bekerja, dan berkreasi.</p>
-                        <a href="{{ route('shop.category', ['category' => 'laptop']) }}" class="em-btn">Jelajahi Laptop <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                    <div class="em-hero-image"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=85" alt="Laptop untuk produktivitas" loading="lazy"></div>
-                </article>
+
+        {{-- BANNER UTAMA: 4 GAMBAR --}}
+        <section class="em-hero-layout" aria-label="Iklan ELECTROMART">
+            <div class="em-ad-slider" data-em-ad-slider>
+                <div class="em-ad-track">
+                    @foreach ($heroImages as $index => $banner)
+                        <a href="{{ route('shop.index') }}"
+                           class="em-ad-slide"
+                           aria-label="{{ $banner['alt'] }}">
+                            <img
+                                src="{{ asset('assets/gambar/iklan/' . $banner['file']) }}"
+                                alt="{{ $banner['alt'] }}"
+                                loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <span class="em-ad-image-error">
+                                Gambar tidak dapat dimuat.
+                                Periksa folder public/assets/gambar/iklan.
+                            </span>
+                        </a>
+                    @endforeach
+                </div>
+
+                <button type="button"
+                        class="em-ad-arrow em-ad-prev"
+                        aria-label="Iklan sebelumnya">
+                    <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                </button>
+
+                <button type="button"
+                        class="em-ad-arrow em-ad-next"
+                        aria-label="Iklan berikutnya">
+                    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </button>
+
+                <div class="em-ad-dots" aria-label="Navigasi iklan">
+                    @foreach ($heroImages as $index => $banner)
+                        <button
+                            type="button"
+                            class="{{ $index === 0 ? 'active' : '' }}"
+                            aria-label="Tampilkan iklan {{ $index + 1 }}"
+                            aria-current="{{ $index === 0 ? 'true' : 'false' }}">
+                        </button>
+                    @endforeach
+                </div>
             </div>
-            <button type="button" class="em-slider-arrow em-slider-prev" aria-label="Slide sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
-            <button type="button" class="em-slider-arrow em-slider-next" aria-label="Slide berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
-            <div class="em-slider-dots" aria-label="Pilih slide">
-                <button type="button" class="em-slider-dot active" aria-label="Slide 1" aria-current="true"></button>
-                <button type="button" class="em-slider-dot" aria-label="Slide 2"></button>
-                <button type="button" class="em-slider-dot" aria-label="Slide 3"></button>
+
+            {{-- DUA BANNER KANAN: SLIDER TERPISAH --}}
+            <div class="em-hero-aside">
+
+                {{-- BANNER KANAN ATAS: KHUSUS SMARTPHONE --}}
+                <div class="em-side-ad" data-em-side-slider>
+                    <div class="em-side-track">
+                        <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo smartphone 1">
+                            <img src="{{ asset('assets/gambar/iklan/promo-smartphone.png') }}"
+                                 alt="Promo smartphone premium" loading="eager">
+                        </a>
+                        <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo smartphone 2">
+                            <img src="{{ asset('assets/gambar/iklan/promo-smartphone-2.png') }}"
+                                 alt="Promo smartphone kamera unggulan" loading="lazy">
+                        </a>
+                        <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo smartphone 3">
+                            <img src="{{ asset('assets/gambar/iklan/promo-smartphone-3.png') }}"
+                                 alt="Promo smartphone dan aksesori" loading="lazy">
+                        </a>
+                    </div>
+                    <button type="button" class="em-side-arrow em-side-prev" aria-label="Promo smartphone sebelumnya">
+                        <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="em-side-arrow em-side-next" aria-label="Promo smartphone berikutnya">
+                        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                    <div class="em-side-dots" aria-label="Navigasi promo smartphone">
+                        <button type="button" class="active" aria-label="Smartphone slide 1"></button>
+                        <button type="button" aria-label="Smartphone slide 2"></button>
+                        <button type="button" aria-label="Smartphone slide 3"></button>
+                    </div>
+                </div>
+
+                {{-- BANNER KANAN BAWAH: KHUSUS GAMING DAN AKSESORI --}}
+                <div class="em-side-ad" data-em-side-slider>
+                    <div class="em-side-track">
+                        <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo gaming 1">
+                            <img src="{{ asset('assets/gambar/iklan/promo-gaming-aksesori.png') }}"
+                                 alt="Promo headset gaming dan keyboard" loading="lazy">
+                        </a>
+                        <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo gaming 2">
+                            <img src="{{ asset('assets/gambar/iklan/promo-gaming-aksesori-2.png') }}"
+                                 alt="Promo mouse gaming dan keyboard RGB" loading="lazy">
+                        </a>
+                        <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo gaming 3">
+                            <img src="{{ asset('assets/gambar/iklan/promo-gaming-aksesori-3.png') }}"
+                                 alt="Promo controller, headset, dan aksesori komputer" loading="lazy">
+                        </a>
+                    </div>
+                    <button type="button" class="em-side-arrow em-side-prev" aria-label="Promo gaming sebelumnya">
+                        <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="em-side-arrow em-side-next" aria-label="Promo gaming berikutnya">
+                        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                    <div class="em-side-dots" aria-label="Navigasi promo gaming">
+                        <button type="button" class="active" aria-label="Gaming slide 1"></button>
+                        <button type="button" aria-label="Gaming slide 2"></button>
+                        <button type="button" aria-label="Gaming slide 3"></button>
+                    </div>
+                </div>
+
             </div>
         </section>
 
+        {{-- BENEFIT BAR --}}
+        <section class="em-benefits" aria-label="Keunggulan ELECTROMART">
+            <div class="em-benefit">
+                <span class="em-benefit-icon">
+                    <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+                </span>
+                <div>
+                    <strong>5 Hari Rusak, Ganti Baru</strong>
+                    <p>Garansi penggantian produk</p>
+                </div>
+            </div>
+
+            <div class="em-benefit">
+                <span class="em-benefit-icon">
+                    <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+                </span>
+                <div>
+                    <strong>Ongkir Terjangkau</strong>
+                    <p>Ongkir lebih murah</p>
+                </div>
+            </div>
+
+            <div class="em-benefit">
+                <span class="em-benefit-icon">
+                    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                </span>
+                <div>
+                    <strong>Proteksi Produk</strong>
+                    <p>Perlindungan produk elektronik</p>
+                </div>
+            </div>
+
+            <div class="em-benefit">
+                <span class="em-benefit-icon">
+                    <i class="fa-solid fa-tags" aria-hidden="true"></i>
+                </span>
+                <div>
+                    <strong>Harga Terjangkau</strong>
+                    <p>Belanja elektronik lebih hemat</p>
+                </div>
+            </div>
+
+            <div class="em-benefit">
+                <span class="em-benefit-icon">
+                    <i class="fa-solid fa-stopwatch" aria-hidden="true"></i>
+                </span>
+                <div>
+                    <strong>Pengiriman Cepat</strong>
+                    <p>Estimasi 2 jam sampai</p>
+                </div>
+            </div>
+        </section>
+
+        {{-- KATEGORI --}}
         <section class="em-section">
             <div class="em-section-head">
-                <div><h2>Jelajahi Kategori</h2><p>Pilih kategori yang sesuai dengan kebutuhanmu.</p></div>
-                <a class="em-text-link" href="{{ route('shop.index') }}">Semua produk <i class="fa-solid fa-arrow-right"></i></a>
+                <div>
+                    <h2>Kategori Produk</h2>
+                </div>
+                <a href="{{ route('shop.index') }}" class="em-section-link">
+                    Semua produk
+                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </a>
             </div>
+
             <div class="em-category-grid">
-                <a class="em-category-card" href="{{ route('shop.category', ['category' => 'smartphone']) }}"><span class="em-category-icon"><i class="fa-solid fa-mobile-screen-button"></i></span><strong>Smartphone</strong></a>
-                <a class="em-category-card" href="{{ route('shop.category', ['category' => 'laptop']) }}"><span class="em-category-icon"><i class="fa-solid fa-laptop"></i></span><strong>Laptop</strong></a>
-                <a class="em-category-card" href="{{ route('shop.category', ['category' => 'komputer']) }}"><span class="em-category-icon"><i class="fa-solid fa-desktop"></i></span><strong>Komputer</strong></a>
-                <a class="em-category-card" href="{{ route('shop.category', ['category' => 'aksesori']) }}"><span class="em-category-icon"><i class="fa-solid fa-headphones"></i></span><strong>Aksesori</strong></a>
-                <a class="em-category-card" href="{{ route('shop.category', ['category' => 'gaming']) }}"><span class="em-category-icon"><i class="fa-solid fa-gamepad"></i></span><strong>Gaming</strong></a>
-                <a class="em-category-card" href="{{ route('shop.category', ['category' => 'networking']) }}"><span class="em-category-icon"><i class="fa-solid fa-wifi"></i></span><strong>Networking</strong></a>
+                @foreach ($homeCategories as $category)
+                    <a href="{{ route('shop.category', ['category' => $category['slug']]) }}"
+                       class="em-category-card">
+                        <span class="em-category-icon">
+                            <i class="fa-solid {{ $category['icon'] }}" aria-hidden="true"></i>
+                        </span>
+                        <strong>{{ $category['name'] }}</strong>
+                    </a>
+                @endforeach
             </div>
         </section>
 
+        {{-- PRODUK PILIHAN --}}
         <section class="em-section">
             <div class="em-section-head">
-                <div><h2>Produk Pilihan</h2><p>Perangkat yang bisa menemani aktivitasmu setiap hari.</p></div>
-                <a class="em-text-link" href="{{ route('shop.index') }}">Lihat semua <i class="fa-solid fa-arrow-right"></i></a>
+                <div>
+                    <h2>Produk Pilihan</h2>
+                    <p>Temukan produk elektronik untuk kebutuhanmu.</p>
+                </div>
+                <a href="{{ route('shop.index') }}" class="em-section-link">
+                    Lihat semua
+                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </a>
             </div>
-            @if (isset($produks) && $produks->isNotEmpty())
-                <div class="em-product-grid">
-                    @foreach ($produks as $produk)
-                        @php
-                            $slugKategori = \Illuminate\Support\Str::slug($produk->kategori->nama_kategori ?? '');
-                            $jumlahUlasan = $produk->ulasanProduk->count();
-                            $rataRataRating = $jumlahUlasan > 0 ? $produk->ulasanProduk->avg('rating') : 0;
-                        @endphp
-                        <article class="em-product-card">
-                            <a class="em-product-image" href="{{ route('produk.detail', $produk->id_produk) }}">
-                                @if ($produk->gambar)
-                                    @php
-                                        $gambar = $produk->gambar;
-                                        if (!preg_match('/^https?:\/\//i', $gambar)) {
-                                            $gambar = asset('storage/' . ltrim($gambar, '/'));
-                                        }
-                                    @endphp
-                                    <img src="{{ $gambar }}" alt="{{ $produk->nama_produk }}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
-                                    <span class="em-product-no-image" style="display:none;">Gambar tidak tersedia</span>
-                                @else
-                                    <span class="em-product-no-image">Gambar belum tersedia</span>
-                                @endif
-                            </a>
-                            <div class="em-product-info">
-                                <p class="em-product-category">{{ $produk->kategori->nama_kategori ?? 'Produk' }}</p>
-                                <h3 class="em-product-name">{{ $produk->nama_produk }}</h3>
-                                <div style="font-size:11px;line-height:1.4;">
-                                    @if ($jumlahUlasan > 0)
-                                        <span style="color:#f59e0b;">★ {{ number_format($rataRataRating, 1) }}</span>
-                                        <span style="color:#667085;">({{ $jumlahUlasan }})</span>
-                                    @else
-                                        <span style="color:#98a2b3;">Belum ada ulasan</span>
-                                    @endif
-                                </div>
-                                <p class="em-product-price">Rp {{ number_format((float) $produk->harga_jual, 0, ',', '.') }}</p>
-                                <a class="em-product-action" href="{{ route('produk.detail', $produk->id_produk) }}">Lihat Detail</a>
+
+            @if ($homeProducts->isNotEmpty())
+                <div class="pcard-grid">
+                    @foreach ($homeProducts->take(10) as $produk)
+                        @include('partials.product-card', ['produk' => $produk])
+                    @endforeach
+                </div>
+            @else
+                <div class="em-empty">
+                    Produk belum tersedia. Tambahkan produk melalui dashboard admin.
+                </div>
+            @endif
+        </section>
+
+        {{-- ULASAN PELANGGAN --}}
+        @php
+            $homeReviews = collect();
+
+            foreach ($homeProducts as $itemProduk) {
+                $reviews = $itemProduk->ulasanProduk ?? collect();
+
+                foreach ($reviews as $review) {
+                    $isiReview = $review->komentar
+                        ?? $review->isi_ulasan
+                        ?? $review->ulasan
+                        ?? $review->review
+                        ?? null;
+
+                    $ratingReview = (float) ($review->rating ?? 0);
+
+                    if ($isiReview || $ratingReview > 0) {
+                        $homeReviews->push([
+                            'produk' => $itemProduk->nama_produk,
+                            'isi' => $isiReview,
+                            'rating' => $ratingReview,
+                        ]);
+                    }
+                }
+            }
+        @endphp
+
+        <section class="em-section">
+            <div class="em-section-head">
+                <div>
+                    <h2>Ulasan Pelanggan</h2>
+                    <p>Penilaian pelanggan yang tersimpan pada produk.</p>
+                </div>
+                <a href="{{ route('shop.index') }}" class="em-section-link">
+                    Jelajahi produk
+                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
+
+            @if ($homeReviews->isNotEmpty())
+                <div class="em-review-grid">
+                    @foreach ($homeReviews->take(3) as $review)
+                        <article class="em-review-card">
+                            <div class="em-review-stars">
+                                @for ($star = 1; $star <= 5; $star++)
+                                    <i class="{{ $star <= round($review['rating']) ? 'fa-solid' : 'fa-regular' }} fa-star"
+                                       aria-hidden="true"></i>
+                                @endfor
+                            </div>
+
+                            <p class="em-review-text">
+                                {{ $review['isi'] ?: 'Pelanggan memberikan penilaian pada produk ini.' }}
+                            </p>
+
+                            <div class="em-review-product">
+                                {{ $review['produk'] }}
+                            </div>
+
+                            <div class="em-review-rating">
+                                Rating {{ number_format($review['rating'], 1) }} dari 5
                             </div>
                         </article>
                     @endforeach
                 </div>
             @else
-                <div class="em-empty-products">
-                    <h3>Belum ada produk</h3>
-                    <p>Produk akan tampil di sini setelah tersedia di database.</p>
-                    <a href="{{ route('shop.index') }}" class="em-btn">Jelajahi katalog</a>
+                <div class="em-empty">
+                    Belum ada ulasan yang tersedia. Ulasan akan tampil di sini
+                    setelah data penilaian produk tersimpan di database.
                 </div>
             @endif
         </section>
 
-        <section class="em-brand-panel">
-            <div><h2>Teknologi yang mendukung setiap langkahmu.</h2><p>Jelajahi pilihan perangkat untuk belajar, bekerja, berkreasi, dan menikmati hiburan. Temukan produk yang sesuai dengan kebutuhanmu.</p><a href="{{ route('shop.index') }}" class="em-btn">Lihat katalog <i class="fa-solid fa-arrow-right"></i></a></div>
-            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=85" alt="Perangkat teknologi untuk produktivitas" loading="lazy">
-        </section>
-    </div>
+        {{-- BANNER PENUTUP --}}
+        <section class="em-bottom-banner">
+            <div class="em-bottom-copy">
+                <h2>Teknologi untuk aktivitasmu.</h2>
+                <p>
+                    Temukan smartphone, laptop, komputer, aksesori, gaming,
+                    dan perangkat networking untuk kebutuhan sehari-hari.
+                </p>
+                <a href="{{ route('shop.index') }}" class="em-btn">
+                    Jelajahi Semua Produk
+                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
 
-    <section class="em-container em-service-grid" aria-label="Informasi layanan">
-        <div class="em-service"><span class="em-service-icon" aria-hidden="true"><i class="fa-solid fa-truck-fast"></i></span><div class="em-service-copy"><strong>Informasi Pengiriman</strong><p>Detail pengiriman yang mudah dipahami.</p></div></div>
-        <div class="em-service"><span class="em-service-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span><div class="em-service-copy"><strong>Transaksi Lebih Aman</strong><p>Utamakan keamanan saat berbelanja.</p></div></div>
-        <div class="em-service"><span class="em-service-icon" aria-hidden="true"><i class="fa-solid fa-circle-info"></i></span><div class="em-service-copy"><strong>Informasi Produk</strong><p>Bantu pilih perangkat sesuai kebutuhan.</p></div></div>
-        <div class="em-service"><span class="em-service-icon" aria-hidden="true"><i class="fa-solid fa-headset"></i></span><div class="em-service-copy"><strong>Bantuan Pelanggan</strong><p>Dukungan untuk pertanyaan produk.</p></div></div>
-    </section>
+            <img
+                src="{{ asset('assets/gambar/iklan/infinix-xbook-14-neo.png') }}"
+                alt="Perangkat teknologi ELECTROMART"
+                loading="lazy">
+        </section>
+
+    </div>
 </div>
 @endsection
 
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const slider = document.getElementById('emHeroSlider');
-    if (!slider) return;
-    const track = slider.querySelector('.em-hero-track');
-    const slides = slider.querySelectorAll('.em-hero-slide');
-    const dots = slider.querySelectorAll('.em-slider-dot');
-    const prev = slider.querySelector('.em-slider-prev');
-    const next = slider.querySelector('.em-slider-next');
-    if (!track || !slides.length || !prev || !next) return;
-    let current = 0;
-    let timer = null;
-    function showSlide(index) {
-        current = (index + slides.length) % slides.length;
-        track.style.transform = 'translateX(-' + (current * 100) + '%)';
-        dots.forEach(function (dot, i) {
-            dot.classList.toggle('active', i === current);
-            if (i === current) dot.setAttribute('aria-current', 'true');
-            else dot.removeAttribute('aria-current');
+    document.querySelectorAll('[data-em-ad-slider]').forEach(function (slider) {
+        const track = slider.querySelector('.em-ad-track');
+        const slides = slider.querySelectorAll('.em-ad-slide');
+        const dots = slider.querySelectorAll('.em-ad-dots button');
+        const prev = slider.querySelector('.em-ad-prev');
+        const next = slider.querySelector('.em-ad-next');
+
+        if (!track || slides.length < 2) return;
+
+        let currentIndex = 0;
+        let timer = null;
+        const interval = 4500;
+
+        const reduceMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+        ).matches;
+
+        function showSlide(index) {
+            currentIndex = (index + slides.length) % slides.length;
+            track.style.transform =
+                'translateX(-' + (currentIndex * 100) + '%)';
+
+            dots.forEach(function (dot, dotIndex) {
+                const active = dotIndex === currentIndex;
+                dot.classList.toggle('active', active);
+                dot.setAttribute('aria-current', active ? 'true' : 'false');
+            });
+        }
+
+        function stopSlider() {
+            if (timer !== null) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        function startSlider() {
+            stopSlider();
+
+            if (reduceMotion || document.hidden) return;
+
+            timer = setInterval(function () {
+                showSlide(currentIndex + 1);
+            }, interval);
+        }
+
+        if (prev) {
+            prev.addEventListener('click', function () {
+                showSlide(currentIndex - 1);
+                startSlider();
+            });
+        }
+
+        if (next) {
+            next.addEventListener('click', function () {
+                showSlide(currentIndex + 1);
+                startSlider();
+            });
+        }
+
+        dots.forEach(function (dot, index) {
+            dot.addEventListener('click', function () {
+                showSlide(index);
+                startSlider();
+            });
         });
-    }
-    function stopAutoSlide() {
-        if (timer) clearInterval(timer);
-        timer = null;
-    }
-    function startAutoSlide() {
-        stopAutoSlide();
-        timer = setInterval(function () { showSlide(current + 1); }, 5000);
-    }
-    prev.addEventListener('click', function () { showSlide(current - 1); startAutoSlide(); });
-    next.addEventListener('click', function () { showSlide(current + 1); startAutoSlide(); });
-    dots.forEach(function (dot, index) {
-        dot.addEventListener('click', function () { showSlide(index); startAutoSlide(); });
+
+        /*
+         * Hover tidak menghentikan slider.
+         * Gambar terus berganti otomatis walaupun kursor berada di banner.
+         */
+        slider.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowLeft') {
+                showSlide(currentIndex - 1);
+                startSlider();
+            }
+
+            if (event.key === 'ArrowRight') {
+                showSlide(currentIndex + 1);
+                startSlider();
+            }
+        });
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                stopSlider();
+            } else {
+                startSlider();
+            }
+        });
+
+        showSlide(0);
+        startSlider();
     });
-    slider.addEventListener('mouseenter', stopAutoSlide);
-    slider.addEventListener('mouseleave', startAutoSlide);
-    slider.addEventListener('focusin', stopAutoSlide);
-    slider.addEventListener('focusout', startAutoSlide);
-    showSlide(0);
-    startAutoSlide();
+
+    // SLIDER OTOMATIS UNTUK MASING-MASING BANNER KECIL
+    document.querySelectorAll("[data-em-side-slider]").forEach(function (slider) {
+        const track = slider.querySelector(".em-side-track");
+        const slides = slider.querySelectorAll(".em-side-slide");
+        const dots = slider.querySelectorAll(".em-side-dots button");
+        const prev = slider.querySelector(".em-side-prev");
+        const next = slider.querySelector(".em-side-next");
+
+        if (!track || slides.length < 2) return;
+
+        let currentIndex = 0;
+        let timer = null;
+
+        function showSideSlide(index) {
+            currentIndex = (index + slides.length) % slides.length;
+            track.style.transform =
+                "translateX(-" + (currentIndex * 100) + "%)";
+
+            dots.forEach(function (dot, dotIndex) {
+                dot.classList.toggle("active", dotIndex === currentIndex);
+            });
+        }
+
+        function stopSideSlider() {
+            if (timer !== null) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        function startSideSlider() {
+            stopSideSlider();
+
+            if (document.hidden) return;
+
+            timer = setInterval(function () {
+                showSideSlide(currentIndex + 1);
+            }, 4000);
+        }
+
+        if (prev) {
+            prev.addEventListener("click", function () {
+                showSideSlide(currentIndex - 1);
+                startSideSlider();
+            });
+        }
+
+        if (next) {
+            next.addEventListener("click", function () {
+                showSideSlide(currentIndex + 1);
+                startSideSlider();
+            });
+        }
+
+        dots.forEach(function (dot, index) {
+            dot.addEventListener("click", function () {
+                showSideSlide(index);
+                startSideSlider();
+            });
+        });
+
+        // Slider tetap berjalan ketika kursor berada di atas banner.
+        slider.addEventListener("mouseenter", startSideSlider);
+        slider.addEventListener("mouseleave", startSideSlider);
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                stopSideSlider();
+            } else {
+                startSideSlider();
+            }
+        });
+
+        showSideSlide(0);
+        startSideSlider();
+    });
 });
 </script>
 @endpush
