@@ -874,7 +874,107 @@
                             Rp{{ number_format((float) $detail->subtotal, 0, ',', '.') }}
                         </strong>
                     </div>
+                        {{-- RIWAYAT RETUR PRODUK --}}
+                        @if ($pesanan->status_pesanan === 'selesai' && auth()->check())
+                            @php
+                                $daftarRetur = $detail->returProduk ?? collect();
 
+                                $statusReturMap = [
+                                    'diajukan' => [
+                                        'label' => 'Menunggu Pemeriksaan',
+                                        'warna' => '#b45309',
+                                        'ikon' => 'fa-clock',
+                                    ],
+                                    'disetujui' => [
+                                        'label' => 'Retur Disetujui',
+                                        'warna' => '#15803d',
+                                        'ikon' => 'fa-circle-check',
+                                    ],
+                                    'ditolak' => [
+                                        'label' => 'Retur Ditolak',
+                                        'warna' => '#b91c1c',
+                                        'ikon' => 'fa-circle-xmark',
+                                    ],
+                                    'selesai' => [
+                                        'label' => 'Retur Selesai',
+                                        'warna' => '#15803d',
+                                        'ikon' => 'fa-check-double',
+                                    ],
+                                ];
+                            @endphp
+
+                            @if ($daftarRetur->isNotEmpty())
+                                <div class="em-box em-return">
+                                    <h4>
+                                        <i class="fa-solid fa-rotate-left"></i>
+                                        Riwayat Retur Produk
+                                    </h4>
+
+                                    @foreach ($daftarRetur->sortByDesc('tanggal_retur') as $retur)
+                                        @php
+                                            $statusInfo = $statusReturMap[$retur->status_retur]
+                                                ?? [
+                                                    'label' => ucwords(str_replace('_', ' ', $retur->status_retur)),
+                                                    'warna' => '#1d4ed8',
+                                                    'ikon' => 'fa-circle-info',
+                                                ];
+                                        @endphp
+
+                                        <div class="em-history">
+                                            <strong>
+                                                Pengajuan Retur
+                                                @if ($retur->tanggal_retur)
+                                                    — {{ \Illuminate\Support\Carbon::parse($retur->tanggal_retur)->format('d M Y, H:i') }}
+                                                @endif
+                                            </strong>
+
+                                            <div class="em-history-item">
+                                                <p>
+                                                    Jumlah:
+                                                    <strong>{{ $retur->jumlah_retur }} produk</strong>
+                                                </p>
+
+                                                <p>Alasan: {{ $retur->alasan }}</p>
+
+                                                <p>
+                                                    Status:
+                                                    <strong style="color: {{ $statusInfo['warna'] }}">
+                                                        <i class="fa-solid {{ $statusInfo['ikon'] }}"></i>
+                                                        {{ $statusInfo['label'] }}
+                                                    </strong>
+                                                </p>
+
+                                                @if ($retur->keputusan_admin)
+                                                    <p>
+                                                        Keputusan Admin:
+                                                        {{ $retur->keputusan_admin }}
+                                                    </p>
+                                                @endif
+
+                                                @if ($retur->status_retur === 'diajukan')
+                                                    <p class="em-note">
+                                                        Pengajuan kamu sedang menunggu pemeriksaan admin.
+                                                    </p>
+                                                @elseif ($retur->status_retur === 'disetujui')
+                                                    <p class="em-note">
+                                                        Pengajuan retur kamu telah disetujui oleh admin.
+                                                        Silakan periksa catatan keputusan untuk instruksi selanjutnya.
+                                                    </p>
+                                                @elseif ($retur->status_retur === 'ditolak')
+                                                    <p class="em-note">
+                                                        Pengajuan retur kamu ditolak. Silakan periksa catatan keputusan admin.
+                                                    </p>
+                                                @elseif ($retur->status_retur === 'selesai')
+                                                    <p class="em-note">
+                                                        Proses retur kamu telah selesai.
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        @endif
                     {{-- ULASAN PRODUK --}}
                     @if ($pesanan->status_pesanan === 'selesai' && $detail->produk && auth()->check())
                         @php
