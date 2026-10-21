@@ -46,7 +46,7 @@
     --em-bg: #f7f9fc;
     color: var(--em-ink);
     background: var(--em-bg);
-    padding: 0 0 40px;
+    padding: 0 0 22px;
     overflow-x: clip;
 }
 
@@ -160,8 +160,13 @@
     background: var(--em-blue);
 }
 
-.em-ad-prev { left: 14px; }
-.em-ad-next { right: 14px; }
+.em-ad-prev {
+    left: 14px;
+}
+
+.em-ad-next {
+    right: 14px;
+}
 
 .em-ad-dots {
     position: absolute;
@@ -310,7 +315,7 @@
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0;
-    margin-top: 18px;
+    margin-top: 14px;
     padding: 25px 24px;
     border: 1px solid rgba(255, 255, 255, .08);
     border-radius: 14px;
@@ -328,7 +333,9 @@
     border-right: 1px solid rgba(255, 255, 255, .18);
 }
 
-.em-benefit:first-child { padding-left: 0; }
+.em-benefit:first-child {
+    padding-left: 0;
+}
 
 .em-benefit:last-child {
     padding-right: 0;
@@ -367,16 +374,29 @@
 
 /* TABLET */
 @media (max-width: 1100px) {
-    .em-benefits { padding: 20px 16px; }
-    .em-benefit { gap: 9px; padding: 0 10px; }
+    .em-benefits {
+        padding: 20px 16px;
+    }
+
+    .em-benefit {
+        gap: 9px;
+        padding: 0 10px;
+    }
+
     .em-benefit-icon {
         width: 40px;
         height: 40px;
         flex-basis: 40px;
         font-size: 15px;
     }
-    .em-benefit strong { font-size: 11px; }
-    .em-benefit p { font-size: 10px; }
+
+    .em-benefit strong {
+        font-size: 11px;
+    }
+
+    .em-benefit p {
+        font-size: 10px;
+    }
 }
 
 /* MOBILE */
@@ -386,25 +406,37 @@
         gap: 18px 0;
         padding: 20px 14px;
     }
+
     .em-benefit {
         gap: 10px;
         padding: 0 10px;
         border-right: 1px solid rgba(255, 255, 255, .18);
     }
-    .em-benefit:nth-child(2n) { border-right: 0; }
+
+    .em-benefit:nth-child(2n) {
+        border-right: 0;
+    }
+
     .em-benefit:last-child {
         grid-column: 1 / -1;
         justify-content: center;
         border-right: 0;
     }
+
     .em-benefit-icon {
         width: 42px;
         height: 42px;
         flex-basis: 42px;
         font-size: 16px;
     }
-    .em-benefit strong { font-size: 12px; }
-    .em-benefit p { font-size: 10px; }
+
+    .em-benefit strong {
+        font-size: 12px;
+    }
+
+    .em-benefit p {
+        font-size: 10px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -413,26 +445,39 @@
         gap: 16px 0;
         border-radius: 11px;
     }
-    .em-benefit { gap: 8px; padding: 0 6px; }
+
+    .em-benefit {
+        gap: 8px;
+        padding: 0 6px;
+    }
+
     .em-benefit-icon {
         width: 34px;
         height: 34px;
         flex-basis: 34px;
         font-size: 13px;
     }
-    .em-benefit strong { font-size: 10px; }
-    .em-benefit p { font-size: 9px; }
+
+    .em-benefit strong {
+        font-size: 10px;
+    }
+
+    .em-benefit p {
+        font-size: 9px;
+    }
 }
 
 /* SECTION */
-.em-section { padding-top: 32px; }
+.em-section {
+    padding-top: 20px;
+}
 
 .em-section-head {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 14px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .em-section-head h2 {
@@ -462,7 +507,9 @@
     white-space: nowrap;
 }
 
-.em-section-link:hover { color: var(--em-blue-dark); }
+.em-section-link:hover {
+    color: var(--em-blue-dark);
+}
 
 /* KATEGORI */
 .em-category-grid {
@@ -511,7 +558,7 @@
     text-align: center;
 }
 
-/* CSS card produk dipindah ke layouts/customer.blade.php, class .pcard-* */
+/* (CSS card produk dipindah ke layouts/customer.blade.php, class .pcard-*) */
 
 .em-empty {
     padding: 28px 18px;
@@ -530,161 +577,486 @@
 }
 
 .em-review-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     min-width: 0;
-    padding: 18px;
+    padding: 20px;
     border: 1px solid var(--em-line);
-    border-radius: 13px;
+    border-radius: 14px;
     background: #fff;
-    box-shadow: 0 4px 12px rgba(23,32,51,.025);
+    box-shadow: 0 4px 12px rgba(23,32,51,.03);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.em-review-card:hover {
+    transform: translateY(-3px);
+    border-color: #c4d4fb;
+    box-shadow: 0 10px 24px rgba(21,94,239,.08);
+}
+
+.em-review-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
 }
 
 .em-review-stars {
-    margin-bottom: 10px;
     color: #f4ad16;
     font-size: 13px;
     letter-spacing: 1px;
 }
 
+.em-review-date {
+    color: var(--em-muted);
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.em-review-quote {
+    margin-bottom: 8px;
+    color: #c9d9ff;
+    font-size: 22px;
+}
+
 .em-review-text {
     display: -webkit-box;
     min-height: 60px;
-    margin: 0 0 14px;
+    margin: 0 0 16px;
     overflow: hidden;
     color: #475467;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.8;
     overflow-wrap: anywhere;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
 
-.em-review-product {
+.em-review-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-top: auto;
-    padding-top: 11px;
+    padding-top: 14px;
     border-top: 1px solid #eef0f4;
-    color: var(--em-ink);
-    font-size: 11px;
-    font-weight: 800;
-    line-height: 1.5;
 }
 
-.em-review-rating {
-    margin-top: 5px;
+.em-review-avatar {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #155eef, #06b6d4);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.em-review-user-info {
+    min-width: 0;
+}
+
+.em-review-user-info strong {
+    display: block;
+    color: var(--em-ink);
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.em-review-user-info span {
+    display: block;
+    overflow: hidden;
     color: var(--em-muted);
+    font-size: 11px;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* RINGKASAN RATING */
+.em-review-summary {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    align-items: center;
+    gap: 28px;
+    margin-bottom: 12px;
+    padding: 18px 24px;
+    border: 1px solid var(--em-line);
+    border-radius: 14px;
+    background: #fff;
+}
+
+.em-review-score {
+    text-align: center;
+}
+
+.em-review-score strong {
+    display: block;
+    color: var(--em-ink);
+    font-size: 46px;
+    font-weight: 850;
+    line-height: 1;
+}
+
+.em-review-score-stars {
+    margin: 8px 0 6px;
+    color: #f4ad16;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.em-review-score span {
+    color: var(--em-muted);
+    font-size: 11px;
+}
+
+.em-review-bars {
+    display: grid;
+    gap: 7px;
+}
+
+.em-review-bar-row {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: 10px;
+    color: var(--em-muted);
+    font-size: 11px;
+}
+
+.em-review-bar-row i {
+    color: #f4ad16;
     font-size: 10px;
 }
 
-/* PILIHAN BRAND */
-.em-brand-grid {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 14px;
+.em-review-bar {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: #eef2f7;
 }
 
+.em-review-bar-fill {
+    display: block;
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #f4ad16, #f9c846);
+}
+
+@media (max-width: 760px) {
+    .em-review-summary {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 18px;
+    }
+}
+
+/* PILIHAN BRAND - TERPUSAT SEPERTI REFERENSI AGRES.ID */
+.em-brand-grid {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
 .em-brand-card {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 0;
-    min-height: 100px;
-    padding: 18px;
+    width: 100%;
+    height: 88px;
+    min-height: 88px;
+    padding: 12px;
     overflow: hidden;
-    border: 1px solid var(--em-line);
-    border-radius: 12px;
+    border: 1px solid #e6eaf0;
+    border-radius: 14px;
     background: #fff;
-    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
 }
 
 .em-brand-card:hover {
     transform: translateY(-3px);
-    border-color: #c4d4fb;
-    box-shadow: 0 8px 20px rgba(21, 94, 239, .09);
+    border-color: #b8d5ff;
+    box-shadow: 0 6px 16px rgba(21, 94, 239, .10);
 }
 
 .em-brand-card img {
     display: block;
     width: 100%;
-    max-width: 140px;
-    height: 52px;
+    max-width: 110px;
+    height: 44px;
     object-fit: contain;
     object-position: center;
 }
 
+/* Laptop dan tablet */
 @media (max-width: 1100px) {
-    .em-brand-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .em-brand-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        max-width: 760px;
+        gap: 10px;
+    }
+
+    .em-brand-card {
+        height: 78px;
+        min-height: 78px;
+    }
+}
+
+/* HP */
+@media (max-width: 520px) {
+    .em-brand-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .em-brand-card {
+        height: 66px;
+        min-height: 66px;
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .em-brand-card img {
+        height: 34px;
+    }
+}
+
+/* TABLET */
+@media (max-width: 760px) {
+    .em-brand-grid {
+        grid-template-columns: repeat(3, 100px);
+        max-width: 316px;
+        gap: 8px;
+    }
+
+    .em-brand-card {
+        width: 100px;
+        height: 62px;
+        min-height: 62px;
+        padding: 8px;
+    }
+
+    .em-brand-card img {
+        max-width: 78px;
+        height: 29px;
+    }
+}
+
+/* HP */
+@media (max-width: 360px) {
+    .em-brand-grid {
+        grid-template-columns: repeat(2, 110px);
+        max-width: 228px;
+        gap: 8px;
+    }
+
+    .em-brand-card {
+        width: 110px;
+        height: 64px;
+        min-height: 64px;
+    }
+}
+
+.em-brand-section .em-section-head {
+    justify-content: center;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.em-brand-section .em-section-head > div {
+    width: 100%;
+}
+
+.em-brand-section .em-section-head h2 {
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    padding-bottom: 10px;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-size: clamp(24px, 2.5vw, 32px);
+    font-weight: 850;
+    line-height: 1.3;
+    letter-spacing: -.7px;
+    color: #1769ff;
+    background: linear-gradient(
+        100deg,
+        #155eef 0%,
+        #2588ff 50%,
+        #06b6d4 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* GARIS AKSEN DI BAWAH JUDUL */
+.em-brand-section .em-section-head h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 58px;
+    height: 4px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #155eef, #06b6d4);
+    transform: translateX(-50%);
+}
+
+/* JARAK BRAND DARI JUDUL */
+.em-brand-section .em-brand-grid {
+    margin-top: 4px;
+}
+
+/* UKURAN JUDUL DI HP */
+@media (max-width: 480px) {
+    .em-brand-section .em-section-head {
+        margin-bottom: 10px;
+    }
+
+    .em-brand-section .em-section-head h2 {
+        font-size: 24px;
+        letter-spacing: -.4px;
+    }
+
+    .em-brand-section .em-section-head h2::after {
+        width: 48px;
+        height: 3px;
+    }
+}
+.em-brand-section .em-section-head .em-section-link {
+    display: none;
+}
+
+@media (max-width: 1100px) {
+    .em-brand-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 760px) {
-    .em-brand-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-}
-    .em-brand-card { min-height: 82px; padding: 12px; }
-    .em-brand-card img { height: 42px; }
+    .em-brand-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        max-width: 540px;
+        gap: 10px;
+    }
+
+    .em-brand-card {
+        min-height: 75px;
+        padding: 10px;
+    }
+
+    .em-brand-card img {
+        max-width: 95px;
+        height: 36px;
+    }
 }
 
 @media (max-width: 480px) {
-    .em-brand-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-    .em-brand-card { min-height: 76px; padding: 10px; }
-    .em-brand-card img { height: 38px; }
+    .em-brand-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 340px;
+        gap: 8px;
+    }
 }
 
-/* BANNER BAWAH */
-.em-bottom-banner {
+/* BANTUAN WHATSAPP (SEBELUM FOOTER) */
+.em-help {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 22px;
-    margin-top: 34px;
-    padding: clamp(22px, 3vw, 38px);
-    overflow: hidden;
+    margin-top: 20px;
+    padding: clamp(20px, 3vw, 30px);
     border-radius: 15px;
-    background: linear-gradient(115deg, #eaf1ff, #f5f8ff 65%, #dce8ff);
+    background: linear-gradient(115deg, #0b1d38, #123a7a 70%, #155eef);
+    color: #fff;
 }
 
-.em-bottom-copy {
-    max-width: 570px;
+.em-help-copy {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 0;
 }
 
-.em-bottom-copy h2 {
-    margin: 0 0 11px;
-    color: var(--em-ink);
-    font-size: clamp(22px, 2.5vw, 32px);
-    font-weight: 850;
-    line-height: 1.25;
+.em-help-icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.14);
+    font-size: 26px;
 }
 
-.em-bottom-copy p {
-    margin: 0 0 17px;
-    color: var(--em-muted);
+.em-help h2 {
+    margin: 0 0 5px;
+    color: #fff;
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.em-help p {
+    margin: 0;
+    color: #c5d0e1;
     font-size: 12px;
-    line-height: 1.8;
+    line-height: 1.7;
 }
 
-.em-home .em-btn {
+.em-help-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    min-height: 40px;
-    padding: 0 17px;
-    border: 0;
-    border-radius: 8px;
-    background: var(--em-blue);
+    gap: 9px;
+    flex-shrink: 0;
+    min-height: 44px;
+    padding: 0 22px;
+    border-radius: 9px;
+    background: #1faa59;
     color: #fff;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
-    cursor: pointer;
+    white-space: nowrap;
+    transition: background .2s ease, transform .2s ease;
 }
 
-.em-home .em-btn:hover {
-    background: var(--em-blue-dark);
+.em-help-btn:hover {
+    background: #178a47;
+    color: #fff;
+    transform: translateY(-2px);
 }
 
-.em-bottom-banner > img {
-    width: 30%;
-    max-height: 170px;
-    object-fit: contain;
+@media (max-width: 760px) {
+    .em-help {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .em-help-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .em-help-icon {
+        width: 46px;
+        height: 46px;
+        flex-basis: 46px;
+        font-size: 21px;
+    }
 }
 
 /* RESPONSIVE */
@@ -812,7 +1184,7 @@
     }
 
     .em-section {
-        padding-top: 25px;
+        padding-top: 16px;
     }
 
     .em-section-head h2 {
@@ -848,15 +1220,7 @@
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .em-bottom-banner {
-        flex-direction: column;
-        align-items: flex-start;
-    }
 
-    .em-bottom-banner > img {
-        width: 100%;
-        max-height: 125px;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -870,6 +1234,7 @@
 @section('content')
 <div class="em-home">
     <div class="em-container">
+
         {{-- BANNER UTAMA: 4 GAMBAR --}}
         <section class="em-hero-layout" aria-label="Iklan ELECTROMART">
             <div class="em-ad-slider" data-em-ad-slider>
@@ -917,6 +1282,7 @@
 
             {{-- DUA BANNER KANAN: SLIDER TERPISAH --}}
             <div class="em-hero-aside">
+
                 {{-- BANNER KANAN ATAS: KHUSUS SMARTPHONE --}}
                 <div class="em-side-ad" data-em-side-slider>
                     <div class="em-side-track">
@@ -924,26 +1290,21 @@
                             <img src="{{ asset('assets/gambar/iklan/promo-smartphone.png') }}"
                                  alt="Promo smartphone premium" loading="eager">
                         </a>
-
                         <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo smartphone 2">
                             <img src="{{ asset('assets/gambar/iklan/promo-smartphone-2.png') }}"
                                  alt="Promo smartphone kamera unggulan" loading="lazy">
                         </a>
-
                         <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo smartphone 3">
                             <img src="{{ asset('assets/gambar/iklan/promo-smartphone-3.png') }}"
                                  alt="Promo smartphone dan aksesori" loading="lazy">
                         </a>
                     </div>
-
                     <button type="button" class="em-side-arrow em-side-prev" aria-label="Promo smartphone sebelumnya">
                         <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
                     </button>
-
                     <button type="button" class="em-side-arrow em-side-next" aria-label="Promo smartphone berikutnya">
                         <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
                     </button>
-
                     <div class="em-side-dots" aria-label="Navigasi promo smartphone">
                         <button type="button" class="active" aria-label="Smartphone slide 1"></button>
                         <button type="button" aria-label="Smartphone slide 2"></button>
@@ -958,32 +1319,28 @@
                             <img src="{{ asset('assets/gambar/iklan/promo-gaming-aksesori.png') }}"
                                  alt="Promo headset gaming dan keyboard" loading="lazy">
                         </a>
-
                         <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo gaming 2">
                             <img src="{{ asset('assets/gambar/iklan/promo-gaming-aksesori-2.png') }}"
                                  alt="Promo mouse gaming dan keyboard RGB" loading="lazy">
                         </a>
-
                         <a href="{{ route('shop.index') }}" class="em-side-slide" aria-label="Promo gaming 3">
                             <img src="{{ asset('assets/gambar/iklan/promo-gaming-aksesori-3.png') }}"
                                  alt="Promo controller, headset, dan aksesori komputer" loading="lazy">
                         </a>
                     </div>
-
                     <button type="button" class="em-side-arrow em-side-prev" aria-label="Promo gaming sebelumnya">
                         <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
                     </button>
-
                     <button type="button" class="em-side-arrow em-side-next" aria-label="Promo gaming berikutnya">
                         <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
                     </button>
-
                     <div class="em-side-dots" aria-label="Navigasi promo gaming">
                         <button type="button" class="active" aria-label="Gaming slide 1"></button>
                         <button type="button" aria-label="Gaming slide 2"></button>
                         <button type="button" aria-label="Gaming slide 3"></button>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -1046,7 +1403,7 @@
                 <div>
                     <h2>Kategori Produk</h2>
                 </div>
-                                <a href="{{ route('shop.index') }}" class="em-section-link">
+                <a href="{{ route('shop.index') }}" class="em-section-link">
                     Semua produk
                     <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </a>
@@ -1090,77 +1447,6 @@
             @endif
         </section>
 
-        {{-- ULASAN PELANGGAN --}}
-        @php
-            $homeReviews = collect();
-
-            foreach ($homeProducts as $itemProduk) {
-                $reviews = $itemProduk->ulasanProduk ?? collect();
-
-                foreach ($reviews as $review) {
-                    $isiReview = $review->komentar
-                        ?? $review->isi_ulasan
-                        ?? $review->ulasan
-                        ?? $review->review
-                        ?? null;
-
-                    $ratingReview = (float) ($review->rating ?? 0);
-
-                    if ($isiReview || $ratingReview > 0) {
-                        $homeReviews->push([
-                            'produk' => $itemProduk->nama_produk,
-                            'isi' => $isiReview,
-                            'rating' => $ratingReview,
-                        ]);
-                    }
-                }
-            }
-        @endphp
-
-        <section class="em-section">
-            <div class="em-section-head">
-                <div>
-                    <h2>Ulasan Pelanggan</h2>
-                </div>
-                <a href="{{ route('shop.index') }}" class="em-section-link">
-                    Jelajahi produk
-                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                </a>
-            </div>
-
-            @if ($homeReviews->isNotEmpty())
-                <div class="em-review-grid">
-                    @foreach ($homeReviews->take(3) as $review)
-                        <article class="em-review-card">
-                            <div class="em-review-stars">
-                                @for ($star = 1; $star <= 5; $star++)
-                                    <i class="{{ $star <= round($review['rating']) ? 'fa-solid' : 'fa-regular' }} fa-star"
-                                       aria-hidden="true"></i>
-                                @endfor
-                            </div>
-
-                            <p class="em-review-text">
-                                {{ $review['isi'] ?: 'Pelanggan memberikan penilaian pada produk ini.' }}
-                            </p>
-
-                            <div class="em-review-product">
-                                {{ $review['produk'] }}
-                            </div>
-
-                            <div class="em-review-rating">
-                                Rating {{ number_format($review['rating'], 1) }} dari 5
-                            </div>
-                        </article>
-                    @endforeach
-                </div>
-            @else
-                <div class="em-empty">
-                    Belum ada ulasan yang tersedia. Ulasan akan tampil di sini
-                    setelah data penilaian produk tersimpan di database.
-                </div>
-            @endif
-        </section>
-
         {{-- PILIHAN BRAND --}}
         @php
             $brandLogos = [
@@ -1186,7 +1472,7 @@
         @endphp
 
         @if ($homeBrands->isNotEmpty())
-            <section class="em-section">
+            <section class="em-section em-brand-section">
                 <div class="em-section-head">
                     <div>
                         <h2>Pilihan Brand</h2>
@@ -1230,24 +1516,176 @@
             </section>
         @endif
 
-        {{-- BANNER PENUTUP --}}
-        <section class="em-bottom-banner">
-            <div class="em-bottom-copy">
-                <h2>Teknologi untuk aktivitasmu.</h2>
-                <p>
-                    Temukan smartphone, laptop, komputer, aksesori, gaming,
-                    dan perangkat networking untuk kebutuhan sehari-hari.
-                </p>
-                <a href="{{ route('shop.index') }}" class="em-btn">
-                    Jelajahi Semua Produk
+        {{-- ULASAN PELANGGAN --}}
+        @php
+            $homeReviews = collect();
+
+            foreach ($homeProducts as $itemProduk) {
+                $reviews = $itemProduk->ulasanProduk ?? collect();
+
+                foreach ($reviews as $review) {
+                    $isiReview = $review->komentar
+                        ?? $review->isi_ulasan
+                        ?? $review->ulasan
+                        ?? $review->review
+                        ?? null;
+
+                    $ratingReview = (float) ($review->rating ?? 0);
+
+                    // Nama pelanggan (coba beberapa nama relasi dan kolom yang umum)
+                    $userReview = $review->user ?? $review->pelanggan ?? null;
+                    $namaLengkap = $userReview->nama
+                        ?? $userReview->name
+                        ?? $userReview->nama_lengkap
+                        ?? $userReview->username
+                        ?? null;
+
+                    $namaLengkap = $namaLengkap ? trim($namaLengkap) : null;
+                    $namaTampil = 'Pelanggan ELECTROMART';
+                    $inisial = 'P';
+
+                    if ($namaLengkap) {
+                        $kata = preg_split('/\s+/', $namaLengkap);
+                        $namaTampil = $kata[0];
+                        if (count($kata) > 1) {
+                            $namaTampil .= ' ' . mb_strtoupper(mb_substr($kata[1], 0, 1)) . '.';
+                        }
+                        $inisial = mb_strtoupper(mb_substr($kata[0], 0, 1));
+                    }
+
+                    $waktuReview = $review->created_at
+                        ? \Carbon\Carbon::parse($review->created_at)
+                        : null;
+
+                    if ($isiReview || $ratingReview > 0) {
+                        $homeReviews->push([
+                            'produk' => $itemProduk->nama_produk,
+                            'isi' => $isiReview,
+                            'rating' => $ratingReview,
+                            'nama' => $namaTampil,
+                            'inisial' => $inisial,
+                            'tanggal' => $waktuReview ? $waktuReview->locale('id')->translatedFormat('d M Y') : null,
+                            'waktu' => $waktuReview ? $waktuReview->timestamp : 0,
+                        ]);
+                    }
+                }
+            }
+
+            // Ringkasan rating dihitung dari data ulasan yang ada di database
+            $ulasanBerating = $homeReviews->where('rating', '>', 0);
+            $jumlahBerating = $ulasanBerating->count();
+            $rataUlasan = $jumlahBerating ? $ulasanBerating->avg('rating') : 0;
+
+            $sebaranBintang = [];
+            for ($bintang = 5; $bintang >= 1; $bintang--) {
+                $sebaranBintang[$bintang] = $ulasanBerating
+                    ->filter(fn ($r) => (int) round($r['rating']) === $bintang)
+                    ->count();
+            }
+
+            // Tampilkan ulasan terbaru lebih dulu
+            $homeReviews = $homeReviews->sortByDesc('waktu')->values();
+        @endphp
+
+        <section class="em-section">
+            <div class="em-section-head">
+                <div>
+                    <h2>Ulasan Pelanggan</h2>
+                </div>
+                <a href="{{ route('shop.index') }}" class="em-section-link">
+                    Jelajahi produk
                     <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
 
-            <img
-                src="{{ asset('assets/gambar/iklan/infinix-xbook-14-neo.png') }}"
-                alt="Perangkat teknologi ELECTROMART"
-                loading="lazy">
+            @if ($homeReviews->isNotEmpty())
+
+                @if ($jumlahBerating > 0)
+                    <div class="em-review-summary">
+                        <div class="em-review-score">
+                            <strong>{{ number_format($rataUlasan, 1) }}</strong>
+                            <div class="em-review-score-stars">
+                                @for ($star = 1; $star <= 5; $star++)
+                                    <i class="{{ $star <= round($rataUlasan) ? 'fa-solid' : 'fa-regular' }} fa-star"
+                                       aria-hidden="true"></i>
+                                @endfor
+                            </div>
+                            <span>dari {{ $jumlahBerating }} ulasan pelanggan</span>
+                        </div>
+
+                        <div class="em-review-bars">
+                            @foreach ($sebaranBintang as $bintang => $jumlah)
+                                <div class="em-review-bar-row">
+                                    <span>{{ $bintang }} <i class="fa-solid fa-star" aria-hidden="true"></i></span>
+                                    <div class="em-review-bar">
+                                        <span class="em-review-bar-fill"
+                                              style="width: {{ round($jumlah / $jumlahBerating * 100) }}%"></span>
+                                    </div>
+                                    <span>{{ $jumlah }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                <div class="em-review-grid">
+                    @foreach ($homeReviews->take(3) as $review)
+                        <article class="em-review-card">
+                            <div class="em-review-top">
+                                <div class="em-review-stars">
+                                    @for ($star = 1; $star <= 5; $star++)
+                                        <i class="{{ $star <= round($review['rating']) ? 'fa-solid' : 'fa-regular' }} fa-star"
+                                           aria-hidden="true"></i>
+                                    @endfor
+                                </div>
+                                @if ($review['tanggal'])
+                                    <span class="em-review-date">{{ $review['tanggal'] }}</span>
+                                @endif
+                            </div>
+
+                            <i class="fa-solid fa-quote-left em-review-quote" aria-hidden="true"></i>
+
+                            <p class="em-review-text">
+                                {{ $review['isi'] ?: 'Pelanggan memberikan penilaian pada produk ini.' }}
+                            </p>
+
+                            <div class="em-review-user">
+                                <span class="em-review-avatar" aria-hidden="true">{{ $review['inisial'] }}</span>
+                                <div class="em-review-user-info">
+                                    <strong>{{ $review['nama'] }}</strong>
+                                    <span>{{ $review['produk'] }}</span>
+                                </div>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            @else
+                <div class="em-empty">
+                    Belum ada ulasan yang tersedia. Ulasan akan tampil di sini
+                    setelah data penilaian produk tersimpan di database.
+                </div>
+            @endif
+        </section>
+
+        {{-- BANTUAN WHATSAPP SEBELUM FOOTER --}}
+        <section class="em-help" aria-label="Bantuan pelanggan">
+            <div class="em-help-copy">
+                <span class="em-help-icon">
+                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                </span>
+                <div>
+                    <h2>Bingung pilih perangkat yang cocok?</h2>
+                    <p>Tanyakan langsung ke tim kami. Jam operasional 09:00 - 22:00.</p>
+                </div>
+            </div>
+
+            <a href="https://wa.me/6285136446683"
+               class="em-help-btn"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                Chat via WhatsApp
+            </a>
         </section>
     </div>
 </div>
@@ -1275,7 +1713,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function showSlide(index) {
             currentIndex = (index + slides.length) % slides.length;
-
             track.style.transform =
                 'translateX(-' + (currentIndex * 100) + '%)';
 
@@ -1353,12 +1790,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // SLIDER OTOMATIS UNTUK MASING-MASING BANNER KECIL
-    document.querySelectorAll('[data-em-side-slider]').forEach(function (slider) {
-        const track = slider.querySelector('.em-side-track');
-        const slides = slider.querySelectorAll('.em-side-slide');
-        const dots = slider.querySelectorAll('.em-side-dots button');
-        const prev = slider.querySelector('.em-side-prev');
-        const next = slider.querySelector('.em-side-next');
+    document.querySelectorAll("[data-em-side-slider]").forEach(function (slider) {
+        const track = slider.querySelector(".em-side-track");
+        const slides = slider.querySelectorAll(".em-side-slide");
+        const dots = slider.querySelectorAll(".em-side-dots button");
+        const prev = slider.querySelector(".em-side-prev");
+        const next = slider.querySelector(".em-side-next");
 
         if (!track || slides.length < 2) return;
 
@@ -1367,12 +1804,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function showSideSlide(index) {
             currentIndex = (index + slides.length) % slides.length;
-
             track.style.transform =
-                'translateX(-' + (currentIndex * 100) + '%)';
+                "translateX(-" + (currentIndex * 100) + "%)";
 
             dots.forEach(function (dot, dotIndex) {
-                dot.classList.toggle('active', dotIndex === currentIndex);
+                dot.classList.toggle("active", dotIndex === currentIndex);
             });
         }
 
@@ -1394,29 +1830,29 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (prev) {
-            prev.addEventListener('click', function () {
+            prev.addEventListener("click", function () {
                 showSideSlide(currentIndex - 1);
                 startSideSlider();
             });
         }
 
         if (next) {
-            next.addEventListener('click', function () {
+            next.addEventListener("click", function () {
                 showSideSlide(currentIndex + 1);
                 startSideSlider();
             });
         }
 
         dots.forEach(function (dot, index) {
-            dot.addEventListener('click', function () {
+            dot.addEventListener("click", function () {
                 showSideSlide(index);
                 startSideSlider();
             });
         });
 
         // Slider tetap berjalan ketika kursor berada di atas banner.
-        slider.addEventListener('mouseenter', startSideSlider);
-        slider.addEventListener('mouseleave', startSideSlider);
+        slider.addEventListener("mouseenter", startSideSlider);
+        slider.addEventListener("mouseleave", startSideSlider);
 
         document.addEventListener('visibilitychange', function () {
             if (document.hidden) {

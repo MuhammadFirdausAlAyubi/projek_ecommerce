@@ -83,7 +83,124 @@
                         Rp{{ number_format((float) $detail->subtotal, 0, ',', '.') }}
                     </strong>
                 </div>
+                {{-- FORM DAN RIWAYAT RETUR PRODUK --}}
+                @if ($pesanan->status_pesanan === 'selesai' && auth()->check())
+                    @php
+                        $daftarRetur = $detail->returProduk ?? collect();
 
+                        $jumlahSudahDiretur = $daftarRetur
+                            ->whereIn('status_retur', [
+                                'diajukan',
+                                'disetujui',
+                                'selesai',
+                            ])
+                            ->sum('jumlah_retur');
+
+                        $sisaRetur = max(
+                            0,
+                            (int) $detail->jumlah - (int) $jumlahSudahDiretur
+                        );
+                    @endphp
+
+                    <div class="return-box">
+                        <h4>Pengajuan Retur Produk</h4>
+
+                        @if ($daftarRetur->isNotEmpty())
+                            <div class="return-history">
+                                <strong>Riwayat Retur</strong>
+
+                                @foreach ($daftarRetur as $retur)
+                                    <div class="return-history-item">
+                                        <p>
+                                            Jumlah:
+                                            {{ $retur->jumlah_retur }} produk
+                                        </p>
+
+                                        <p>
+                                            Alasan:
+                                            {{ $retur->alasan }}
+                                        </p>
+
+                                        <p>
+                                            Status:
+                                            <strong>
+                                                {{ ucwords(str_replace('_', ' ', $retur->status_retur)) }}
+                                            </strong>
+                                        </p>
+
+                                        @if ($retur->keputusan_admin)
+                                            <p>
+                                                Keputusan Admin:
+                                                {{ $retur->keputusan_admin }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        @if ($sisaRetur > 0)
+                            <p class="return-description">
+                                Kamu masih bisa mengajukan retur sebanyak
+                                {{ $sisaRetur }} produk.
+                            </p>
+
+                            <form
+                                action="{{ route('pesanan-saya.retur.store', [
+                                    'id_pesanan' => $pesanan->id_pesanan,
+                                    'id_detail_pesanan' => $detail->id_detail_pesanan,
+                                ]) }}"
+                                method="POST"
+                            >
+                                @csrf
+
+                                <label for="jumlah-retur-{{ $detail->id_detail_pesanan }}">
+                                    Jumlah Produk yang Diretur
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="jumlah-retur-{{ $detail->id_detail_pesanan }}"
+                                    name="jumlah_retur"
+                                    min="1"
+                                    max="{{ $sisaRetur }}"
+                                    value="{{ old('jumlah_retur', 1) }}"
+                                    required
+                                >
+
+                                @error('jumlah_retur')
+                                    <p class="return-error">{{ $message }}</p>
+                                @enderror
+
+                                <label for="alasan-retur-{{ $detail->id_detail_pesanan }}">
+                                    Alasan Retur
+                                </label>
+
+                                <textarea
+                                    id="alasan-retur-{{ $detail->id_detail_pesanan }}"
+                                    name="alasan"
+                                    rows="3"
+                                    minlength="10"
+                                    maxlength="5000"
+                                    placeholder="Jelaskan alasan kamu ingin mengembalikan produk."
+                                    required
+                                >{{ old('alasan') }}</textarea>
+
+                                @error('alasan')
+                                    <p class="return-error">{{ $message }}</p>
+                                @enderror
+
+                                <button type="submit" class="return-submit">
+                                    Ajukan Retur
+                                </button>
+                            </form>
+                        @else
+                            <p class="return-note">
+                                Tidak ada sisa jumlah produk yang dapat diretur.
+                            </p>
+                        @endif
+                    </div>
+                @endif
                 @if ($pesanan->status_pesanan === 'selesai' && $detail->produk && auth()->check())
                     @php
                         $daftarUlasanProduk = $detail->produk->ulasanProduk ?? collect();
@@ -636,7 +753,135 @@
         background: #1d4ed8;
         color: #fff;
     }
+    /* RETUR PRODUK */
+    .return-box {
+        margin: 16px 0 22px;
+        padding: 20px;
+        border: 1px solid #fed7aa;
+        border-radius: 12px;
+        background: #fffaf5;
+    }
 
+    .return-box h4 {
+        margin: 0 0 12px;
+        color: #9a3412;
+        font-size: 16px;
+        font-weight: 800;
+    }
+
+    .return-description {
+        margin: 0 0 14px;
+        color: #57534e;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .return-box label {
+        display: block;
+        margin: 14px 0 6px;
+        color: #374151;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .return-box input,
+    .return-box textarea {
+        display: block;
+        width: 100%;
+        padding: 11px 12px;
+        border: 1px solid #d6d3d1;
+        border-radius: 8px;
+        background: #fff;
+        color: #202124;
+        font: inherit;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .return-box input:focus,
+    .return-box textarea:focus {
+        outline: none;
+        border-color: #ea580c;
+        box-shadow: 0 0 0 3px rgba(234, 88, 12, .12);
+    }
+
+    .return-box textarea {
+        resize: vertical;
+        min-height: 90px;
+    }
+
+    .return-submit {
+        margin-top: 14px;
+        padding: 11px 18px;
+        border: none;
+        border-radius: 8px;
+        background: #ea580c;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background .2s ease;
+    }
+
+    .return-submit:hover {
+        background: #c2410c;
+    }
+
+    .return-history {
+        margin: 14px 0;
+        padding: 14px;
+        border: 1px solid #e7e5e4;
+        border-radius: 9px;
+        background: #fff;
+    }
+
+    .return-history > strong {
+        display: block;
+        margin-bottom: 10px;
+        color: #44403c;
+        font-size: 13px;
+    }
+
+    .return-history-item {
+        padding: 12px 0;
+        border-top: 1px solid #f0eeec;
+    }
+
+    .return-history-item p {
+        margin: 5px 0;
+        color: #57534e;
+        font-size: 13px;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+
+    .return-history-item p strong {
+        color: #9a3412;
+    }
+
+    .return-error {
+        margin: 6px 0 0;
+        color: #b91c1c;
+        font-size: 12px;
+    }
+
+    .return-note {
+        margin: 8px 0 0;
+        color: #78716c;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    @media (max-width: 760px) {
+        .return-box {
+            padding: 15px;
+        }
+
+        .return-submit {
+            width: 100%;
+        }
+    }
+    
     @media (max-width: 760px) {
         .detail-page {
             padding: 22px 12px 35px;

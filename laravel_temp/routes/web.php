@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\UlasanProdukController as AdminUlasanProdukContro
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AlamatPelangganController;
 use App\Http\Controllers\PesananPelangganController;
+use App\Http\Controllers\ReturPelangganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -674,6 +675,12 @@ Route::middleware(['auth', 'user'])->group(function () {
         PesananPelangganController::class,
         'show',
     ])->name('pesanan-saya.show');
+    
+    Route::post(
+        '/pesanan-saya/{id_pesanan}/detail/{id_detail_pesanan}/retur',
+        [ReturPelangganController::class, 'store']
+    )->name('pesanan-saya.retur.store');
+
     // KERANJANG
     Route::get('/keranjang', [KeranjangController::class, 'index'])
         ->name('keranjang.index');
@@ -816,4 +823,5 @@ Route::middleware(['auth', 'admin'])
 
         Route::delete('/ulasan/{id}', [AdminUlasanProdukController::class, 'destroy'])
             ->name('ulasan.destroy');
+            
     });

@@ -365,12 +365,12 @@
         .pcard-image img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .25s}
         .pcard:hover .pcard-image img{transform:scale(1.03)}
         .pcard-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#98a2b3;font-size:11px;text-align:center}
-        .pcard-info{display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;padding:10px;box-sizing:border-box}
+        .pcard-info{display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:2px;min-width:0;padding:10px 10px 12px;box-sizing:border-box}
         .pcard-brand{color:#667085;font-size:10px;line-height:1.4}
-        .pcard-name{display:-webkit-box;width:100%;min-height:32px;margin:0;overflow:hidden;color:#172033;font-size:12px;font-weight:600;line-height:1.4;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}
-        .pcard-rating{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:11px;line-height:1.4}
-        .pcard-price{margin-top:auto;padding-top:5px;color:#155eef;font-size:14px;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
-        .pcard-stock{color:#667085;font-size:10px}
+        .pcard-name{display:-webkit-box;width:100%;margin:0;overflow:hidden;color:#172033;font-size:12px;font-weight:600;line-height:1.4;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+        .pcard-rating{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:2px;font-size:11px;line-height:1.4}
+        .pcard-price{margin-top:4px;color:#155eef;font-size:14px;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
+        .pcard-stock{margin-top:2px;color:#667085;font-size:10px}
         .pcard-stock.tersedia{color:#15803d}
         .pcard-stock.habis{color:#dc2626}
         @media(max-width:540px){.pcard-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.pcard-image{height:145px;padding:8px}.pcard-info{padding:9px}.pcard-price{font-size:13px}}
