@@ -2,7 +2,7 @@
 
 # ELECTROMART
 
-### Sistem Informasi E-Commerce Barang Elektronik
+### Website E-Commerce Barang Elektronik
 
 *Temukan perangkat yang sesuai kebutuhanmu, belanja elektronik jadi lebih praktis.*
 
@@ -36,7 +36,7 @@
   </tr>
   <tr>
     <td align="center">1</td>
-    <td>Muhammad Firdaus Al Ayubi</td>
+    <td>Muhammad Firdaus Al-Ayubi</td>
     <td>2522105012</td>
     <td><a href="https://github.com/MuhammadFirdausAlAyubi">@MuhammadFirdausAlAyubi</a></td>
     <td><code>Ayub</code></td>
@@ -57,14 +57,14 @@
   </tr>
   <tr>
     <td align="center">4</td>
-    <td>Devandira Kila Wibisana</td>
+    <td>Devandira Kaila Wibisana</td>
     <td>2522105016</td>
     <td><a href="https://github.com/Devandira">@Devandira</a></td>
     <td><code>Devan</code></td>
   </tr>
   <tr>
     <td align="center">5</td>
-    <td>Didiek Saputra</td>
+    <td>Didik Saputra</td>
     <td>2522105021</td>
     <td><a href="https://github.com/saputradidik112-lab">@saputradidik112-lab</a></td>
     <td><code>Didik</code></td>
