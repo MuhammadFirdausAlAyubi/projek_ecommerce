@@ -2,7 +2,7 @@
 
 # ELECTROMART
 
-### Website E-Commerce Barang Elektronik
+### Aplikasi E-Commerce Barang Elektronik
 
 *Temukan perangkat yang sesuai kebutuhanmu, belanja elektronik jadi lebih praktis.*
 
