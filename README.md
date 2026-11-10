@@ -39,35 +39,35 @@
     <td>Muhammad Firdaus Al Ayubi</td>
     <td>2522105012</td>
     <td><a href="https://github.com/MuhammadFirdausAlAyubi">@MuhammadFirdausAlAyubi</a></td>
-    <td><code>ayub</code></td>
+    <td><code>Ayub</code></td>
   </tr>
   <tr>
     <td align="center">2</td>
     <td>Farrel Andrea Carrvaro</td>
     <td>2522105091</td>
     <td><a href="https://github.com/Lerrrss">@Lerrrss</a></td>
-    <td><code>farrel</code></td>
+    <td><code>Farrel</code></td>
   </tr>
   <tr>
     <td align="center">3</td>
     <td>Muhammad Fahmi Ramadhan</td>
     <td>2522105033</td>
     <td><a href="https://github.com/fahmialxstardiee">@fahmialxstardiee</a></td>
-    <td><code>fahmi</code></td>
+    <td><code>ami</code></td>
   </tr>
   <tr>
     <td align="center">4</td>
     <td>Devandira Kila Wibisana</td>
     <td>2522105016</td>
     <td><a href="https://github.com/Devandira">@Devandira</a></td>
-    <td><code>devandira</code></td>
+    <td><code>Devan</code></td>
   </tr>
   <tr>
     <td align="center">5</td>
     <td>Didiek Saputra</td>
     <td>2522105021</td>
     <td><a href="https://github.com/saputradidik112-lab">@saputradidik112-lab</a></td>
-    <td><code>didiek</code></td>
+    <td><code>Didik</code></td>
   </tr>
 </table>
 
