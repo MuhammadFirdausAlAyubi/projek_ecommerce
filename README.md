@@ -28,5 +28,5 @@ JavaScript
 
 Membangun aplikasi E-Commerce barang elektronik sebagai salah satu bentuk penerapan ilmu pemrograman web dan pengelolaan database.
 
-Dibuat oleh Kelompok 7# Projek Ecommerce
+Dibuat oleh Kelompok 7 Projek Ecommerce
 Projek E-Commerce Barang Elektronik
