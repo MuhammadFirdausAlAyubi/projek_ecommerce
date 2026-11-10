@@ -1,6 +1,6 @@
 🛒 PROJEK E-COMMERCE BARANG ELEKTRONIK
 
-Nama Kelompok: Kelompok 1
+Nama Kelompok: Kelompok 7
 
 Mata Kuliah: Ecommerc
 
