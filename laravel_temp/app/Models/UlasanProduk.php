@@ -14,6 +14,7 @@ class UlasanProduk extends Model
     protected $fillable = [
         'id_produk',
         'id_user',
+        'id_detail_pesanan',
         'rating',
         'komentar',
     ];
@@ -34,12 +35,21 @@ class UlasanProduk extends Model
         );
     }
 
-    public function user(): BelongsTo
+      public function user(): BelongsTo
     {
         return $this->belongsTo(
             User::class,
             'id_user',
             'id_user'
+        );
+    }
+
+    public function detailPesanan(): BelongsTo
+    {
+        return $this->belongsTo(
+            DetailPesanan::class,
+            'id_detail_pesanan',
+            'id_detail_pesanan'
         );
     }
 }

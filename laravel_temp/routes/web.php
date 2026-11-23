@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Produk;
+use App\Models\Brand;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -50,7 +51,6 @@ $priceRangeOptions = [
 |--------------------------------------------------------------------------
 */
 
-// HALAMAN UTAMA
 Route::get('/', function () {
     $produks = Produk::with([
         'kategori',
@@ -62,8 +62,11 @@ Route::get('/', function () {
         ->limit(8)
         ->get();
 
+    $brands = Brand::orderBy('nama_brand')->get();
+
     return view('home.dashboard', [
         'produks' => $produks,
+        'brands' => $brands,
     ]);
 })->name('home');
 
@@ -97,14 +100,26 @@ Route::get('/shop', function (Request $request) use ($priceRangeOptions) {
 
     // Brand yang dicentang
     $selectedBrands = array_filter((array) $request->query('brand'));
-
+    // Kata kunci pencarian dari header
+    $keyword = trim($request->query('q', ''));
     $query = Produk::with([
         'kategori',
         'brand',
         'stok',
         'ulasanProduk',
     ]);
-
+    // Filter pencarian berdasarkan nama produk, brand, dan kategori
+if ($keyword !== '') {
+    $query->where(function ($q) use ($keyword) {
+        $q->where('nama_produk', 'LIKE', "%{$keyword}%")
+            ->orWhereHas('brand', function ($brandQuery) use ($keyword) {
+                $brandQuery->where('nama_brand', 'LIKE', "%{$keyword}%");
+            })
+            ->orWhereHas('kategori', function ($kategoriQuery) use ($keyword) {
+                $kategoriQuery->where('nama_kategori', 'LIKE', "%{$keyword}%");
+            });
+    });
+}
     if (!empty($selectedBrands)) {
         $query->whereIn('id_brand', $selectedBrands);
     }
@@ -632,7 +647,7 @@ Route::post('/logout', [UserController::class, 'logout'])
 Route::middleware(['auth', 'user'])->group(function () {
 
     // ULASAN PRODUK
-    Route::post('/produk/{id}/ulasan', [
+    Route::post('/detail-pesanan/{idDetailPesanan}/ulasan', [
         UlasanProdukController::class,
         'store',
     ])->name('ulasan.store');

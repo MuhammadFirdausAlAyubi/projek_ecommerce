@@ -43,28 +43,42 @@
 .shop-main{min-width:0}
 .shop-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
 .shop-count{margin:0;color:#667085;font-size:12px}
-/* (CSS card produk ada di layouts/customer.blade.php, class .pcard-*) */
 .produk-empty{grid-column:1/-1;padding:35px 16px;border:1px dashed #d0d5dd;border-radius:10px;background:#fff;text-align:center}
 .produk-empty i{margin-bottom:10px;color:#98a2b3;font-size:32px}
 .produk-empty h2{margin:0 0 7px;color:#172033;font-size:18px;font-weight:700}
 .produk-empty p{margin:0;color:#667085;font-size:12px}
 .shop-pagination{display:flex;justify-content:center;margin-top:25px}
 .shop-pagination nav{max-width:100%}
-@media(max-width:1000px){.shop-container{padding-right:24px;padding-left:24px}.shop-layout{grid-template-columns:205px minmax(0,1fr);gap:14px}}
-@media(max-width:768px){.shop-container{padding:14px 18px 30px}.shop-layout{grid-template-columns:1fr}.shop-sidebar{padding:14px}}
-@media(max-width:540px){.shop-container{padding:12px 12px 26px}.shop-layout{gap:15px}}
+
+@media(max-width:1000px){
+    .shop-container{padding-right:24px;padding-left:24px}
+    .shop-layout{grid-template-columns:205px minmax(0,1fr);gap:14px}
+}
+@media(max-width:768px){
+    .shop-container{padding:14px 18px 30px}
+    .shop-layout{grid-template-columns:1fr}
+    .shop-sidebar{padding:14px}
+}
+@media(max-width:540px){
+    .shop-container{padding:12px 12px 26px}
+    .shop-layout{gap:15px}
+}
 </style>
 @endpush
 
 @section('content')
 <div class="shop-container">
+
     <nav class="shop-breadcrumb" aria-label="Breadcrumb">
-        <a href="{{ route('home') }}">Beranda</a><span>/</span>
+        <a href="{{ route('home') }}">Beranda</a>
+        <span>/</span>
         <span aria-current="page">Semua Produk</span>
     </nav>
 
     <div class="shop-layout">
+
         <aside class="shop-sidebar">
+
             <div class="filter-heading">
                 <h2>Filter Produk</h2>
                 <a href="{{ route('shop.index') }}" class="filter-reset">Reset</a>
@@ -73,19 +87,23 @@
             @php
                 $priceMin = max(0, min(50000000, (int) request('min_price', $minPrice ?? 0)));
                 $priceMax = max(0, min(50000000, (int) request('max_price', $maxPrice ?? 50000000)));
+
                 if ($priceMin > $priceMax) {
                     $priceMin = 0;
                     $priceMax = 50000000;
                 }
+
                 $selectedRange = request('price_range', $selectedRange ?? '');
 
-                // Daftar brand untuk filter (pakai $brands dari controller kalau ada)
+                // Daftar brand untuk filter
                 $brandList = isset($brands)
                     ? collect($brands)
                     : (class_exists(\App\Models\Brand::class)
                         ? \App\Models\Brand::orderBy('nama_brand')->get()
                         : collect());
+
                 $selectedBrands = array_map('intval', (array) request('brand', []));
+
                 $ranges = [
                     'under500' => ['label' => 'Di bawah Rp500.000', 'min' => 0, 'max' => 499999],
                     '500to1m' => ['label' => 'Rp500.000 – Rp1.000.000', 'min' => 500000, 'max' => 1000000],
@@ -95,6 +113,8 @@
             @endphp
 
             <form action="{{ route('shop.index') }}" method="GET" id="productPriceFilter">
+
+                {{-- Pertahankan kata kunci pencarian saat filter diterapkan --}}
                 @if (request()->filled('q'))
                     <input type="hidden" name="q" value="{{ request('q') }}">
                 @endif
@@ -103,25 +123,73 @@
                     <h3>Rentang Harga</h3>
 
                     <div class="filter-price-values">
-                        <div class="filter-price-value"><small>Harga minimum</small><span id="productMinLabel">Rp{{ number_format($priceMin, 0, ',', '.') }}</span></div>
-                        <div class="filter-price-value" style="text-align:right"><small>Harga maksimum</small><span id="productMaxLabel">Rp{{ number_format($priceMax, 0, ',', '.') }}</span></div>
+                        <div class="filter-price-value">
+                            <small>Harga minimum</small>
+                            <span id="productMinLabel">Rp{{ number_format($priceMin, 0, ',', '.') }}</span>
+                        </div>
+
+                        <div class="filter-price-value" style="text-align:right">
+                            <small>Harga maksimum</small>
+                            <span id="productMaxLabel">Rp{{ number_format($priceMax, 0, ',', '.') }}</span>
+                        </div>
                     </div>
 
                     <div class="filter-slider">
                         <div class="filter-slider-track" id="productRangeTrack"></div>
-                        <input type="range" id="productMinRange" min="0" max="50000000" step="100000" value="{{ $priceMin }}" aria-label="Harga minimum">
-                        <input type="range" id="productMaxRange" min="0" max="50000000" step="100000" value="{{ $priceMax }}" aria-label="Harga maksimum">
+
+                        <input type="range"
+                               id="productMinRange"
+                               min="0"
+                               max="50000000"
+                               step="100000"
+                               value="{{ $priceMin }}"
+                               aria-label="Harga minimum">
+
+                        <input type="range"
+                               id="productMaxRange"
+                               min="0"
+                               max="50000000"
+                               step="100000"
+                               value="{{ $priceMax }}"
+                               aria-label="Harga maksimum">
                     </div>
 
                     <div class="filter-price-inputs">
-                        <label>Minimum (Rp)<input type="number" id="productMinInput" name="min_price" min="0" max="50000000" step="1000" value="{{ request('min_price', $minPrice ?? '') }}" placeholder="Minimum"></label>
-                        <label>Maksimum (Rp)<input type="number" id="productMaxInput" name="max_price" min="0" max="50000000" step="1000" value="{{ request('max_price', $maxPrice ?? '') }}" placeholder="Maksimum"></label>
+                        <label>
+                            Minimum (Rp)
+                            <input type="number"
+                                   id="productMinInput"
+                                   name="min_price"
+                                   min="0"
+                                   max="50000000"
+                                   step="1000"
+                                   value="{{ request('min_price', $minPrice ?? '') }}"
+                                   placeholder="Minimum">
+                        </label>
+
+                        <label>
+                            Maksimum (Rp)
+                            <input type="number"
+                                   id="productMaxInput"
+                                   name="max_price"
+                                   min="0"
+                                   max="50000000"
+                                   step="1000"
+                                   value="{{ request('max_price', $maxPrice ?? '') }}"
+                                   placeholder="Maksimum">
+                        </label>
                     </div>
 
                     <div class="filter-ranges">
                         @foreach ($ranges as $value => $range)
                             <label class="filter-range">
-                                <input type="radio" name="price_range" value="{{ $value }}" data-min="{{ $range['min'] }}" data-max="{{ $range['max'] }}" {{ $selectedRange === $value ? 'checked' : '' }}>
+                                <input type="radio"
+                                       name="price_range"
+                                       value="{{ $value }}"
+                                       data-min="{{ $range['min'] }}"
+                                       data-max="{{ $range['max'] }}"
+                                       {{ $selectedRange === $value ? 'checked' : '' }}>
+
                                 <span>{{ $range['label'] }}</span>
                             </label>
                         @endforeach
@@ -135,8 +203,11 @@
                         <div class="filter-brand-list">
                             @foreach ($brandList as $brandItem)
                                 <label class="filter-brand-option">
-                                    <input type="checkbox" name="brand[]" value="{{ $brandItem->id_brand }}"
-                                        {{ in_array((int) $brandItem->id_brand, $selectedBrands, true) ? 'checked' : '' }}>
+                                    <input type="checkbox"
+                                           name="brand[]"
+                                           value="{{ $brandItem->id_brand }}"
+                                           {{ in_array((int) $brandItem->id_brand, $selectedBrands, true) ? 'checked' : '' }}>
+
                                     <span>{{ $brandItem->nama_brand }}</span>
                                 </label>
                             @endforeach
@@ -146,37 +217,131 @@
                     @endif
                 </div>
 
-                <button type="submit" class="filter-apply">Terapkan Filter</button>
+                <button type="submit" class="filter-apply">
+                    Terapkan Filter
+                </button>
+
             </form>
         </aside>
 
         <main class="shop-main">
-            <div class="shop-toolbar"><p class="shop-count">{{ $produk->total() }} produk tersedia</p></div>
+
+            <div class="shop-toolbar">
+                <p class="shop-count">
+                    @if (request()->filled('q'))
+                        Hasil pencarian "{{ request('q') }}" :
+                    @else
+                        Semua Produk :
+                    @endif
+
+                    {{ $produk->total() }} produk tersedia
+                </p>
+            </div>
 
             <div class="pcard-grid">
+
                 @forelse ($produk as $item)
+
                     @include('partials.product-card', ['produk' => $item])
+
                 @empty
+
                     <div class="produk-empty">
                         <i class="fa-solid fa-box-open"></i>
+
                         <h2>Produk Tidak Ditemukan</h2>
-                        <p>Tidak ada produk pada rentang harga tersebut. Silakan ubah filter harga.</p>
+
+                        @if (request()->filled('q'))
+                            <p>
+                                Maaf, produk dengan kata kunci
+                                "<strong>{{ request('q') }}</strong>"
+                                tidak tersedia di ELECTROMART.
+                            </p>
+
+                            <p>Silakan coba kata kunci lainnya.</p>
+                        @else
+                            <p>
+                                Tidak ada produk pada filter yang dipilih.
+                                Silakan ubah filter harga atau brand.
+                            </p>
+                        @endif
                     </div>
+
                 @endforelse
+
             </div>
 
             @if (method_exists($produk, 'links'))
-                <div class="shop-pagination">{{ $produk->appends(request()->query())->links() }}</div>
+                <div class="shop-pagination">
+                    {{ $produk->appends(request()->query())->links() }}
+                </div>
             @endif
+
         </main>
     </div>
 </div>
+
+{{-- POPUP JIKA HASIL PENCARIAN KOSONG --}}
+@if (request()->filled('q') && $produk->total() == 0)
+    <div class="modal fade"
+         id="searchNotFoundModal"
+         tabindex="-1"
+         aria-labelledby="searchNotFoundTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border:0;border-radius:16px;">
+
+                <div class="modal-body text-center p-4">
+
+                    <div class="mb-3">
+                        <i class="fa-solid fa-magnifying-glass"
+                           style="font-size:42px;color:#155eef;">
+                        </i>
+                    </div>
+
+                    <h5 id="searchNotFoundTitle" class="fw-bold mb-2">
+                        Produk Tidak Ditemukan
+                    </h5>
+
+                    <p class="text-muted mb-3">
+                        Maaf, produk
+                        <strong>"{{ request('q') }}"</strong>
+                        tidak tersedia di ELECTROMART.
+                    </p>
+
+                    <p class="small text-muted">
+                        Coba gunakan nama produk atau kata kunci lainnya.
+                    </p>
+
+                    <button type="button"
+                            class="btn btn-primary px-4"
+                            data-bs-dismiss="modal">
+                        Mengerti
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 @endsection
 
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
+    // Tampilkan popup jika pencarian tidak menemukan produk
+    const searchModal = document.getElementById('searchNotFoundModal');
+
+    if (searchModal && window.bootstrap) {
+        const modal = new bootstrap.Modal(searchModal);
+        modal.show();
+    }
+
     const form = document.getElementById('productPriceFilter');
+
     if (!form) return;
 
     const minRange = document.getElementById('productMinRange');
@@ -186,21 +351,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const minLabel = document.getElementById('productMinLabel');
     const maxLabel = document.getElementById('productMaxLabel');
     const track = document.getElementById('productRangeTrack');
+
     const maxValue = 50000000;
     const gap = 100000;
+
     const rupiah = value => 'Rp' + Number(value).toLocaleString('id-ID');
 
     function update(source, syncInputs = true) {
+
         let min = Number(minRange.value);
         let max = Number(maxRange.value);
 
         if (max - min < gap) {
-            if (source === 'min') min = max - gap;
-            else max = min + gap;
+            if (source === 'min') {
+                min = max - gap;
+            } else {
+                max = min + gap;
+            }
         }
 
         min = Math.max(0, min);
         max = Math.min(maxValue, max);
+
         minRange.value = min;
         maxRange.value = max;
 
@@ -211,11 +383,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         minLabel.textContent = rupiah(min);
         maxLabel.textContent = rupiah(max);
+
         track.style.left = (min / maxValue * 100) + '%';
         track.style.width = ((max - min) / maxValue * 100) + '%';
 
         form.querySelectorAll('input[name="price_range"]').forEach(radio => {
-            radio.checked = Number(radio.dataset.min) === min && Number(radio.dataset.max) === max;
+            radio.checked =
+                Number(radio.dataset.min) === min &&
+                Number(radio.dataset.max) === max;
         });
     }
 
@@ -224,27 +399,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
     minInput.addEventListener('input', function () {
         const min = Math.max(0, Math.min(maxValue, Number(this.value || 0)));
+
         minRange.value = min;
+
         update('min', false);
     });
 
     maxInput.addEventListener('input', function () {
         const max = Math.max(0, Math.min(maxValue, Number(this.value || maxValue)));
+
         maxRange.value = max;
+
         update('max', false);
     });
 
     form.querySelectorAll('input[name="price_range"]').forEach(radio => {
         radio.addEventListener('change', function () {
+
             minRange.value = this.dataset.min;
             maxRange.value = this.dataset.max;
+
             minInput.value = this.dataset.min;
             maxInput.value = this.dataset.max;
+
             update('max');
         });
     });
 
     update('max', false);
+
 });
 </script>
 @endpush

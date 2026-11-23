@@ -976,85 +976,107 @@
                             @endif
                         @endif
                     {{-- ULASAN PRODUK --}}
-                    @if ($pesanan->status_pesanan === 'selesai' && $detail->produk && auth()->check())
-                        @php
-                            $daftarUlasanProduk = $detail->produk->ulasanProduk ?? collect();
-                            $ulasanSaya = $daftarUlasanProduk->firstWhere('id_user', auth()->user()->id_user);
-                        @endphp
+            
+{{-- ULASAN PRODUK --}}
+@if ($pesanan->status_pesanan === 'selesai' && $detail->produk && auth()->check())
 
-                        <div class="em-box em-review">
-                            @if ($ulasanSaya)
-                                <h4><i class="fa-solid fa-star"></i> Ulasan Kamu</h4>
+    @php
+        $ulasanSaya = $detail->ulasanProduk->first();
+    @endphp
 
-                                <div class="em-stars">
-                                    {{ str_repeat('★', (int) $ulasanSaya->rating) }}{{ str_repeat('☆', 5 - (int) $ulasanSaya->rating) }}
-                                </div>
+    <div class="em-box em-review">
+        @if ($ulasanSaya)
 
-                                <p class="em-rating-text">Rating: {{ $ulasanSaya->rating }}/5</p>
+            <h4>
+                <i class="fa-solid fa-star"></i>
+                Ulasan Kamu
+            </h4>
 
-                                <p class="em-comment">
-                                    {{ $ulasanSaya->komentar ?: 'Kamu memberikan rating tanpa komentar.' }}
-                                </p>
+            <div class="em-stars">
+                {{ str_repeat('★', (int) $ulasanSaya->rating) }}{{ str_repeat('☆', 5 - (int) $ulasanSaya->rating) }}
+            </div>
 
-                                <p class="em-review-note">
-                                    <i class="fa-solid fa-circle-check"></i>
-                                    Ulasan sudah dikirim dan tidak dapat diubah.
-                                </p>
-                            @else
-                                <h4><i class="fa-solid fa-star"></i> Beri Ulasan Produk</h4>
+            <p class="em-rating-text">
+                Rating: {{ $ulasanSaya->rating }}/5
+            </p>
 
-                                <p class="em-box-desc">
-                                    Bagikan pengalaman kamu setelah menerima produk.
-                                </p>
+            <p class="em-comment">
+                {{ $ulasanSaya->komentar ?: 'Kamu memberikan rating tanpa komentar.' }}
+            </p>
 
-                                <form
-                                    action="{{ route('ulasan.store', ['id' => $detail->produk->id_produk]) }}"
-                                    method="POST"
-                                >
-                                    @csrf
+            <p class="em-review-note">
+                <i class="fa-solid fa-circle-check"></i>
+                Ulasan sudah dikirim dan tidak dapat diubah.
+            </p>
 
-                                    <label for="rating-{{ $detail->produk->id_produk }}">
-                                        Rating bintang
-                                    </label>
+        @else
 
-                                    <select id="rating-{{ $detail->produk->id_produk }}" name="rating" required>
-                                        <option value="">Pilih rating</option>
+            <h4>
+                <i class="fa-solid fa-star"></i>
+                Beri Ulasan Produk
+            </h4>
 
-                                        @for ($bintang = 5; $bintang >= 1; $bintang--)
-                                            <option
-                                                value="{{ $bintang }}"
-                                                @selected((int) old('rating') === $bintang)
-                                            >
-                                                {{ $bintang }} bintang
-                                            </option>
-                                        @endfor
-                                    </select>
+            <p class="em-box-desc">
+                Bagikan pengalaman kamu setelah menerima produk.
+            </p>
 
-                                    <label for="komentar-{{ $detail->produk->id_produk }}">
-                                        Komentar (opsional)
-                                    </label>
+            <form
+                action="{{ route('ulasan.store', ['idDetailPesanan' => $detail->id_detail_pesanan]) }}"
+                method="POST"
+            >
+                @csrf
 
-                                    <textarea
-                                        id="komentar-{{ $detail->produk->id_produk }}"
-                                        name="komentar"
-                                        rows="3"
-                                        maxlength="2000"
-                                        placeholder="Bagaimana pengalamanmu menggunakan produk ini?"
-                                    >{{ old('komentar') }}</textarea>
+                <label for="rating-{{ $detail->id_detail_pesanan }}">
+                    Rating bintang
+                </label>
 
-                                    @error('rating')
-                                        <p class="em-error">{{ $message }}</p>
-                                    @enderror
+                <select
+                    id="rating-{{ $detail->id_detail_pesanan }}"
+                    name="rating"
+                    required
+                >
+                    <option value="">Pilih rating</option>
 
-                                    @error('komentar')
-                                        <p class="em-error">{{ $message }}</p>
-                                    @enderror
+                    @for ($bintang = 5; $bintang >= 1; $bintang--)
+                        <option
+                            value="{{ $bintang }}"
+                            @selected((int) old('rating') === $bintang)
+                        >
+                            {{ $bintang }} bintang
+                        </option>
+                    @endfor
+                </select>
 
-                                    <button type="submit" class="em-submit">Kirim Ulasan</button>
-                                </form>
-                            @endif
-                        </div>
-                    @endif
+                <label for="komentar-{{ $detail->id_detail_pesanan }}">
+                    Komentar (opsional)
+                </label>
+
+                <textarea
+                    id="komentar-{{ $detail->id_detail_pesanan }}"
+                    name="komentar"
+                    rows="3"
+                    maxlength="2000"
+                    placeholder="Bagaimana pengalamanmu menggunakan produk ini?"
+                >{{ old('komentar') }}</textarea>
+
+                @error('rating')
+                    <p class="em-error">{{ $message }}</p>
+                @enderror
+
+                @error('komentar')
+                    <p class="em-error">{{ $message }}</p>
+                @enderror
+
+                <button type="submit" class="em-submit">
+                    Kirim Ulasan
+                </button>
+            </form>
+
+        @endif
+    </div>
+
+@endif
+
                 @empty
                     <p class="em-muted">Rincian produk untuk pesanan ini belum tersedia.</p>
                 @endforelse
