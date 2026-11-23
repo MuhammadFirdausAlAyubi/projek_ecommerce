@@ -34,8 +34,21 @@ class DetailPesanan extends Model
         return $this->belongsTo(Produk::class, 'id_produk', 'id_produk');
     }
 
-    public function returProduk(): HasMany
+     public function returProduk(): HasMany
     {
-        return $this->hasMany(ReturProduk::class, 'id_detail_pesanan', 'id_detail_pesanan');
+        return $this->hasMany(
+            ReturProduk::class,
+            'id_detail_pesanan',
+            'id_detail_pesanan'
+        );
+    }
+
+    public function ulasanProduk(): HasMany
+    {
+        return $this->hasMany(
+            UlasanProduk::class,
+            'id_detail_pesanan',
+            'id_detail_pesanan'
+        );
     }
 }

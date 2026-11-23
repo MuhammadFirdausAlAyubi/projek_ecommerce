@@ -569,190 +569,149 @@
     text-align: center;
 }
 
-/* ULASAN */
-.em-review-grid {
+/* ULASAN PELANGGAN - LAYOUT GAYA AGRES.ID */
+.em-review-layout {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
+    grid-template-columns: minmax(220px, 1.05fr) repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+    width: 100%;
+}
+
+.em-review-summary,
+.em-review-card {
+    min-width: 0;
+    min-height: 205px;
+    border: 1px solid #dfe3ea;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 5px 14px rgba(23, 32, 51, .09);
+}
+
+.em-review-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 22px 16px;
+    text-align: center;
+}
+
+.em-review-summary h3 {
+    margin: 0 0 4px;
+    color: #101828;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.em-review-summary-stars,
+.em-review-stars {
+    color: #f5ad16;
+    letter-spacing: 2px;
+}
+
+.em-review-summary-stars {
+    margin: 3px 0 7px;
+    font-size: 19px;
+}
+
+.em-review-summary p {
+    margin: 0;
+    color: #667085;
+    font-size: 11px;
+}
+
+.em-review-summary-divider {
+    width: 100%;
+    height: 1px;
+    margin: 14px 0 10px;
+    background: #e6eaf0;
+}
+
+.em-review-summary-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #344054;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.em-review-summary-label i {
+    color: #4285f4;
+    font-size: 17px;
 }
 
 .em-review-card {
     position: relative;
     display: flex;
     flex-direction: column;
-    min-width: 0;
-    padding: 20px;
-    border: 1px solid var(--em-line);
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(23,32,51,.03);
-    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-}
-
-.em-review-card:hover {
-    transform: translateY(-3px);
-    border-color: #c4d4fb;
-    box-shadow: 0 10px 24px rgba(21,94,239,.08);
+    padding: 17px 16px 15px;
 }
 
 .em-review-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 12px;
 }
 
 .em-review-stars {
-    color: #f4ad16;
-    font-size: 13px;
-    letter-spacing: 1px;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
 .em-review-date {
-    color: var(--em-muted);
+    color: #667085;
     font-size: 10px;
-    white-space: nowrap;
 }
 
-.em-review-quote {
-    margin-bottom: 8px;
-    color: #c9d9ff;
-    font-size: 22px;
+.em-review-google {
+    position: absolute;
+    top: -8px;
+    right: 8px;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    color: #4285f4;
+    font-size: 15px;
 }
 
 .em-review-text {
-    display: -webkit-box;
-    min-height: 60px;
-    margin: 0 0 16px;
-    overflow: hidden;
-    color: #475467;
-    font-size: 13px;
-    line-height: 1.8;
+    flex: 1;
+    margin: 0 0 14px;
+    color: #344054;
+    font-size: 12px;
+    line-height: 1.65;
     overflow-wrap: anywhere;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
 }
 
 .em-review-user {
-    display: flex;
-    align-items: center;
-    gap: 10px;
     margin-top: auto;
-    padding-top: 14px;
-    border-top: 1px solid #eef0f4;
-}
-
-.em-review-avatar {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    flex: 0 0 40px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #155eef, #06b6d4);
-    color: #fff;
-    font-size: 15px;
-    font-weight: 800;
-}
-
-.em-review-user-info {
-    min-width: 0;
-}
-
-.em-review-user-info strong {
-    display: block;
-    color: var(--em-ink);
-    font-size: 12px;
-    font-weight: 800;
-    line-height: 1.4;
-}
-
-.em-review-user-info span {
-    display: block;
-    overflow: hidden;
-    color: var(--em-muted);
+    color: #172033;
     font-size: 11px;
-    line-height: 1.4;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-weight: 700;
 }
 
-/* RINGKASAN RATING */
-.em-review-summary {
-    display: grid;
-    grid-template-columns: 210px minmax(0, 1fr);
-    align-items: center;
-    gap: 28px;
-    margin-bottom: 12px;
-    padding: 18px 24px;
-    border: 1px solid var(--em-line);
-    border-radius: 14px;
-    background: #fff;
+@media (max-width: 1100px) {
+    .em-review-layout {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
-.em-review-score {
-    text-align: center;
-}
-
-.em-review-score strong {
-    display: block;
-    color: var(--em-ink);
-    font-size: 46px;
-    font-weight: 850;
-    line-height: 1;
-}
-
-.em-review-score-stars {
-    margin: 8px 0 6px;
-    color: #f4ad16;
-    font-size: 14px;
-    letter-spacing: 2px;
-}
-
-.em-review-score span {
-    color: var(--em-muted);
-    font-size: 11px;
-}
-
-.em-review-bars {
-    display: grid;
-    gap: 7px;
-}
-
-.em-review-bar-row {
-    display: grid;
-    grid-template-columns: 34px minmax(0, 1fr) 24px;
-    align-items: center;
-    gap: 10px;
-    color: var(--em-muted);
-    font-size: 11px;
-}
-
-.em-review-bar-row i {
-    color: #f4ad16;
-    font-size: 10px;
-}
-
-.em-review-bar {
-    height: 8px;
-    overflow: hidden;
-    border-radius: 99px;
-    background: #eef2f7;
-}
-
-.em-review-bar-fill {
-    display: block;
-    height: 100%;
-    border-radius: 99px;
-    background: linear-gradient(90deg, #f4ad16, #f9c846);
-}
-
-@media (max-width: 760px) {
-    .em-review-summary {
+@media (max-width: 600px) {
+    .em-review-layout {
         grid-template-columns: 1fr;
-        gap: 18px;
-        padding: 18px;
+        gap: 12px;
+    }
+
+    .em-review-summary,
+    .em-review-card {
+        min-height: 175px;
     }
 }
 
@@ -969,6 +928,7 @@
         gap: 8px;
     }
 }
+
 
 /* BANTUAN WHATSAPP (SEBELUM FOOTER) */
 .em-help {
@@ -1219,8 +1179,6 @@
     .em-review-grid {
         grid-template-columns: minmax(0, 1fr);
     }
-
-
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1449,26 +1407,21 @@
 
         {{-- PILIHAN BRAND --}}
         @php
-            $brandLogos = [
-                'acer' => 'acer.png',
-                'asus' => 'asus.png',
-                'lenovo' => 'lenovo.png',
-                'apple' => 'apple.png',
-                'hp' => 'hp.png',
-                'dell' => 'dell.png',
-                'samsung' => 'samsung.png',
-                'xiaomi' => 'xiaomi.png',
-                'oppo' => 'oppo.png',
-                'vivo' => 'vivo.png',
-                'infinix' => 'infinix.png',
-                'logitech' => 'logitech.png',
-            ];
-
-            $homeBrands = $homeProducts
-                ->map(fn ($produk) => $produk->brand ?? null)
-                ->filter()
-                ->unique('id_brand')
-                ->values();
+           $brandLogos = [
+            'acer' => 'acer.svg',
+            'asus' => 'asus.svg',
+            'lenovo' => 'lenovo.svg',
+            'apple' => 'apple.svg',
+            'hp' => 'hp.svg',
+            'dell' => 'dell.svg',
+            'samsung' => 'samsung.svg',
+            'xiaomi' => 'xiaomi.svg',
+            'oppo' => 'oppo.svg',
+            'vivo' => 'vivo.svg',
+            'infinix' => 'infinix.svg',
+            'logitech' => 'logitech.svg',
+        ];
+        $homeBrands = collect($brands ?? []);
         @endphp
 
         @if ($homeBrands->isNotEmpty())
@@ -1491,7 +1444,7 @@
                             $logoFile = $brandLogos[$brandSlug] ?? null;
                         @endphp
 
-                        <a href="{{ route('shop.index') }}"
+                          <a href="{{ route('shop.index', ['brand' => [$brand->id_brand]]) }}"
                            class="em-brand-card"
                            title="{{ $brandName }}"
                            aria-label="Lihat produk {{ $brandName }}">
@@ -1516,156 +1469,88 @@
             </section>
         @endif
 
-        {{-- ULASAN PELANGGAN --}}
-        @php
-            $homeReviews = collect();
+{{-- ULASAN PELANGGAN --}}
 
-            foreach ($homeProducts as $itemProduk) {
-                $reviews = $itemProduk->ulasanProduk ?? collect();
+@php
+    $homeReviews = [
+        [
+            'nama' => 'Andi Pratama',
+            'tanggal' => '2 minggu lalu',
+            'isi' => 'Pelayanan sangat baik, produk sesuai deskripsi dan pengiriman cepat. Barang sampai dalam kondisi aman. Puas belanja di ELECTROMART!',
+        ],
+        [
+            'nama' => 'Siti Rahma',
+            'tanggal' => '1 minggu lalu',
+            'isi' => 'Laptop yang saya beli kualitasnya bagus. Admin ramah dan membantu menjelaskan spesifikasi produk sampai saya menemukan yang sesuai kebutuhan.',
+        ],
+        [
+            'nama' => 'Budi Santoso',
+            'tanggal' => '3 minggu lalu',
+            'isi' => 'Harga cukup bersaing, pilihan produknya banyak. Proses pemesanan juga mudah dan barang dikemas dengan rapi.',
+        ],
+    ];
+@endphp
 
-                foreach ($reviews as $review) {
-                    $isiReview = $review->komentar
-                        ?? $review->isi_ulasan
-                        ?? $review->ulasan
-                        ?? $review->review
-                        ?? null;
 
-                    $ratingReview = (float) ($review->rating ?? 0);
+<section class="em-section em-reviews-section">
+    <div class="em-section-head">
+        <div>
+            <h2>Ulasan Pelanggan</h2>
+        </div>
+    </div>
 
-                    // Nama pelanggan (coba beberapa nama relasi dan kolom yang umum)
-                    $userReview = $review->user ?? $review->pelanggan ?? null;
-                    $namaLengkap = $userReview->nama
-                        ?? $userReview->name
-                        ?? $userReview->nama_lengkap
-                        ?? $userReview->username
-                        ?? null;
+    <div class="em-review-layout">
 
-                    $namaLengkap = $namaLengkap ? trim($namaLengkap) : null;
-                    $namaTampil = 'Pelanggan ELECTROMART';
-                    $inisial = 'P';
+        {{-- KARTU RINGKASAN RATING --}}
+        <div class="em-review-summary">
+            <h3>5.0 Stars</h3>
 
-                    if ($namaLengkap) {
-                        $kata = preg_split('/\s+/', $namaLengkap);
-                        $namaTampil = $kata[0];
-                        if (count($kata) > 1) {
-                            $namaTampil .= ' ' . mb_strtoupper(mb_substr($kata[1], 0, 1)) . '.';
-                        }
-                        $inisial = mb_strtoupper(mb_substr($kata[0], 0, 1));
-                    }
-
-                    $waktuReview = $review->created_at
-                        ? \Carbon\Carbon::parse($review->created_at)
-                        : null;
-
-                    if ($isiReview || $ratingReview > 0) {
-                        $homeReviews->push([
-                            'produk' => $itemProduk->nama_produk,
-                            'isi' => $isiReview,
-                            'rating' => $ratingReview,
-                            'nama' => $namaTampil,
-                            'inisial' => $inisial,
-                            'tanggal' => $waktuReview ? $waktuReview->locale('id')->translatedFormat('d M Y') : null,
-                            'waktu' => $waktuReview ? $waktuReview->timestamp : 0,
-                        ]);
-                    }
-                }
-            }
-
-            // Ringkasan rating dihitung dari data ulasan yang ada di database
-            $ulasanBerating = $homeReviews->where('rating', '>', 0);
-            $jumlahBerating = $ulasanBerating->count();
-            $rataUlasan = $jumlahBerating ? $ulasanBerating->avg('rating') : 0;
-
-            $sebaranBintang = [];
-            for ($bintang = 5; $bintang >= 1; $bintang--) {
-                $sebaranBintang[$bintang] = $ulasanBerating
-                    ->filter(fn ($r) => (int) round($r['rating']) === $bintang)
-                    ->count();
-            }
-
-            // Tampilkan ulasan terbaru lebih dulu
-            $homeReviews = $homeReviews->sortByDesc('waktu')->values();
-        @endphp
-
-        <section class="em-section">
-            <div class="em-section-head">
-                <div>
-                    <h2>Ulasan Pelanggan</h2>
-                </div>
-                <a href="{{ route('shop.index') }}" class="em-section-link">
-                    Jelajahi produk
-                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                </a>
+            <div class="em-review-summary-stars">
+                @for ($star = 1; $star <= 5; $star++)
+                    <i class="fa-solid fa-star"></i>
+                @endfor
             </div>
 
-            @if ($homeReviews->isNotEmpty())
+            <p>Berdasarkan {{ count($homeReviews) }} ulasan</p>
+            <div class="em-review-summary-divider"></div>
 
-                @if ($jumlahBerating > 0)
-                    <div class="em-review-summary">
-                        <div class="em-review-score">
-                            <strong>{{ number_format($rataUlasan, 1) }}</strong>
-                            <div class="em-review-score-stars">
-                                @for ($star = 1; $star <= 5; $star++)
-                                    <i class="{{ $star <= round($rataUlasan) ? 'fa-solid' : 'fa-regular' }} fa-star"
-                                       aria-hidden="true"></i>
-                                @endfor
-                            </div>
-                            <span>dari {{ $jumlahBerating }} ulasan pelanggan</span>
-                        </div>
+            <div class="em-review-summary-label">
+                <i class="fa-brands fa-google"></i>
+                Ulasan ELECTROMART
+            </div>
+        </div>
 
-                        <div class="em-review-bars">
-                            @foreach ($sebaranBintang as $bintang => $jumlah)
-                                <div class="em-review-bar-row">
-                                    <span>{{ $bintang }} <i class="fa-solid fa-star" aria-hidden="true"></i></span>
-                                    <div class="em-review-bar">
-                                        <span class="em-review-bar-fill"
-                                              style="width: {{ round($jumlah / $jumlahBerating * 100) }}%"></span>
-                                    </div>
-                                    <span>{{ $jumlah }}</span>
-                                </div>
-                            @endforeach
-                        </div>
+        {{-- TIGA KARTU ULASAN --}}
+        @foreach ($homeReviews as $review)
+            <article class="em-review-card">
+
+                <i class="fa-brands fa-google em-review-google"></i>
+
+                <div class="em-review-top">
+                    <div class="em-review-stars">
+                        @for ($star = 1; $star <= 5; $star++)
+                            <i class="fa-solid fa-star"></i>
+                        @endfor
                     </div>
-                @endif
 
-                <div class="em-review-grid">
-                    @foreach ($homeReviews->take(3) as $review)
-                        <article class="em-review-card">
-                            <div class="em-review-top">
-                                <div class="em-review-stars">
-                                    @for ($star = 1; $star <= 5; $star++)
-                                        <i class="{{ $star <= round($review['rating']) ? 'fa-solid' : 'fa-regular' }} fa-star"
-                                           aria-hidden="true"></i>
-                                    @endfor
-                                </div>
-                                @if ($review['tanggal'])
-                                    <span class="em-review-date">{{ $review['tanggal'] }}</span>
-                                @endif
-                            </div>
-
-                            <i class="fa-solid fa-quote-left em-review-quote" aria-hidden="true"></i>
-
-                            <p class="em-review-text">
-                                {{ $review['isi'] ?: 'Pelanggan memberikan penilaian pada produk ini.' }}
-                            </p>
-
-                            <div class="em-review-user">
-                                <span class="em-review-avatar" aria-hidden="true">{{ $review['inisial'] }}</span>
-                                <div class="em-review-user-info">
-                                    <strong>{{ $review['nama'] }}</strong>
-                                    <span>{{ $review['produk'] }}</span>
-                                </div>
-                            </div>
-                        </article>
-                    @endforeach
+                <span class="em-review-date">
+                    {{ $review['tanggal'] }}
+                </span>
                 </div>
-            @else
-                <div class="em-empty">
-                    Belum ada ulasan yang tersedia. Ulasan akan tampil di sini
-                    setelah data penilaian produk tersimpan di database.
+
+                <p class="em-review-text">
+                    {{ $review['isi'] }}
+                </p>
+
+                <div class="em-review-user">
+                    {{ $review['nama'] }}
                 </div>
-            @endif
-        </section>
+
+            </article>
+        @endforeach
+
+    </div>
+</section>
 
         {{-- BANTUAN WHATSAPP SEBELUM FOOTER --}}
         <section class="em-help" aria-label="Bantuan pelanggan">
@@ -1864,6 +1749,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
         showSideSlide(0);
         startSideSlider();
+    });
+});
+
+// Tombol "Lihat selengkapnya" pada ulasan pelanggan
+document.addEventListener('DOMContentLoaded', function () {
+    const moreButton = document.getElementById('emReviewMoreBtn');
+    if (!moreButton) return;
+
+    moreButton.addEventListener('click', function () {
+        document.querySelectorAll('[data-em-review-card].is-hidden').forEach(function (card) {
+            card.classList.remove('is-hidden');
+        });
+
+        // Semua ulasan sudah tampil, tombol dihilangkan.
+        moreButton.closest('.em-review-more').remove();
     });
 });
 </script>
