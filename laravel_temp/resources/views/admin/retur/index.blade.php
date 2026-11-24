@@ -640,8 +640,7 @@
                 Menampilkan {{ $retur->firstItem() ?? 0 }}–{{ $retur->lastItem() ?? 0 }}
                 dari {{ $retur->total() }} retur
             </span>
-
-            {{ $retur->appends(request()->query())->links() }}
+        {{ $retur->appends(request()->query())->links('vendor.pagination.admin') }}
         </div>
     </section>
 </div>

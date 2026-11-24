@@ -634,7 +634,7 @@
         {{-- PAGINATION --}}
         @if($ulasan->hasPages())
             <div class="pagination">
-                {{ $ulasan->links() }}
+                {{ $ulasan->links('vendor.pagination.admin') }}
             </div>
         @endif
     </section>

@@ -676,8 +676,8 @@
         {{-- PAGINATION --}}
         @if($keranjang->hasPages())
             <div class="kp-pagination">
-                {{ $keranjang->appends(request()->query())->links() }}
-            </div>
+            {{ $keranjang->appends(request()->query())->links('vendor.pagination.admin') }}
+        </div>
         @endif
 
     </div>

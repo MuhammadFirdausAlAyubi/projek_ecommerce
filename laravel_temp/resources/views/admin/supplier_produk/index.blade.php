@@ -535,7 +535,7 @@
                 </span>
 
                 <div>
-                    {{ $supplierProduk->appends(request()->query())->links() }}
+                    {{ $supplierProduk->appends(request()->query())->links('vendor.pagination.admin') }}
                 </div>
 
             </div>

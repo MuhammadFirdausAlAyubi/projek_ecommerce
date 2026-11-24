@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 23 Nov 2026 pada 17.39
+-- Waktu pembuatan: 24 Nov 2026 pada 13.35
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -152,7 +152,7 @@ INSERT INTO `detail_keranjang` (`id_detail_keranjang`, `id_keranjang`, `id_produ
 (5, 5, 4, NULL, 1, '2026-10-18 07:41:12'),
 (6, 6, 4, NULL, 1, '2026-10-18 07:52:00'),
 (7, 7, 3, NULL, 1, '2026-10-18 13:43:20'),
-(8, 8, 3, NULL, 1, '2026-11-23 12:50:07');
+(8, 8, 3, NULL, 3, '2026-11-23 12:50:07');
 
 -- --------------------------------------------------------
 
@@ -261,13 +261,11 @@ INSERT INTO `foto_produk` (`id_foto_produk`, `id_produk`, `gambar`, `urutan`, `c
 (2, 2, 'produk/Mz17IB41emqDjQqMGS0X6vXAQZzf4fFFR8EGpjPq.png', 2, '2026-10-16 21:47:25', '2026-10-16 21:47:25'),
 (3, 2, 'produk/kj6U2GdrN3Q2sSrowGcwsCrjCw4ks0wlFnVQjncI.png', 3, '2026-10-16 21:47:25', '2026-10-16 21:47:25'),
 (4, 2, 'produk/WEoXCoVgaJZoq6KkKODAp4TpcFX0ZUeoO5EhDVtV.png', 4, '2026-10-16 21:47:25', '2026-10-16 21:47:25'),
-(5, 3, 'produk/F05RslPlvwT3qqxv0l6wkgqWqAu8TeTsj9Uf04GY.png', 1, '2026-10-16 22:27:14', '2026-10-16 22:27:14'),
-(6, 3, 'produk/Ej7Rt6pUzavjCNzVHBr7N91KEp5VcRi5wILJqdeI.png', 2, '2026-10-16 22:27:14', '2026-10-16 22:27:14'),
-(7, 3, 'produk/ferA4vb1fMJ0aYkoKTz8axnplEK3pWNZBk4VJ9p8.png', 3, '2026-10-16 22:27:14', '2026-10-16 22:27:14'),
-(8, 3, 'produk/QhWMgrypRG7q7Wi5fp0EdXMdlSDwc6b97uAbOyyh.png', 4, '2026-10-16 22:27:14', '2026-10-16 22:27:14'),
-(9, 4, 'produk/ZSUiudX2asg9XYSYgwQuOuzRca1lVYU5ckXvqCZ7.jpg', 1, '2026-10-16 22:43:44', '2026-10-16 22:43:44'),
-(10, 4, 'produk/pssDKIVm6QF0wMY2mmhwvBUeZ5NMePLKHFlWIw3U.jpg', 2, '2026-10-16 22:43:44', '2026-10-16 22:43:44'),
-(11, 4, 'produk/Va73x7bwk4XqwtRhN0vv6wLtAxFYesFn2ehtuTKE.jpg', 3, '2026-10-16 22:43:44', '2026-10-16 22:43:44');
+(12, 4, 'produk/0KfX13j9RwJrtTTh1EP6DrrBVriNReFmLEFc4EIA.png', 1, '2026-11-24 05:09:36', '2026-11-24 05:09:36'),
+(13, 4, 'produk/R9OZHzPbQ6hCXzhTz2gEqvqR9Z1YwcD8Zdf7WIoP.png', 2, '2026-11-24 05:09:36', '2026-11-24 05:09:36'),
+(14, 4, 'produk/zCVqCQPF3cpnK293pHYJWKHwXOOzxjUTxLPYNKIi.png', 3, '2026-11-24 05:09:36', '2026-11-24 05:09:36'),
+(15, 4, 'produk/ynL5PvXVH4bFnRg6lDZJGORPM0iNmBCZXgSsyaK2.png', 4, '2026-11-24 05:09:36', '2026-11-24 05:09:36'),
+(22, 3, 'produk/jS7tWF1EWGAYiWg07EVkdPlUKrQrbfAcjbdb6iSe.png', 1, '2026-11-24 05:29:29', '2026-11-24 05:29:29');
 
 -- --------------------------------------------------------
 
@@ -92523,8 +92521,8 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `id_kategori`, `id_brand`, `nama_produk`, `deskripsi`, `spesifikasi`, `harga_jual`, `gambar`, `status_produk`, `created_at`) VALUES
-(3, 1, 1, 'Samsung Galaxy S25', 'Samsung Galaxy S25 merupakan smartphone premium dengan desain modern, performa tinggi, dan fitur Galaxy AI untuk mendukung produktivitas serta hiburan sehari-hari.', 'Layar Dynamic AMOLED 2X 6,2 inci, prosesor Snapdragon 8 Elite for Galaxy, kamera utama 50 MP, kamera ultrawide 12 MP, kamera telefoto 10 MP, dan baterai 4.000 mAh.', 13999000.00, 'produk/F05RslPlvwT3qqxv0l6wkgqWqAu8TeTsj9Uf04GY.png', 'aktif', '2026-10-17 05:27:14'),
-(4, 2, 2, 'ASUS Vivobook 14', 'Laptop ASUS Vivobook 14 dengan desain ringkas dan modern, cocok untuk pelajar, mahasiswa, serta kebutuhan kerja sehari-hari.', 'Prosesor Intel Core i5, RAM 8 GB, SSD 512 GB, layar 14 inci Full HD.', 7498998.00, 'produk/ZSUiudX2asg9XYSYgwQuOuzRca1lVYU5ckXvqCZ7.jpg', 'aktif', '2026-10-17 05:43:44');
+(3, 1, 1, 'Samsung Galaxy S25', 'Samsung Galaxy S25 merupakan smartphone premium dengan desain modern, performa tinggi, dan fitur Galaxy AI untuk mendukung produktivitas serta hiburan sehari-hari.', 'Layar Dynamic AMOLED 2X 6,2 inci, prosesor Snapdragon 8 Elite for Galaxy, kamera utama 50 MP, kamera ultrawide 12 MP, kamera telefoto 10 MP, dan baterai 4.000 mAh.', 13999000.00, 'produk/jS7tWF1EWGAYiWg07EVkdPlUKrQrbfAcjbdb6iSe.png', 'aktif', '2026-10-17 05:27:14'),
+(4, 2, 2, 'ASUS Vivobook 14', 'Laptop ASUS Vivobook 14 dengan desain ringkas dan modern, cocok untuk pelajar, mahasiswa, serta kebutuhan kerja sehari-hari.', 'Prosesor Intel Core i5, RAM 8 GB, SSD 512 GB, layar 14 inci Full HD.', 7498998.00, 'produk/0KfX13j9RwJrtTTh1EP6DrrBVriNReFmLEFc4EIA.png', 'aktif', '2026-10-17 05:43:44');
 
 -- --------------------------------------------------------
 
@@ -92576,8 +92574,8 @@ CREATE TABLE `stok` (
 --
 
 INSERT INTO `stok` (`id_stok`, `id_produk`, `jumlah_stok`, `stok_minimum`, `update_at`) VALUES
-(3, 3, 4, 5, '2026-10-18 13:44:30'),
-(4, 4, 0, 1, '2026-10-18 07:52:18');
+(3, 3, 4, 5, '2026-11-24 12:29:29'),
+(4, 4, 2, 1, '2026-11-24 12:09:36');
 
 -- --------------------------------------------------------
 
@@ -92693,7 +92691,7 @@ CREATE TABLE `varian_produk` (
 INSERT INTO `varian_produk` (`id_varian`, `id_produk`, `nama_varian`, `warna`, `kapasitas`, `harga`, `jumlah_stok`, `gambar`, `status_varian`, `created_at`, `updated_at`) VALUES
 (1, 3, 'Icyblue 256GB', 'Icyblue', '256GB', 13999000.00, 2, 'produk/varian/y2s2T6XK5dQg4549r6uEjFAoBTCBLvPh8wfnblmd.png', 1, '2026-10-16 22:27:14', '2026-10-16 22:27:14'),
 (2, 3, 'Mint 256GB', 'Mint', '256GB', 13999000.00, 5, 'produk/varian/GFQ2t5pfFIoWexqGpg4vJDA57zwpGmznbg0JISqm.png', 1, '2026-10-16 22:27:14', '2026-10-16 22:27:14'),
-(3, 4, 'Hitam', 'Hitam', '256GB/16GB', 7499000.00, 2, 'produk/varian/XOCaWhH4sPEfZvpAPniVZEDgaWxtd5WLbHspEbvt.jpg', 1, '2026-10-16 22:43:44', '2026-10-16 22:43:44');
+(3, 4, 'Silver', 'Silver', '256GB/16GB', 7499000.00, 2, 'produk/varian/XOCaWhH4sPEfZvpAPniVZEDgaWxtd5WLbHspEbvt.jpg', 1, '2026-10-16 22:43:44', '2026-11-24 05:09:36');
 
 --
 -- Indexes for dumped tables
@@ -93000,7 +92998,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT untuk tabel `foto_produk`
 --
 ALTER TABLE `foto_produk`
-  MODIFY `id_foto_produk` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_foto_produk` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `indonesia_cities`

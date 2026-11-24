@@ -557,7 +557,7 @@
 
         {{-- PAGINATION --}}
         <div class="pagination">
-            {{ $stoks->links() }}
+            {{ $stoks->links('vendor.pagination.admin') }}
         </div>
 
     </section>

@@ -58,8 +58,8 @@ Route::get('/', function () {
         'stok',
         'ulasanProduk',
     ])
-        ->orderByDesc('created_at')
-        ->limit(8)
+        ->where('harga_jual', '<', 10000000)
+        ->orderBy('harga_jual', 'asc')
         ->get();
 
     $brands = Brand::orderBy('nama_brand')->get();

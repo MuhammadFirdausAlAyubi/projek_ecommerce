@@ -600,8 +600,8 @@
         {{-- PAGINATION --}}
         @if($pembelian->hasPages())
             <div class="pb-pagination">
-                {{ $pembelian->appends(request()->query())->links() }}
-            </div>
+            {{ $pembelian->appends(request()->query())->links('vendor.pagination.admin') }}
+        </div>
         @endif
     </div>
 

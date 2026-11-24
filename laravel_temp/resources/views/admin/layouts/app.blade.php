@@ -333,6 +333,111 @@
                 font-size: 12px;
             }
         }
+
+/* ==========================================
+   ELECTROMART - PAGINATION ADMIN
+========================================== */
+
+.em-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px 23px;
+    border-top: 1px solid var(--border);
+    background: #fff;
+}
+
+.em-pagination-info {
+    color: #788397;
+    font-size: 13px;
+}
+
+.em-pagination-info strong {
+    color: #182230;
+    font-weight: 700;
+}
+
+.em-pagination-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.em-pagination-nav a {
+    text-decoration: none;
+}
+
+.em-pagination-nav .page-btn,
+.em-pagination-nav .page-number {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 11px;
+    border: 1px solid #e8edf4;
+    border-radius: 9px;
+    background: #fff;
+    color: #344054;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all .2s ease;
+}
+
+.em-pagination-nav .page-btn:hover,
+.em-pagination-nav .page-number:hover {
+    border-color: #246bfd;
+    color: #246bfd;
+    background: #f3f7ff;
+}
+
+.em-pagination-nav .page-number.active {
+    background: #246bfd;
+    border-color: #246bfd;
+    color: #fff;
+    cursor: default;
+}
+
+.em-pagination-nav .page-btn.disabled {
+    color: #b8c0cc;
+    background: #f8f9fb;
+    border-color: #edf0f4;
+    cursor: not-allowed;
+}
+
+.em-pagination-nav .page-dots {
+    padding: 0 4px;
+    color: #8792a4;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .em-pagination {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+    }
+
+    .em-pagination-nav {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 5px;
+    }
+
+    .em-pagination-nav .page-btn,
+    .em-pagination-nav .page-number {
+        min-width: 34px;
+        height: 35px;
+        padding: 0 8px;
+        font-size: 12px;
+    }
+}
+
     </style>
 
     @stack('styles')

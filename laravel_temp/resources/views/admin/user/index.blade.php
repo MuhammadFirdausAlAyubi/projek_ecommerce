@@ -701,7 +701,7 @@
         {{-- PAGINATION --}}
         @if($users->hasPages())
             <div class="user-pagination">
-                {{ $users->appends(request()->query())->links() }}
+                {{ $users->appends(request()->query())->links('vendor.pagination.admin') }}
             </div>
         @endif
 

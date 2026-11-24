@@ -286,7 +286,6 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="pagination">{{ $kategoris->links() }}</div>
+    {{ $kategoris->links('vendor.pagination.admin') }}
     </section>
 @endsection

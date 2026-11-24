@@ -625,8 +625,7 @@
                 Menampilkan {{ $bank->firstItem() ?? 0 }}–{{ $bank->lastItem() ?? 0 }}
                 dari {{ $bank->total() }} bank
             </span>
-
-            {{ $bank->appends(request()->query())->links() }}
+            {{ $bank->appends(request()->query())->links('vendor.pagination.admin') }}
         </div>
     </section>
 </div>
