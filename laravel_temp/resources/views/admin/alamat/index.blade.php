@@ -686,8 +686,8 @@
         {{-- PAGINATION --}}
         @if($alamat->hasPages())
             <div class="alamat-pagination">
-                {{ $alamat->appends(request()->query())->links() }}
-            </div>
+        {{ $alamat->appends(request()->query())->links('vendor.pagination.admin') }}
+        </div>
         @endif
 
     </div>

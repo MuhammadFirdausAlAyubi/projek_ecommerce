@@ -664,8 +664,7 @@
                 Menampilkan {{ $ekspedisi->firstItem() ?? 0 }}–{{ $ekspedisi->lastItem() ?? 0 }}
                 dari {{ $ekspedisi->total() }} ekspedisi
             </span>
-
-            {{ $ekspedisi->appends(request()->query())->links() }}
+            {{ $ekspedisi->appends(request()->query())->links('vendor.pagination.admin') }} 
         </div>
     </section>
 </div>

@@ -1380,30 +1380,33 @@
             </div>
         </section>
 
-        {{-- PRODUK PILIHAN --}}
-        <section class="em-section">
-            <div class="em-section-head">
-                <div>
-                    <h2>Produk Pilihan</h2>
-                </div>
-                <a href="{{ route('shop.index') }}" class="em-section-link">
-                    Lihat semua
-                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                </a>
-            </div>
+  {{-- PRODUK TERJANGKAU --}}
 
-            @if ($homeProducts->isNotEmpty())
-                <div class="pcard-grid">
-                    @foreach ($homeProducts->take(10) as $produk)
-                        @include('partials.product-card', ['produk' => $produk])
-                    @endforeach
-                </div>
-            @else
-                <div class="em-empty">
-                    Produk belum tersedia. Tambahkan produk melalui dashboard admin.
-                </div>
-            @endif
-        </section>
+<section class="em-section">
+    <div class="em-section-head">
+        <div>
+            <h2>Produk Terjangkau</h2>
+        </div>
+
+        <a href="{{ route('shop.index', ['max_price' => 9999999]) }}"
+           class="em-section-link">
+            Lihat semua
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+    </div>
+
+    @if ($homeProducts->isNotEmpty())
+        <div class="pcard-grid">
+            @foreach ($homeProducts as $produk)
+                @include('partials.product-card', ['produk' => $produk])
+            @endforeach
+        </div>
+    @else
+        <div class="em-empty">
+            Belum ada produk dengan harga di bawah Rp10.000.000.
+        </div>
+    @endif
+</section>
 
         {{-- PILIHAN BRAND --}}
         @php

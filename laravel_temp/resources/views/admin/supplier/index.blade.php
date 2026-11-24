@@ -573,7 +573,7 @@
                 </div>
 
                 <div>
-                    {{ $supplier->appends(request()->query())->links() }}
+                    {{ $supplier->appends(request()->query())->links('vendor.pagination.admin') }}
                 </div>
 
             </div>

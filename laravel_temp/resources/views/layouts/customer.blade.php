@@ -164,7 +164,7 @@
             background: var(--em-primary-dark);
         }
 
-        /* AKUN DAN KERANJANG */
+        /* AKUN, PESANAN, DAN KERANJANG */
         .em-actions {
             display: flex;
             align-items: center;
@@ -188,6 +188,33 @@
 
         .em-action:hover {
             color: var(--em-primary);
+        }
+
+        /* BADGE JUMLAH PESANAN DAN KERANJANG */
+        .em-action-icon {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .em-badge {
+            position: absolute;
+            top: -9px;
+            right: -12px;
+            min-width: 19px;
+            height: 19px;
+            padding: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+            border-radius: 50px;
+            background: #e53945;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            line-height: 1;
         }
 
         /* NAVIGASI KATEGORI */
@@ -503,6 +530,27 @@
 
 <body>
 
+    {{-- HITUNG BADGE SESUAI USER YANG SEDANG LOGIN --}}
+    @php
+        $jumlahKeranjang = 0;
+        $jumlahPesanan = 0;
+
+        if (auth()->check()) {
+            $idUser = auth()->id();
+
+            $jumlahKeranjang = \Illuminate\Support\Facades\DB::table('detail_keranjang')
+                ->join('keranjang', 'detail_keranjang.id_keranjang', '=', 'keranjang.id_keranjang')
+                ->where('keranjang.id_user', $idUser)
+                ->where('keranjang.status_keranjang', 'aktif')
+                ->sum('detail_keranjang.jumlah');
+
+           $jumlahPesanan = \Illuminate\Support\Facades\DB::table('pesanan')
+            ->where('id_user', $idUser)
+            ->whereNotIn('status_pesanan', ['selesai', 'dibatalkan'])
+            ->count();
+        }
+    @endphp
+
     {{-- HEADER STICKY --}}
     <div class="em-sticky-header">
 
@@ -550,9 +598,25 @@
                         <span class="em-action-label">Akun</span>
                     </a>
 
+                    {{-- PESANAN SAYA --}}
+                    <a href="{{ auth()->check() ? route('pesanan-saya.index') : route('login') }}" class="em-action">
+                        <span class="em-action-icon">
+                            <i class="fa-solid fa-receipt"></i>
+                            @if (auth()->check() && $jumlahPesanan > 0)
+                                <span class="em-badge">{{ $jumlahPesanan > 99 ? '99+' : $jumlahPesanan }}</span>
+                            @endif
+                        </span>
+                        <span class="em-action-label">Pesanan Saya</span>
+                    </a>
+
                     {{-- KERANJANG --}}
-                    <a href="{{ route('keranjang.index') }}" class="em-action">
-                        <i class="fa-solid fa-bag-shopping"></i>
+                    <a href="{{ auth()->check() ? route('keranjang.index') : route('login') }}" class="em-action">
+                        <span class="em-action-icon">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            @if (auth()->check() && $jumlahKeranjang > 0)
+                                <span class="em-badge">{{ $jumlahKeranjang > 99 ? '99+' : $jumlahKeranjang }}</span>
+                            @endif
+                        </span>
                         <span class="em-action-label">Keranjang</span>
                     </a>
 

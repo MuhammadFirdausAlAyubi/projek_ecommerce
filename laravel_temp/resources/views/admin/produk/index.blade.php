@@ -314,6 +314,8 @@
             </table>
         </div>
 
-        <div class="pagination">{{ $produks->links() }}</div>
-    </section>
+        <div class="pagination">
+            {{ $produks->links('vendor.pagination.admin') }}
+        </div>    
+</section>
 @endsection

@@ -640,8 +640,7 @@
                 Menampilkan {{ $pengiriman->firstItem() ?? 0 }}–{{ $pengiriman->lastItem() ?? 0 }}
                 dari {{ $pengiriman->total() }} pengiriman
             </span>
-
-            {{ $pengiriman->appends(request()->query())->links() }}
+        {{ $pengiriman->appends(request()->query())->links('vendor.pagination.admin') }}
         </div>
     </section>
 </div>

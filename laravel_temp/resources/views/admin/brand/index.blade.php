@@ -419,7 +419,7 @@
         </div>
 
         <div class="pagination">
-            {{ $brands->links() }}
+              {{ $brands->links('vendor.pagination.admin') }}
         </div>
     </section>
 @endsection

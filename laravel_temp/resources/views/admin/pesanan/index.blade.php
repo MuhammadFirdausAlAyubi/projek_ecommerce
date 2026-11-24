@@ -662,8 +662,7 @@
                 Menampilkan {{ $pesanan->firstItem() ?? 0 }}–{{ $pesanan->lastItem() ?? 0 }}
                 dari {{ $pesanan->total() }} pesanan
             </span>
-
-            {{ $pesanan->appends(request()->query())->links() }}
+        {{ $pesanan->appends(request()->query())->links('vendor.pagination.admin') }}
         </div>
     </div>
 </div>
